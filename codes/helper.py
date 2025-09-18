@@ -3,6 +3,8 @@ import os
 import json
 # from dotenv import load_dotenv
 from SPARQLWrapper import SPARQLWrapper, JSON , CSV
+from pydantic import BaseModel, ValidationError
+from typing import List
 
 def run_sparql_query(sparql_text: str, SPARQLPATH: str) -> json:
     """"
