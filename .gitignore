@@ -1,2 +1,6 @@
 /datasets
 .env
+.DS_Store
+*.npy
+property_embeddings.npy
+entity_embeddings.npy

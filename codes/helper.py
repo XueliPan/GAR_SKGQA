@@ -17,15 +17,24 @@ def run_sparql_query(sparql_text: str, SPARQLPATH: str) -> json:
         sparql = SPARQLWrapper(SPARQLPATH)
         sparql_txt = sparql_text
         sparql.setQuery(sparql_txt)
-        sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
-        # Remove keys to match the expected output format in the benchmark
-        results["head"].pop("link", None)
-        results["results"].pop("distinct", None)
-        results["results"].pop("ordered", None)
-        return json.dumps(results)
+        for result in sparql.query().bindings:
+             print(f"{result['resource'].value}, {result['label'].value}")
+        
+        
+        # ------json output
+        # sparql.setReturnFormat(JSON)
+        # results = sparql.query().convert()
+        # # Remove keys to match the expected output format in the benchmark
+        # results["head"].pop("link", None)
+        # results["results"].pop("distinct", None)
+        # results["results"].pop("ordered", None)
+        # return json.dumps(results)
+        # # ------csv output
+        # sparql.setReturnFormat(CSV)
+        # results = sparql.query().convert()
+        # return results
     except:
-        print('Your database is not installed properly !!!')
+            print('Your database is not installed properly !!!')
 
 
 def orkg_prefixes() -> str:
