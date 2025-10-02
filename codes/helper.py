@@ -19,8 +19,7 @@ def run_sparql_query(sparql_text: str, SPARQLPATH: str) -> json:
         sparql.setQuery(sparql_txt)
         for result in sparql.query().bindings:
              print(f"{result['resource'].value}, {result['label'].value}")
-        
-        
+           
         # ------json output
         # sparql.setReturnFormat(JSON)
         # results = sparql.query().convert()

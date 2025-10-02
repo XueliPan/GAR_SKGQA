@@ -1,0 +1,23 @@
+@prefix orkgp: <http://orkg.org/orkg/predicate/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://orkg.org/orkg/resource/R150598> orkgp:P34063 <http://orkg.org/orkg/resource/R150599> .
+
+<http://orkg.org/orkg/resource/R150599> a <http://orkg.org/orkg/class/Resource> ;
+    rdfs:label "CHEMDNER corpus"^^xsd:string ;
+    orkgp:P34059 "3000 Test set"^^xsd:string,
+        "3500 Development set"^^xsd:string,
+        "3500 Training set"^^xsd:string ;
+    orkgp:P34594 "7,563 Test set chemicals"^^xsd:string,
+        "8,520 Training set chemicals"^^xsd:string,
+        "8,677 Development set chemicals"^^xsd:string ;
+    orkgp:P42011 <http://orkg.org/orkg/resource/R150603>,
+        <http://orkg.org/orkg/resource/R150680>,
+        "All records used for the CHEMDNER corpus were distributed as plain text, UTF8-encoded PubMed abstracts in a tab-separated format with the following three columns: article identifier (PMID, PubMed identifier), title of the article, and abstract of the article. The baseline entity annotation file had a tab-separated format with columns corresponding to the article identifier, the part of the document processed (T: title, A: abstract), the start and end characters offsets of the chemical, the text string of the chemical entity mention and the corresponding chemical entity mention class."^^xsd:string ;
+    orkgp:P43025 "662,571 Test set"^^xsd:string,
+        "766,331 Development set"^^xsd:string,
+        "770,855 Training set"^^xsd:string ;
+    orkgp:P43068 "19,805 unique chemical name strings"^^xsd:string ;
+    orkgp:description "Each of the chemical entity mentions was manually labeled according to its structure-associated chemical entity mention (SACEM) class: abbreviation, family, formula, identifier, multiple, systematic and trivial. The difficulty and consistency of tagging chemicals in text was measured using an agreement study between annotators, obtaining a percentage agreement of 91."^^xsd:string .
+

@@ -1,134 +1,186 @@
 import os
+import argparse
+from typing import Optional
+import pandas as pd
 from google import genai
 from dotenv import load_dotenv
 from google.genai import types
+from helper import orkg_prefixes
 
-def generate_orkg_sparql(target_question: str) -> str:
+
+def _strip_markdown_fences(text: str) -> str:
     """
-    Generates a SPARQL query for ORKG using the Gemini API, incorporating 
-    the official ORKG prefixes and a strong one-shot example.
+    Remove leading/trailing markdown code fences like ```sparql ... ``` or ``` ... ```.
+    Preserves the inner query content.
+    """
+    if not text:
+        return text
+    s = text.strip()
+    # Remove starting fence variants
+    if s.startswith("```sparql"):
+        s = s[len("```sparql"):].lstrip("\n\r ")
+    elif s.startswith("```"):
+        s = s[len("```"):].lstrip("\n\r ")
+    # Remove trailing fence
+    if s.endswith("```"):
+        s = s[: -len("```")].rstrip()
+    return s
+
+
+def generate_orkg_sparql(
+    target_question: str,
+    subgraph_turtle: str,
+    example_question: Optional[str] = None,
+    example_sparql: Optional[str] = None,
+    ontology_turtle: Optional[str] = None,
+) -> str:
+    """
+    Generate a SPARQL query for ORKG using Gemini with a modular prompt that includes:
+    - Required: input question, subgraph (Turtle), ORKG prefixes
+    - Optional: example question and example query (one-shot), ontology (Turtle)
 
     Args:
-        target_question: The natural language question to be converted to SPARQL.
+        target_question: Natural language question to convert to SPARQL. (required)
+        subgraph_turtle: Turtle text of the subgraph relevant to the question. (required)
+        example_question: Optional example question for one-shot guidance.
+        example_sparql: Optional SPARQL matching the example question.
+        ontology_turtle: Optional ontology snippet in Turtle.
 
     Returns:
         The generated SPARQL query string.
     """
-    # --- 1. Define Context Variables ---
-    
-    # OFFICIAL ORKG PREFIXES
-    PREFIXES = """
-PREFIX orkgp: <http://orkg.org/orkg/predicate/>
-PREFIX orkgc: <http://orkg.org/orkg/class/>
-PREFIX orkgr: <http://orkg.org/orkg/resource/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-"""
-    
-    # A. Ontology Example (One-shot learning) - Your provided example
-    EXAMPLE_QUESTION = "What are the metrics of evaluation over the Stanford Cars dataset?"
-    EXAMPLE_SPARQL = f"""
-{PREFIXES.strip()}
 
-SELECT DISTINCT ?metric ?metric_lbl
-WHERE {{
-  ?dataset       a                orkgc:Dataset;
-                  rdfs:label       ?dataset_lbl.
-  FILTER (str(?dataset_lbl) = "Stanford Cars")
-  ?benchmark      orkgp:HAS_DATASET       ?dataset;
-                  orkgp:HAS_EVALUATION    ?eval.
-  OPTIONAL {{?eval           orkgp:HAS_METRIC         ?metric.
-           ?metric          rdfs:label               ?metric_lbl.}}
-}}
-"""
+    # Required ORKG prefixes
+    PREFIXES = orkg_prefixes().strip()
 
-    # B. Subgraph Context (Schema/Ontology details) - Used to provide general ORKG structure
-    SUBGRAPH_CONTEXT = f"""
-# ORKG Subgraph Context in Turtle Format
-# orkgp for Predicates, orkgc for Classes, orkgr for Resources
+    # Assemble optional sections
+    example_block = ""
+    if example_question and example_sparql:
+        example_block = f"""
+### Example (Optional One-Shot)
+Question: {example_question}
+SPARQL:
+{example_sparql.strip()}
+""".strip()
+
+    ontology_block = ""
+    if ontology_turtle:
+        ontology_block = f"""
+### Ontology (Optional, Turtle)
+{ontology_turtle.strip()}
+""".strip()
+
+    # Construct final prompt with required and optional sections
+    FULL_PROMPT = f"""
+### Role
+You are an expert SPARQL generator for the ORKG (Open Research Knowledge Graph).
+
+### ORKG Prefixes (Required)
 {PREFIXES}
 
-# General ORKG structural patterns for Paper, Contribution, Problem, Method
-orkgr:R2005 a orkgc:Paper ;
-    rdfs:label "AI in Climate Modeling" ;
-    orkgp:P32 orkgr:R3006 . # P32 = has contribution
+### Subgraph (Required, Turtle)
+{subgraph_turtle.strip()}
 
-orkgr:R3006 a orkgc:Contribution ;
-    orkgp:P3001 orkgr:R1004 ; # P3001 = has research problem
-    orkgp:P4007 orkgr:M123 . # P4007 = has method
+### Question (Required)
+{target_question}
 
-orkgr:R1004 a orkgc:ResearchProblem ;
-    rdfs:label "Question Answering" .
+{example_block}
 
-orkgr:M123 a orkgc:Method ;
-    rdfs:label "Sequence-to-Sequence Model" .
+{ontology_block}
 
-# Predicates used in the example:
-# orkgp:HAS_DATASET, orkgp:HAS_EVALUATION, orkgp:HAS_METRIC
-"""
+### Instructions
+Produce a single SPARQL query that answers the Question using the provided Subgraph and honoring ORKG schema (as implied by prefixes). The output must:
+- Don't include all necessary PREFIX declarations in the output, as they are already provided above.
+- Be a single SPARQL query only, with no extra commentary
+- Don't use any comments in the SPARQL
+""".strip()
 
-    # --- 2. Construct the Full Prompt ---
-    FULL_PROMPT = f"""
-### 1. Role and Goal
-You are an expert SPARQL query generator specialized in the **ORKG (Open Research Knowledge Graph)** ontology. Your task is to translate a natural language **Question** into a single, syntactically correct SPARQL query.
-
-### 2. Context and Constraints
-You are provided with the following information to ensure accuracy against the ORKG schema:
-
-**A. Ontology Example (One-Shot):**
-* **Example Question:** {EXAMPLE_QUESTION}
-* **Example SPARQL Query:**
-{EXAMPLE_SPARQL}
-
-**B. Subgraph Context (Turtle Format):**
-* **Subgraph:**
-{SUBGRAPH_CONTEXT}
-
-### 3. Input (The Target Request)
-Based on the context above, generate a query for the following:
-
-* **Target Question:** {target_question}
-
-### 4. Output Format
-Provide **only** the generated SPARQL query, including all necessary `PREFIX` declarations, enclosed in a single markdown code block. Do not include any explanatory text, introduction, or conversation outside of the code block.
-"""
-
-    # --- 3. Initialize Gemini Client and Generate Content ---
     try:
-        # Client automatically picks up the API key from the environment variable GEMINI_API_KEY
-
         client = genai.Client()
-        
-        # Use a model that is good for code generation and instruction following
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-2.5-pro',
             contents=FULL_PROMPT,
-            config=types.GenerateContentConfig(
-                # Low temperature for deterministic, factual output (like code)
-                temperature=0.1
-            )
+            config=types.GenerateContentConfig(temperature=0.1)
         )
-        
-        # Extract the text response
         return response.text.strip()
-
     except Exception as e:
         return f"An error occurred (check API key and internet connection): {e}"
 
+
 # --- EXAMPLE USAGE ---
 if __name__ == '__main__':
-    # Ensure GEMINI_API_KEY is set in your environment
+    parser = argparse.ArgumentParser(description="Task3: Generate SPARQL from question + subgraph")
+    parser.add_argument("--input_csv", required=True, help="CSV with columns: question_id,question_string,sparql_query")
+    parser.add_argument("--subgraph_dir", required=True, help="Directory containing per-question subgraphs named <question_id>_subgraph.ttl")
+    parser.add_argument("--output_csv", required=True, help="Where to write sparql generation results CSV")
+    parser.add_argument("--example_question", default=None, help="Optional one-shot example question")
+    parser.add_argument("--example_sparql", default=None, help="Optional one-shot example SPARQL")
+    parser.add_argument("--ontology_turtle_path", default=None, help="Optional path to ontology Turtle file")
+    args = parser.parse_args()
+
     load_dotenv()
     if not os.getenv('GEMINI_API_KEY'):
-        print("ERROR: Please set the 'GEMINI_API_KEY' environment variable.")
-    else:
-        # Your new question for the ORKG
-        USER_QUESTION = "Find all papers that use the method 'Sequence-to-Sequence Model' and list their titles."
-        
-        # Generate the query
-        sparql_query_output = generate_orkg_sparql(USER_QUESTION)
-        
-        print("--- User Question ---")
-        print(USER_QUESTION)
-        print("\n--- Generated SPARQL Query ---")
-        print(sparql_query_output)
-        print("\n------------------------------")
+        raise RuntimeError("Please set the 'GEMINI_API_KEY' environment variable.")
+
+    ontology_turtle = None
+    if args.ontology_turtle_path and os.path.exists(args.ontology_turtle_path):
+        with open(args.ontology_turtle_path, 'r', encoding='utf-8') as f:
+            ontology_turtle = f.read()
+
+    df = pd.read_csv(args.input_csv)
+    required_cols = {"question_id", "question_string", "sparql_query"}
+    missing = required_cols - set(df.columns)
+    if missing:
+        raise ValueError(f"Missing required columns in {args.input_csv}: {sorted(list(missing))}")
+
+    rows = []
+    for _, row in df.iterrows():
+        qid = str(row["question_id"])  # preserve naming
+        question = row["question_string"]
+        subgraph_path = os.path.join(args.subgraph_dir, f"{qid}_subgraph.ttl")
+        if not os.path.exists(subgraph_path):
+            gen_query = ""
+            error = f"Missing subgraph file: {subgraph_path}"
+            rows.append({
+                "question_id": qid,
+                "question_string": question,
+                "gold_sparql": row.get("sparql_query", ""),
+                "generated_sparql": gen_query,
+                "error": error
+            })
+            continue
+
+        with open(subgraph_path, 'r', encoding='utf-8') as f:
+            subgraph_ttl = f.read()
+
+        gen_query = generate_orkg_sparql(
+            target_question=question,
+            subgraph_turtle=subgraph_ttl,
+            example_question=args.example_question,
+            example_sparql=args.example_sparql,
+            ontology_turtle=ontology_turtle,
+        )
+
+        # Clean markdown fences if present
+        gen_query = _strip_markdown_fences(gen_query)
+
+        rows.append({
+            "question_id": qid,
+            "question_string": question,
+            "gold_sparql": row.get("sparql_query", ""),
+            "generated_sparql": gen_query,
+            "error": ""
+        })
+        print(f"\nProcessed question_id={qid}")
+        print(f"\nGenerated SPARQL:\n{gen_query}")
+        # print(f"\nGold SPARQL:\n{row.get('sparql_query', '')}")
+        print("-------------------------------------------------------------------------------")
+
+    pd.DataFrame(rows)[[
+        "question_id",
+        "question_string",
+        "gold_sparql",
+        "generated_sparql",
+        "error"
+    ]].to_csv(args.output_csv, index=False)
+    print(f"Wrote results to {args.output_csv}")

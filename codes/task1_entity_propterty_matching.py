@@ -20,8 +20,8 @@ from sentence_transformers import SentenceTransformer, util
 # File paths for caching
 ENTITY_EMBEDDINGS_PATH = "entity_embeddings.npy"
 PROPERTY_EMBEDDINGS_PATH = "property_embeddings.npy"
-CANDIDATE_ENTITIES_PATH = "/Users/sherrypan/GitHub/GAR_SKGQA/datasets/sciqa/project_data/entity_labels.csv"
-CANDIDATE_PROPERTIES_PATH = "/Users/sherrypan/GitHub/GAR_SKGQA/datasets/sciqa/project_data/property_labels.csv"
+CANDIDATE_ENTITIES_PATH = "/Users/sherrypan/GitHub/GAR_SKGQA/datasets/sciqa/project_data/orkg_entity_labels.csv"
+CANDIDATE_PROPERTIES_PATH = "/Users/sherrypan/GitHub/GAR_SKGQA/datasets/sciqa/project_data/sciqa_predicate_labels.csv"
 
 # Load the model only once
 model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")

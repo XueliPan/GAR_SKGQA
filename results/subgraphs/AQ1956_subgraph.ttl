@@ -1,0 +1,16 @@
+@prefix ns1: <http://orkg.org/orkg/predicate/SCHEMAORG:> .
+@prefix orkgp: <http://orkg.org/orkg/predicate/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://orkg.org/orkg/resource/R206389> orkgp:P1004 <http://orkg.org/orkg/resource/R225027> .
+
+<http://orkg.org/orkg/resource/R225017> orkgp:HAS_MODEL <http://orkg.org/orkg/resource/R225027> .
+
+<http://orkg.org/orkg/resource/R225018> orkgp:HAS_MODEL <http://orkg.org/orkg/resource/R225027> .
+
+<http://orkg.org/orkg/resource/R225027> a <http://orkg.org/orkg/class/Model>,
+        <http://orkg.org/orkg/class/Resource> ;
+    rdfs:label "CATTS-XSUM"^^xsd:string ;
+    ns1:alternateName "Controlled Abstraction for TLDRs with Title Scaffolding with XSUM weights"^^xsd:string .
+

@@ -1,0 +1,11 @@
+@prefix orkgp: <http://orkg.org/orkg/predicate/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://orkg.org/orkg/resource/R46354> orkgp:P23049 <http://orkg.org/orkg/resource/R46355> .
+
+<http://orkg.org/orkg/resource/R46355> a <http://orkg.org/orkg/class/Resource> ;
+    rdfs:label "models"^^xsd:string ;
+    orkgp:P25041 <http://orkg.org/orkg/resource/R46356>,
+        <http://orkg.org/orkg/resource/R46357> .
+
