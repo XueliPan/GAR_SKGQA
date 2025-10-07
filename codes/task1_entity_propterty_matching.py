@@ -83,13 +83,31 @@ def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
 
 # Existing functions (unmodified)
 def get_response(client, prompt, instruction):
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        config=types.GenerateContentConfig(
-            system_instruction=instruction),
-        contents=prompt
-    )
-    return response.text
+    overload_markers = [
+        "503",
+        "UNAVAILABLE",
+        "overloaded",
+        "The model is overloaded",
+        "Rate limit",
+        "try again later",
+    ]
+
+    while True:
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-pro",
+                config=types.GenerateContentConfig(
+                    system_instruction=instruction),
+                contents=prompt
+            )
+            return response.text
+        except Exception as e:
+            msg = str(e)
+            if any(m in msg for m in overload_markers):
+                print("Gemini overloaded or temporarily unavailable. Waiting 30s before retry...")
+                time.sleep(30)
+                continue
+            raise
 
 class ExtractionResult(BaseModel):
     Entities: List[str]
@@ -211,9 +229,9 @@ def main(input_question):
     load_dotenv()
     client = genai.Client()
     instruction = """
-        You are an expert in entity recognition and predicate extraction. 
+        You are an expert in entity recognition and predicate extraction for scholarly data mining. 
         You will be given a question and you need to identify and extract all the entities and predicates mentioned in the question. 
-        Entities could be names of datasets, models, methods, benchmarks, etc.
+        Entities could be the specific names of papers, authors, datasets, models, methods, benchmarks, etc in research papers. Not general terms such as ID, title, study, paper, model, dataset etc.
         Predicates are the relationships or attributes associated with these entities.
         Your response must be a single, raw JSON string. Do not include any text before or after the JSON.  
 

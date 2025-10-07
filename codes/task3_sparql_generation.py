@@ -1,6 +1,6 @@
 import os
 import argparse
-from typing import Optional
+from typing import Optional, Dict, Tuple
 import pandas as pd
 from google import genai
 from dotenv import load_dotenv
@@ -75,28 +75,33 @@ SPARQL:
 ### Role
 You are an expert SPARQL generator for the ORKG (Open Research Knowledge Graph).
 
-### ORKG Prefixes (Required)
-{PREFIXES}
-
-### Subgraph (Required, Turtle)
-{subgraph_turtle.strip()}
+### Instructions
+Given an input Question and a Subgraph in Turtle format, your task is to generate a SPARQL query that can be executed against the ORKG SPARQL endpoint to retrieve the answer. Use the provided prefixes and ensure the query is syntactically correct and semantically aligned with the question.
+The output must:
+- Don't include all necessary PREFIX declarations in the output, as they are already provided above.
+- Be a single SPARQL query only, with no extra commentary
+- Don't use any comments in the SPARQL
 
 ### Question (Required)
 {target_question}
+
+### ORKG Prefixes (Required)
+{PREFIXES}
+
+{subgraph_turtle.strip()}
 
 {example_block}
 
 {ontology_block}
 
-### Instructions
-Produce a single SPARQL query that answers the Question using the provided Subgraph and honoring ORKG schema (as implied by prefixes). The output must:
-- Don't include all necessary PREFIX declarations in the output, as they are already provided above.
-- Be a single SPARQL query only, with no extra commentary
-- Don't use any comments in the SPARQL
+
 """.strip()
 
     try:
         client = genai.Client()
+        print(f"\n####################################")
+        print(f"Full prompt:\n{FULL_PROMPT}")
+        print(f"\n####################################")
         response = client.models.generate_content(
             model='gemini-2.5-pro',
             contents=FULL_PROMPT,
@@ -113,8 +118,7 @@ if __name__ == '__main__':
     parser.add_argument("--input_csv", required=True, help="CSV with columns: question_id,question_string,sparql_query")
     parser.add_argument("--subgraph_dir", required=True, help="Directory containing per-question subgraphs named <question_id>_subgraph.ttl")
     parser.add_argument("--output_csv", required=True, help="Where to write sparql generation results CSV")
-    parser.add_argument("--example_question", default=None, help="Optional one-shot example question")
-    parser.add_argument("--example_sparql", default=None, help="Optional one-shot example SPARQL")
+    parser.add_argument("--one_shot_csv", default=None, help="CSV with columns: id,test_question,test_query,best_train_question,best_train_query for per-question examples")
     parser.add_argument("--ontology_turtle_path", default=None, help="Optional path to ontology Turtle file")
     args = parser.parse_args()
 
@@ -132,6 +136,24 @@ if __name__ == '__main__':
     missing = required_cols - set(df.columns)
     if missing:
         raise ValueError(f"Missing required columns in {args.input_csv}: {sorted(list(missing))}")
+
+    # Load one-shot mapping if provided
+    one_shot_map: Dict[str, Tuple[Optional[str], Optional[str]]] = {}
+    if args.one_shot_csv and os.path.exists(args.one_shot_csv):
+        os_df = pd.read_csv(args.one_shot_csv)
+        os_required = {"id", "test_question", "test_query", "best_train_question", "best_train_query"}
+        os_missing = os_required - set(os_df.columns)
+        if os_missing:
+            raise ValueError(f"Missing required columns in {args.one_shot_csv}: {sorted(list(os_missing))}")
+        # Build map from id (as string) to tuple(example_question, example_query)
+        for _, r in os_df.iterrows():
+            qid_key = str(r["id"]) if not pd.isna(r["id"]) else None
+            if qid_key is None:
+                continue
+            one_shot_map[qid_key] = (
+                None if pd.isna(r["best_train_question"]) else str(r["best_train_question"]),
+                None if pd.isna(r["best_train_query"]) else str(r["best_train_query"]),
+            )
 
     rows = []
     for _, row in df.iterrows():
@@ -153,11 +175,19 @@ if __name__ == '__main__':
         with open(subgraph_path, 'r', encoding='utf-8') as f:
             subgraph_ttl = f.read()
 
+        # Determine per-question example if available; otherwise none
+        per_example_question = None
+        per_example_sparql = None
+        if qid in one_shot_map:
+            ex_q, ex_s = one_shot_map[qid]
+            per_example_question = ex_q
+            per_example_sparql = ex_s
+
         gen_query = generate_orkg_sparql(
             target_question=question,
             subgraph_turtle=subgraph_ttl,
-            example_question=args.example_question,
-            example_sparql=args.example_sparql,
+            example_question=per_example_question,
+            example_sparql=per_example_sparql,
             ontology_turtle=ontology_turtle,
         )
 

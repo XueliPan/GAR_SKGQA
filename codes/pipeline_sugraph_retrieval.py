@@ -7,6 +7,7 @@ from rdflib import Graph, Namespace
 
 # Local imports
 from task1_entity_propterty_matching import main as task1_main
+from task1_huggingface import main as task1_main_huggingface
 from task2_subgraph_extraction import extract_n_hop_rdflib
 
 
@@ -70,6 +71,9 @@ def run_pipeline(question: str,
     label_df = load_label_to_iri_map(entity_label_csv)
     seed_iris = labels_to_iris(candidate_labels, label_df, max_entities=topk_entities)
 
+    print(f"Candidate labels from task1: {candidate_labels}")
+    print(f"Mapped seed IRIs: {seed_iris}")
+
     # Step 3: subgraph extraction
     g = Graph()
     # Format inferred by extension: .nt for N-Triples
@@ -77,6 +81,7 @@ def run_pipeline(question: str,
 
     merged = Graph()
     for iri in seed_iris:
+        print(f"Extracting {hops}-hop subgraph around seed IRI: {iri}")
         sub = extract_n_hop_rdflib(g, iri, n=hops, direction=direction, include_literals=include_literals)
         for t in sub:
             merged.add(t)
@@ -160,8 +165,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--include_literals", type=str.lower, choices=["true", "false"], default="true", help="Include literal objects in subgraph (true/false)")
     parser.add_argument("--topk_candidates", type=int, default=1, help="Top-k candidates per source to take from task1 results")
     parser.add_argument("--topk_entities", type=int, default=1, help="Top entities to use as seeds")
-    parser.add_argument("--output_dir", default="/Users/sherrypan/GitHub/GAR_SKGQA/results/subgraphs", help="Directory for per-question TTL outputs")
-    parser.add_argument("--summary_csv", default="/Users/sherrypan/GitHub/GAR_SKGQA/results/pipeline_summary.csv", help="Path to write pipeline summary CSV")
+    parser.add_argument("--output_dir", default="/Users/sherrypan/GitHub/GAR_SKGQA/results/subgraphs/hop1_entity_only", help="Directory for per-question TTL outputs")
+    parser.add_argument("--summary_csv", default="/Users/sherrypan/GitHub/GAR_SKGQA/results/subgraphs/subgraph_summary_hop1_entity_only.csv", help="Path to write pipeline summary CSV")
     return parser
 
 
