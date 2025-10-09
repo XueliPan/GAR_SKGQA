@@ -197,7 +197,8 @@ def main(input_question):
         print(f"Current CUDA device: {torch.cuda.current_device()}")
         print(f"CUDA device name: {torch.cuda.get_device_name()}")
     
-    model_id="meta-llama/Meta-Llama-3.1-8B-Instruct"
+    # model_id="meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_id = "databricks/dolly-v2-3b"
     instruction = """
         You are an expert in entity recognition and predicate extraction for scholarly data mining. 
         You will be given a question and you need to identify and extract all the entities and predicates mentioned in the question. 

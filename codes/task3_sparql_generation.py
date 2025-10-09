@@ -111,7 +111,8 @@ The output must:
     #     )
     #     return response.text.strip()
     #### use transformers to generate the SPARQL query
-    model_id = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    # model_id = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+    model_id = "databricks/dolly-v2-3b"
     try:
         pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map="auto")
         message = [
