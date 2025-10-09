@@ -341,7 +341,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--include_literals", type=str.lower, choices=["true", "false"], default="true", help="Include literal objects in subgraph (true/false)")
     parser.add_argument("--topk_candidates", type=int, default=1, help="Top-k candidates per source to take from task1 results")
     parser.add_argument("--topk_entities", type=int, default=1, help="Top entities to use as seeds")
-    parser.add_argument("--output_dir", default="results/sparql_generation", help="Directory for per-question TTL outputs")
+    parser.add_argument("--output_dir", default="results/subgraphs", help="Directory for per-question TTL outputs")
     parser.add_argument("--summary_csv", default="results/sparql_generation_summary.csv", help="Path to write pipeline summary CSV")
     parser.add_argument("--one_shot_csv", default=None, help="CSV with columns: id,test_question,test_query,best_train_question,best_train_query for per-question examples")
     parser.add_argument("--ontology_turtle_path", default=None, help="Optional path to ontology Turtle file")
