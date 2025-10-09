@@ -1,0 +1,214 @@
+question_id,question_string,sparql_query
+HQ0038,What is the mean capacity of a carbon-based fuel?,"SELECT (AVG(?numerical_capacity) AS ?mean) 
+WHERE {
+  ?paper a orkgc:Paper;
+         orkgp:P31 [
+           orkgp:P15483 ?capacity
+         ];
+         rdfs:label ?title.
+  BIND(
+    xsd:double(
+      REPLACE(
+        STR(
+          REPLACE(
+            ?capacity,
+            ""([0-9]+),([0-9]+)"",
+            ""$1$2""
+          )
+        ),
+        ""([0-9]+).*"",
+        ""$1""
+      ) 
+    ) AS ?numerical_capacity
+  )
+  FILTER(REGEX(STR(?title), ""(fuel|CO2)""))
+}"
+HQ0003,What is the most common Knowledge representation method?,"SELECT (COUNT(?repr) AS ?cnt) ?repr
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7046 ?sys.
+  ?sys orkgp:P7056 ?repr.
+}
+GROUP BY ?repr
+ORDER BY DESC(?cnt)
+LIMIT 1"
+HQ0057,Where can all the data sets used in the compared studies be found?,"SELECT DISTINCT ?URL
+WHERE {
+  orkgr:R112387 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:HAS_DATASET ?URL.
+  FILTER(!REGEX(?URL, ""Not""))
+}"
+HQ0081,What quantity of iron oxide was discovered on Elorza crater?,"SELECT ?properties_values, ?property_description
+WHERE {
+  ?papers rdf:type orkgc:Paper.
+  ?papers rdfs:label ?papers_labels.
+  FILTER(REGEX(?papers_labels, ""Elorza crater"", ""i""))
+  ?papers orkgp:P31 ?contrib.
+  ?contrib ?properties ?properties_values.
+  ?properties rdfs:label ?properties_labels.
+  FILTER(REGEX(?properties_labels, ""FeO""))
+  ?properties orkgp:description ?property_description.
+}"
+HQ0097,What types of nanocarriers do have therapeutic effect?,"SELECT ?types_of_nanocarriers, ?types_of_nanocarriers_labels
+WHERE {
+  orkgr:R144364 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41740 ?types_of_nanocarriers.
+  ?contrib orkgp:P41743 ?therapeutic_effect.
+  FILTER(?therapeutic_effect = ""T""^^xsd:string)
+  ?types_of_nanocarriers rdfs:label ?types_of_nanocarriers_labels.
+}"
+HQ0043,Which are 3 the most common variables for the atmosphere models?,"SELECT ?variables
+WHERE {
+  orkgr:R68871 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P7144 ?models.
+  ?models rdfs:label ?models_labels.
+  FILTER(REGEX(?models_labels, ""tmospher""))
+  ?models orkgp:P26032 ?variables.
+}
+ORDER BY DESC(COUNT(?variables))
+LIMIT 3"
+HQ0091,What is Raman spectroscopy?,"SELECT ?definitions
+WHERE {
+  ?terms orkgp:P24009 ?definitions.
+  ?terms rdfs:label ?terms_labels.
+  FILTER(REGEX(?terms_labels, ""Raman spectroscopy""))
+}"
+HQ0085,What data format does CHEMDNER corpus have?,"SELECT ?data_format, ?data_format_label
+WHERE {
+  orkgr:R150596 orkgp:P31 ?contrib.
+  ?contrib orkgp:P42011 ?data_format.
+  ?data_format rdfs:label ?data_format_label.
+}"
+HQ0078,Where did the study with maximal geographic scale take place?,"SELECT ?location, ?location_label
+WHERE {
+  {
+    SELECT (MAX(?geo_scale) AS ?max_geo_scale)
+    WHERE {
+      orkgr:R149849 orkgp:compareContribution ?contrib.
+      ?contrib orkgp:P41568 ?geo_scale.
+    }
+  }
+  orkgr:R149849 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41568 ?geo_scale;
+           orkgp:P37524 ?location.
+  ?location rdfs:label ?location_label.
+  FILTER(?geo_scale = ?max_geo_scale)
+}"
+HQ0022,"Does paper ""Disambiguating authors in citations on the web and authorship correlations"" employe Cosine similarity?","ASK
+WHERE {
+  orkgr:R6187 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?paper_title.
+  ?cont orkgp:P5002 orkgr:R6006.
+  FILTER(REGEX(STR(?paper_title), ""Disambiguating authors in citations on the web and authorship correlations"", ""i""))
+}"
+HQ0026,Which QA benchmarks incorporating more than 10000 questions?,"SELECT ?papers, ?papers_labels
+WHERE {
+  ?papers rdf:type orkgc:Paper;
+          orkgp:P31 ?contrib;
+          rdfs:label ?papers_labels.
+  ?contrib orkgp:P41923 ?questions_number_str.
+  BIND(REPLACE(?questions_number_str, ""[+]"", """") AS ?questions_number_preprocessed)
+  BIND(xsd:integer(REPLACE(?questions_number_preprocessed, """","""", """")) AS ?questions_number)
+  FILTER(?questions_number > 10000)
+}"
+HQ0099,For what piezoresistive material the least response time was obtained?,"SELECT ?piezoresistive_materials WHERE {
+  orkgr:R138374 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41021 ?piezoresistive_materials.
+  ?contrib orkgp:P41022 ?response_time.
+}
+ORDER BY ASC(?response_time)
+LIMIT 1"
+HQ0037,Who has contributed to the largest number of articles about coronavirus?,"SELECT ?author_name
+WHERE {
+  {
+    SELECT (COUNT(?paper_) as ?max_n_papers)
+    WHERE {
+      ?paper_ a orkgc:Paper;
+      rdfs:label ?title_;
+      orkgp:P27 ?author_.
+      FILTER(REGEX(STR(?title_), ""2019-nCoV""))
+    }
+    GROUP BY ?author_
+    ORDER BY DESC(?max_n_papers)
+    LIMIT 1
+  }
+  ?paper a orkgc:Paper;
+  rdfs:label ?title;
+  orkgp:P27 ?author.
+  OPTIONAL {
+    ?author rdfs:label ?author_label
+  }
+  BIND(IF(BOUND(?author_label), ?author_label, ?author) as ?author_name)
+  FILTER(REGEX(STR(?title), ""2019-nCoV""))
+}
+GROUP BY ?author ?type ?author_name ?max_n_papers
+HAVING(COUNT(?paper) = ?max_n_papers)"
+HQ0031,What coolant does ASTRID reactor use?,"SELECT ?coolant ?coolant_label
+WHERE {
+  ?ASTRID_reactor ?rdfs_label ""ASTRID""^^xsd:string.
+  ?contrib ?reactor_predicate ?ASTRID_reactor.
+  ?contrib ?predicates ?coolant.
+  ?predicates rdfs:label ?predicates_label.
+  FILTER(REGEX(?predicates_label, ""coolant""))
+  ?coolant rdfs:label ?coolant_label.
+}"
+HQ0032,What is the most common lead compound?,"SELECT ?compound
+WHERE {
+  orkgr:R75638 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P35194 ?compound.
+}
+ORDER BY DESC(COUNT(?compound))
+LIMIT 1"
+HQ0084,What is the emergency type of AMBER Alert?,"SELECT DISTINCT ?emergency_type
+WHERE {
+  orkgr:R153500 orkgp:P31 ?contrib.
+  ?contrib orkgp:P43093 ?emergency_type.
+}"
+HQ0017,What is the most common location in the studies?,"SELECT ?locations
+WHERE {
+  orkgr:R111045 orkgp:compareContribution ?cont.
+  ?cont orkgp:P37537 ?locations.
+}
+ORDER BY DESC(COUNT(?locations))
+LIMIT 1"
+HQ0027,For which country of study overall prevalence of epilepsy is the highest?,"SELECT ?country, ?country_label
+WHERE {
+  orkgr:R75729 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15512 ?country.
+  ?contrib orkgp:P16013 ?overall_prevalence.
+  ?country rdfs:label ?country_label.
+  ?overall_prevalence rdfs:label ?overall_prevalence_value
+}
+ORDER BY DESC(?overall_prevalence_value)
+LIMIT 1"
+HQ0046,Are children examined in the studies?,"ASK {
+  orkgr:R44979 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P23161 ?population.
+  FILTER(REGEX(?population, ""ildren""))
+}"
+HQ0068,Which sectors are modeled as energy sectors and how often?,"SELECT ?label COUNT(?label)
+WHERE {
+  ?sector rdfs:label ?label;
+          a ?class.
+  ?class owl:equivalentClass <http://openenergy-platform.org/ontology/oeo/OEO_00000367>.
+  [
+    orkgp:P37668 ?sector
+  ].
+}"
+HQ0058,"What are the precision, recall, and f1 values of all compared studies that used the algorithm naive bayes in combination with the machine learning feature bag of words to classfy user feedback as feature request? ","SELECT ?precision ?recall ?f1
+WHERE {
+  orkgr:R112387 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15006 ?algorithms.
+  ?algorithms rdfs:label ?alg_names.
+  FILTER(REGEX(?alg_names, ""Naive bayes""))
+  ?algorithms orkgp:P36075 ?features.
+  ?features rdfs:label ?fea_names.
+  FILTER(REGEX(?fea_names, ""Bag of words""))
+  ?features orkgp:P37029 ?categories.
+  ?categories rdfs:label ?cat_names.
+  FILTER(REGEX(?cat_names, ""Feature request""))
+  ?categories orkgp:P3004 ?precision;
+              orkgp:P5015 ?recall;
+              orkgp:P18037 ?f1.
+}"

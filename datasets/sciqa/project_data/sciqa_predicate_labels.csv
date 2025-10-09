@@ -1,0 +1,118 @@
+predicate,label
+orkgp:HAS_DATASET,has dataset
+orkgp:HAS_BENCHMARK,has benchmark
+orkgp:HAS_MODEL,has model
+orkgp:HAS_EVALUATION,evaluation
+orkgp:HAS_METRIC,metric
+orkgp:HAS_VALUE,value
+orkgp:HAS_SOURCE_CODE,has source code
+orkgp:P31,contribution
+orkgp:P32,research problem
+orkgp:compareContribution,compare contribution
+orkgp:P30,research field
+orkgp:P43135,Has energy sources
+orkgp:P27,author
+orkgp:P37586,hasFactsAbout
+orkgp:P29,publication year
+orkgp:P7046,Semantic representation
+orkgp:P34,evaluation
+orkgp:P43134,Has electricity generation
+orkgp:P43133,Has installed capacity
+orkgp:P5015,Recall
+orkgp:P7034,Ontology
+orkgp:P37675,is used in study
+orkgp:P5003,Performance metric
+orkgp:P3004,Precision
+orkgp:P7035,Full name
+orkgp:P41923,Amount of Questions
+orkgp:P28,publication month
+orkgp:P37668,models energy sector
+orkgp:P41568,Geographic scale (Km²)
+orkgp:P39010,HasOpenness
+orkgp:P4077,source code
+orkgp:P7055,Data type
+orkgp:P7047,Scope
+orkgp:P7056,Knowledge representation
+orkgp:P7049,Acquisition
+orkgp:P5008,Graph
+orkgp:P2005,dataset
+orkgp:P5025,Filter
+orkgp:P15,implementation
+orkgp:P5043,Approach type
+orkgp:P2006,metric
+orkgp:P15687,Sample size (n)
+orkgp:P37557,Major reactant
+orkgp:P37537,Location
+orkgp:HAS_METHOD,method
+orkgp:P23031,has software
+orkgp:P7038,Class count
+orkgp:P7042,IRI
+orkgp:P5002,uses similarity
+orkgp:P5004,Evidence
+orkgp:P5006,Limitations
+orkgp:P7009,Supports RDF
+orkgp:P15512,Country of study
+orkgp:P16013,Overall
+orkgp:P36089,Indicator for well-being
+orkgp:P9040,Study date
+orkgp:P34037,has toxin
+orkgp:P35194,Lead compound
+orkgp:P37530,Has frequency (%)
+orkgp:P37528,Risk factors for OSA
+orkgp:P37458,Major anion
+orkgp:P37663,has source of funding
+orkgp:P15483,Capacity (MWth)
+orkgp:P5049,location
+orkgp:P37571,non wheat flour
+orkgp:P7144,Earth System Model
+orkgp:P26032,Has prognostic atmosphere model variable
+orkgp:P31024,Number of species
+orkgp:P15249,Country
+orkgp:P23169,N
+orkgp:P23161,"Population/Procedure, Sample size"
+orkgp:P23140,Basic reproduction number
+orkgp:P23154,% Female
+orkgp:P15006,Machine learning algorithms
+orkgp:P36075,Machine learning feature
+orkgp:P37029,Classification category
+orkgp:P18037,F1
+orkgp:P36,has subfield
+orkgp:P35147,Compound of interest
+orkgp:P35148,Vegetable source
+orkgp:P15051,Objective
+orkgp:P15661,Functional specification
+orkgp:P15585,Number of patients studied
+orkgp:P15692,Egg mass (g)
+orkgp:P15090,substrate
+orkgp:P35205,Time frame
+orkgp:P37581,hasScenario
+orkgp:P43138,hasGoal
+orkgp:P43139,has time frame
+orkgp:P41068,Total sampling stations
+orkgp:P27029,Region of data collection
+orkgp:P37041,Study Area
+orkgp:P37578,Uses drug
+orkgp:P41379,Open ocean sampling
+orkgp:P43149,Product
+orkgp:P43148,Conversion
+orkgp:P43156,Efficiency
+orkgp:P41006,Preprocessing
+orkgp:P43095,Type of Biosensor
+orkgp:P37524,Study Location
+orkgp:P43146,simulates
+orkgp:P37583,hasEmpricialData
+orkgp:P37343,Has type
+orkgp:P4059,Has url
+orkgp:description,description
+orkgp:SAME_AS,same as
+orkgp:P43093,Emergency Type
+orkgp:P42011,Data formats
+orkgp:P41242,Museum involved
+orkgp:P24009,Has definition
+orkgp:P5038,Aggregation
+orkgp:P41740,Type of nanocarrier
+orkgp:P41743,Therapeutic effects of the carrier
+orkgp:P41333,Integrity constraints
+orkgp:P41021,Piezoresistive Material
+orkgp:P41022,Response time (ms)
+orkgp:P37560,Reaction yield (%)
