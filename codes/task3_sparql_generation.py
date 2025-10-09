@@ -5,6 +5,8 @@ import pandas as pd
 from google import genai
 from dotenv import load_dotenv
 from google.genai import types
+from transformers import pipeline
+import torch
 from helper import orkg_prefixes
 
 
@@ -96,18 +98,29 @@ The output must:
 
 
 """.strip()
-
+    #### use google gemini to generate the SPARQL query
+    # try:
+    #     client = genai.Client()
+    #     print(f"\n####################################")
+    #     print(f"Full prompt:\n{FULL_PROMPT}")
+    #     print(f"\n####################################")
+    #     response = client.models.generate_content(
+    #         model='gemini-2.5-flash',
+    #         contents=FULL_PROMPT,
+    #         config=types.GenerateContentConfig(temperature=0.1)
+    #     )
+    #     return response.text.strip()
+    #### use transformers to generate the SPARQL query
+    model_id = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     try:
-        client = genai.Client()
-        print(f"\n####################################")
-        print(f"Full prompt:\n{FULL_PROMPT}")
-        print(f"\n####################################")
-        response = client.models.generate_content(
-            model='gemini-2.5-pro',
-            contents=FULL_PROMPT,
-            config=types.GenerateContentConfig(temperature=0.1)
-        )
-        return response.text.strip()
+        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map="auto")
+        message = [
+            {"role": "user", "content": FULL_PROMPT}
+        ]
+        response = pipe(message, max_new_tokens=512)
+        print(f"response for the sparql generation: {response}")
+        return response[0]['generated_text'][-1]['content'].strip()
+
     except Exception as e:
         return f"An error occurred (check API key and internet connection): {e}"
 
@@ -125,6 +138,8 @@ if __name__ == '__main__':
     load_dotenv()
     if not os.getenv('GEMINI_API_KEY'):
         raise RuntimeError("Please set the 'GEMINI_API_KEY' environment variable.")
+    if not os.getenv('OPENAI_API_KEY'):
+        raise RuntimeError("Please set the 'OPENAI_API_KEY' environment variable.")
 
     ontology_turtle = None
     if args.ontology_turtle_path and os.path.exists(args.ontology_turtle_path):

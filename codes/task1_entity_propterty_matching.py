@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 import numpy as np
 import os
 from sentence_transformers import SentenceTransformer, util
+from transformers import pipeline
+import torch
 
 # --- New Caching Section ---
 # Pre-computation and storage of candidate embeddings
@@ -25,24 +27,6 @@ CANDIDATE_PROPERTIES_PATH = "/Users/sherrypan/GitHub/GAR_SKGQA/datasets/sciqa/pr
 
 # Load the model only once
 model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
-
-# def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
-#     """Loads embeddings from cache or computes and saves them."""
-#     if os.path.exists(embeddings_path):
-#         print(f"Loading embeddings from cache: {embeddings_path}")
-#         df = pd.read_csv(csv_path)
-#         # print(df.head())
-#         candidates = df["label"].tolist()
-#         embeddings = np.load(embeddings_path)
-#         return candidates, embeddings
-#     else:
-#         print(f"Cache not found. Computing and saving embeddings to {embeddings_path}")
-#         df = pd.read_csv(csv_path)
-#         # print(df.head())
-#         candidates = df["label"].tolist()
-#         embeddings = model.encode(candidates, convert_to_numpy=True)
-#         np.save(embeddings_path, embeddings)
-#         return candidates, embeddings
 
 def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
     """Loads embeddings from cache or computes and saves them.
@@ -81,8 +65,8 @@ def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
 
 # --- End of New Caching Section ---
 
-# Existing functions (unmodified)
-def get_response(client, prompt, instruction):
+### get response from gemini api with retry on overload
+def get_response_google(prompt, instruction, model_id):
     overload_markers = [
         "503",
         "UNAVAILABLE",
@@ -94,8 +78,9 @@ def get_response(client, prompt, instruction):
 
     while True:
         try:
+            client = genai.Client()
             response = client.models.generate_content(
-                model="gemini-2.5-pro",
+                model=model_id,
                 config=types.GenerateContentConfig(
                     system_instruction=instruction),
                 contents=prompt
@@ -109,6 +94,20 @@ def get_response(client, prompt, instruction):
                 continue
             raise
 
+#### get response from transformers pipeline
+def get_response(prompt, instruction, model_id):
+    try:
+        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map="auto")
+        message = [
+            {"role": "system", "content": instruction},
+            {"role": "user", "content": prompt}
+        ]
+        response = pipe(message, max_new_tokens=512)
+        return response[0]['generated_text'][-1]['content'].strip()
+    except Exception as e:
+        print(f"Error generating response: {e}")
+        return ""
+
 class ExtractionResult(BaseModel):
     Entities: List[str]
     Properties: List[str]
@@ -121,52 +120,6 @@ def validate_response(response: str) -> bool:
     except (json.JSONDecodeError, ValidationError):
         return False
 
-# Modified get_top_k_candidates function
-# def get_top_k_candidates(sources:list, candidates:list, candidate_embeddings: np.ndarray, top_k=3) -> pd.DataFrame:
-#     """
-#     Match source entities/properties to top-k similar candidates using pre-computed embeddings.
-#     sources: list of source entity/property strings
-#     candidates: list of candidate entity/property strings
-#     candidate_embeddings: pre-computed embeddings for candidates
-#     top_k: number of top matches to return
-#     Returns a DataFrame with columns: source_entity_property, candidate_entity_property, similarity_score
-#     """
-#     if not sources:
-#         return pd.DataFrame({
-#             "source_entity_property": [],
-#             "candidate_entity_property": [],
-#             "similarity_score": []
-#         })
-
-#     # Encode the new source queries only
-#     sources = [str(s) for s in sources if s is not None and str(s).strip() != ""]
-#     source_embeddings = model.encode(sources, prompt_name="query", convert_to_numpy=True)
-
-#     # Compute the (cosine) similarity
-#     similarity = model.similarity(source_embeddings, candidate_embeddings)
-#     # similarity = torch.tensor(similarity)
-#     similarity.clone().detach()
-#     similarity.clone().detach().requires_grad_(True)
-    
-#     values, indices = torch.topk(similarity, k=top_k, dim=1)
-    
-#     top_candidates = []
-#     top_scores = []
-#     top_sources = []
-#     for i, source_property in enumerate(sources):
-#         for j in range(top_k):
-#             candidate_property = candidates[indices[i][j]]
-#             sim_score = values[i][j].item()
-#             top_candidates.append(candidate_property)
-#             top_scores.append(f"{sim_score:.4f}")
-#             top_sources.append(source_property)
-
-#     top_df = pd.DataFrame({
-#         "source_entity_property": top_sources,
-#         "candidate_entity_property": top_candidates,
-#         "similarity_score": top_scores
-#     })
-#     return top_df
 
 def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: np.ndarray, top_k=3) -> pd.DataFrame:
     """
@@ -227,7 +180,7 @@ def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: 
 def main(input_question):
     # Load genai API key from .env file
     load_dotenv()
-    client = genai.Client()
+    model_id="meta-llama/Meta-Llama-3.1-8B-Instruct"
     instruction = """
         You are an expert in entity recognition and predicate extraction for scholarly data mining. 
         You will be given a question and you need to identify and extract all the entities and predicates mentioned in the question. 
@@ -245,7 +198,7 @@ def main(input_question):
         If no entities or predicates are found, please return empty lists within the JSON object.
         Do not wrap the JSON in any markdown code block, such as ```json or ```.
         """
-    response = get_response(client, input_question, instruction)
+    response = get_response(input_question, instruction,model_id)
     print(f"Raw LLM output:\n{response}\n")
     # print("Is response valid?", validate_response(response))
 

@@ -4,3 +4,11 @@
 *.npy
 property_embeddings.npy
 entity_embeddings.npy
+entity_embeddings.npy
+property_embeddings.npy
+/results/subgraphs
+/results/subgraphs
+/results/sparql_generation
+/results
+entity_embeddings.npy
+property_embeddings.npy
