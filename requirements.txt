@@ -2,7 +2,6 @@
 # $ conda create --name <env> --file <this file>
 # platform: osx-arm64
 # created-by: conda 25.1.1
-_python_abi3_support==1.0
 accelerate==1.10.1
 annotated-types==0.7.0
 anyio==4.10.0
