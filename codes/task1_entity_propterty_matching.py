@@ -97,7 +97,15 @@ def get_response_google(prompt, instruction, model_id):
 #### get response from transformers pipeline
 def get_response(prompt, instruction, model_id):
     try:
-        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map="auto")
+        # Check if CUDA is available and use appropriate device configuration
+        if torch.cuda.is_available():
+            print(f"CUDA is available. Using GPU with {torch.cuda.device_count()} device(s)")
+            device_map = "auto"  # Let transformers automatically handle GPU allocation
+        else:
+            print("CUDA is not available. Using CPU")
+            device_map = None
+        
+        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map=device_map)
         message = [
             {"role": "system", "content": instruction},
             {"role": "user", "content": prompt}
@@ -180,6 +188,15 @@ def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: 
 def main(input_question):
     # Load genai API key from .env file
     load_dotenv()
+    
+    # Print device information for debugging
+    print(f"PyTorch version: {torch.__version__}")
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"CUDA device count: {torch.cuda.device_count()}")
+        print(f"Current CUDA device: {torch.cuda.current_device()}")
+        print(f"CUDA device name: {torch.cuda.get_device_name()}")
+    
     model_id="meta-llama/Meta-Llama-3.1-8B-Instruct"
     instruction = """
         You are an expert in entity recognition and predicate extraction for scholarly data mining. 

@@ -12,7 +12,6 @@ numpy==2.3.3
 pandas==2.3.2
 pip==25.2
 pydantic==2.11.9
-python==3.13.7
 rdflib==7.1.4
 regex==2025.9.1
 requests==2.32.5

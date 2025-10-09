@@ -10,7 +10,6 @@
 
 # Load the required modules
 module load 2023
-module load python/3.10
 module load Python/3.11.3-GCCcore-12.3.0 CUDA/12.1.1
 
 # Activate virtual environment 
@@ -18,6 +17,12 @@ source ~/graphrag/bin/activate
 
 # Navigate to the project directory
 cd GAR_SKGQA/
+
+# Debug GPU availability
+echo "=== GPU Debug Information ==="
+nvidia-smi
+echo "CUDA_VISIBLE_DEVICES: $CUDA_VISIBLE_DEVICES"
+echo "============================="
 
 # Run your Python script
 python codes/pipeline_sparql_generation.py \
