@@ -2,12 +2,22 @@ import os
 import argparse
 from typing import Optional, Dict, Tuple
 import pandas as pd
-from google import genai
 from dotenv import load_dotenv
-from google.genai import types
-from transformers import pipeline
 import torch
 from helper import orkg_prefixes
+
+# Optional imports guarded at runtime
+try:
+    from google import genai  # type: ignore
+    from google.genai import types  # type: ignore
+except Exception:  # pragma: no cover
+    genai = None
+    types = None
+
+try:
+    from transformers import pipeline  # type: ignore
+except Exception:  # pragma: no cover
+    pipeline = None
 
 
 def _strip_markdown_fences(text: str) -> str:
@@ -29,12 +39,70 @@ def _strip_markdown_fences(text: str) -> str:
     return s
 
 
+def _build_prompt(
+    target_question: str,
+    subgraph_turtle: str,
+    example_question: Optional[str] = None,
+    example_sparql: Optional[str] = None,
+    ontology_turtle: Optional[str] = None,
+) -> str:
+    """
+    Build the final prompt for SPARQL generation with required and optional blocks.
+    """
+    prefixes = orkg_prefixes().strip()
+
+    example_block = ""
+    if example_question and example_sparql:
+        example_block = f"""
+            ### Example (Optional One-Shot)
+            Question: {example_question}
+            SPARQL:
+            {example_sparql.strip()}
+            """.strip()
+
+    ontology_block = ""
+    if ontology_turtle:
+        ontology_block = f"""
+            ### Ontology (Optional, Turtle)
+            {ontology_turtle.strip()}
+            """.strip()
+
+    full_prompt = f"""
+        ### Role
+        You are an expert SPARQL generator for the ORKG (Open Research Knowledge Graph).
+
+        ### Instructions
+        Given an input Question and a Subgraph in Turtle format, your task is to generate a SPARQL query that can be executed against the ORKG SPARQL endpoint to retrieve the answer. Use the provided prefixes and ensure the query is syntactically correct and semantically aligned with the question.
+        The output must:
+        - Don't include all necessary PREFIX declarations in the output, as they are already provided above.
+        - Be a single SPARQL query only, with no extra commentary
+        - Don't use any comments in the SPARQL
+
+        ### Question (Required)
+        {target_question}
+
+        ### ORKG Prefixes (Required)
+        {prefixes}
+
+        {subgraph_turtle.strip()}
+
+        {example_block}
+
+        {ontology_block}
+        """.strip()
+
+    return full_prompt
+
+
 def generate_orkg_sparql(
     target_question: str,
     subgraph_turtle: str,
     example_question: Optional[str] = None,
     example_sparql: Optional[str] = None,
     ontology_turtle: Optional[str] = None,
+    backend: str = "google",
+    model: Optional[str] = None,
+    temperature: float = 0.1,
 ) -> str:
     """
     Generate a SPARQL query for ORKG using Gemini with a modular prompt that includes:
@@ -52,78 +120,51 @@ def generate_orkg_sparql(
         The generated SPARQL query string.
     """
 
-    # Required ORKG prefixes
-    PREFIXES = orkg_prefixes().strip()
+    prompt = _build_prompt(
+        target_question=target_question,
+        subgraph_turtle=subgraph_turtle,
+        example_question=example_question,
+        example_sparql=example_sparql,
+        ontology_turtle=ontology_turtle,
+    )
+    print(f"\nFinal SPARQL generation prompt:\n{prompt}\n")
 
-    # Assemble optional sections
-    example_block = ""
-    if example_question and example_sparql:
-        example_block = f"""
-### Example (Optional One-Shot)
-Question: {example_question}
-SPARQL:
-{example_sparql.strip()}
-""".strip()
+    backend = (backend or "google").lower()
 
-    ontology_block = ""
-    if ontology_turtle:
-        ontology_block = f"""
-### Ontology (Optional, Turtle)
-{ontology_turtle.strip()}
-""".strip()
-
-    # Construct final prompt with required and optional sections
-    FULL_PROMPT = f"""
-### Role
-You are an expert SPARQL generator for the ORKG (Open Research Knowledge Graph).
-
-### Instructions
-Given an input Question and a Subgraph in Turtle format, your task is to generate a SPARQL query that can be executed against the ORKG SPARQL endpoint to retrieve the answer. Use the provided prefixes and ensure the query is syntactically correct and semantically aligned with the question.
-The output must:
-- Don't include all necessary PREFIX declarations in the output, as they are already provided above.
-- Be a single SPARQL query only, with no extra commentary
-- Don't use any comments in the SPARQL
-
-### Question (Required)
-{target_question}
-
-### ORKG Prefixes (Required)
-{PREFIXES}
-
-{subgraph_turtle.strip()}
-
-{example_block}
-
-{ontology_block}
-
-
-""".strip()
-    #### use google gemini to generate the SPARQL query
-    # try:
-    #     client = genai.Client()
-    #     print(f"\n####################################")
-    #     print(f"Full prompt:\n{FULL_PROMPT}")
-    #     print(f"\n####################################")
-    #     response = client.models.generate_content(
-    #         model='gemini-2.5-flash',
-    #         contents=FULL_PROMPT,
-    #         config=types.GenerateContentConfig(temperature=0.1)
-    #     )
-    #     return response.text.strip()
-    #### use transformers to generate the SPARQL query
-    # model_id = "meta-llama/Meta-Llama-3.1-8B-Instruct"
-    model_id = "databricks/dolly-v2-3b"
     try:
-        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map="auto")
-        message = [
-            {"role": "user", "content": FULL_PROMPT}
-        ]
-        response = pipe(message, max_new_tokens=512)
-        print(f"response for the sparql generation: {response}")
-        return response[0]['generated_text'][-1]['content'].strip()
+        if backend == "google":
+            if genai is None or types is None:
+                raise RuntimeError("google-genai is not installed. Install google-genai to use backend=google.")
+            client = genai.Client()
+            model_name = model
+            print("\n####################################")
+            print(f"Backend: Google GenAI | Model: {model_name}")
+            print("####################################")
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(temperature=float(temperature))
+            )
+            return response.text.strip()
+
+        elif backend == "transformers":
+            if pipeline is None:
+                raise RuntimeError("transformers is not installed. Install transformers to use backend=transformers.")
+            model_id = model
+            textgen = pipeline("text-generation", model=model_id, dtype=torch.bfloat16, trust_remote_code=True, device_map="auto")
+            outputs = textgen(prompt, max_new_tokens=512, do_sample=False, temperature=float(temperature))
+            # transformers pipelines return a list of dicts with 'generated_text'
+            generated = outputs[0].get("generated_text", "").strip()
+            # Some models echo the prompt; try to extract after the prompt
+            if generated.startswith(prompt):
+                generated = generated[len(prompt):].strip()
+            return generated
+
+        else:
+            raise ValueError(f"Unsupported backend: {backend}. Use 'google' or 'transformers'.")
 
     except Exception as e:
-        return f"An error occurred (check API key and internet connection): {e}"
+        return f"An error occurred during SPARQL generation: {e}"
 
 
 # --- EXAMPLE USAGE ---
@@ -134,13 +175,15 @@ if __name__ == '__main__':
     parser.add_argument("--output_csv", required=True, help="Where to write sparql generation results CSV")
     parser.add_argument("--one_shot_csv", default=None, help="CSV with columns: id,test_question,test_query,best_train_question,best_train_query for per-question examples")
     parser.add_argument("--ontology_turtle_path", default=None, help="Optional path to ontology Turtle file")
+    parser.add_argument("--backend", choices=["google", "transformers"], default=os.getenv("SPARQL_BACKEND", "google"), help="Model backend to use")
+    parser.add_argument("--model", default=None, help="Optional model name/id for the selected backend")
+    parser.add_argument("--temperature", type=float, default=0.1, help="Decoding temperature")
     args = parser.parse_args()
 
     load_dotenv()
-    if not os.getenv('GEMINI_API_KEY'):
-        raise RuntimeError("Please set the 'GEMINI_API_KEY' environment variable.")
-    if not os.getenv('OPENAI_API_KEY'):
-        raise RuntimeError("Please set the 'OPENAI_API_KEY' environment variable.")
+    # Only require keys for the selected backend
+    if args.backend == "google" and not os.getenv('GEMINI_API_KEY'):
+        raise RuntimeError("Please set the 'GEMINI_API_KEY' environment variable for backend=google.")
 
     ontology_turtle = None
     if args.ontology_turtle_path and os.path.exists(args.ontology_turtle_path):
@@ -205,6 +248,9 @@ if __name__ == '__main__':
             example_question=per_example_question,
             example_sparql=per_example_sparql,
             ontology_turtle=ontology_turtle,
+            backend=args.backend,
+            model=args.model,
+            temperature=args.temperature,
         )
 
         # Clean markdown fences if present
@@ -219,7 +265,6 @@ if __name__ == '__main__':
         })
         print(f"\nProcessed question_id={qid}")
         print(f"\nGenerated SPARQL:\n{gen_query}")
-        # print(f"\nGold SPARQL:\n{row.get('sparql_query', '')}")
         print("-------------------------------------------------------------------------------")
 
     pd.DataFrame(rows)[[
@@ -230,3 +275,23 @@ if __name__ == '__main__':
         "error"
     ]].to_csv(args.output_csv, index=False)
     print(f"Wrote results to {args.output_csv}")
+
+
+
+    # -------------use transformers to generate the SPARQL query-------------
+    #     python codes/task3_sparql_generation.py \
+    #   --input_csv datasets/sciqa/project_data/test_questions.csv \
+    #   --subgraph_dir results/subgraphs \
+    #   --output_csv results/generated_sparql.csv \
+    #   --backend transformers \
+    #   --model meta-llama/Llama-3.1-8B \
+    #   --temperature 0.1
+
+    # -------------use google gemini to generate the SPARQL query-------------
+    #     python codes/task3_sparql_generation.py \
+    #   --input_csv datasets/sciqa/project_data/test_questions.csv \
+    #   --subgraph_dir results/subgraphs \
+    #   --output_csv results/generated_sparql.csv \
+    #   --backend google \
+    #   --model gemini-2.5-flash \
+    #   --temperature 0.1

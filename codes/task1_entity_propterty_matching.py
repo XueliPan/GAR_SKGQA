@@ -1,19 +1,27 @@
 import time
-from urllib import response
-import torch
 import json
 import pandas as pd
-from google import genai
-from google.genai import types
-from helper import run_sparql_query
-from pydantic import BaseModel, ValidationError
-from typing import List
-from dotenv import load_dotenv
-import numpy as np
 import os
-from sentence_transformers import SentenceTransformer, util
-from transformers import pipeline
+import numpy as np
 import torch
+from pydantic import BaseModel, ValidationError
+from typing import List, Optional
+from dotenv import load_dotenv
+from sentence_transformers import SentenceTransformer, util
+from helper import run_sparql_query
+
+# Optional imports for LLM backends
+try:
+    from google import genai  # type: ignore
+    from google.genai import types  # type: ignore
+except Exception:  # pragma: no cover
+    genai = None
+    types = None
+
+try:
+    from transformers import pipeline  # type: ignore
+except Exception:  # pragma: no cover
+    pipeline = None
 
 # --- New Caching Section ---
 # Pre-computation and storage of candidate embeddings
@@ -26,7 +34,7 @@ CANDIDATE_ENTITIES_PATH = "datasets/sciqa/project_data/orkg_entity_labels.csv"
 CANDIDATE_PROPERTIES_PATH = "datasets/sciqa/project_data/sciqa_predicate_labels.csv"
 
 # Load the model only once
-model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
+embedding_model = SentenceTransformer("Qwen/Qwen3-Embedding-0.6B")
 
 def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
     """Loads embeddings from cache or computes and saves them.
@@ -57,7 +65,7 @@ def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
 
     # compute embeddings and save
     print(f"Computing embeddings for {len(candidates)} candidates and saving to {embeddings_path}")
-    embeddings = model.encode(candidates, convert_to_numpy=True, show_progress_bar=True, batch_size=64)
+    embeddings = embedding_model.encode(candidates, convert_to_numpy=True, show_progress_bar=True, batch_size=64)
     # ensure float32 for downstream torch conversion
     embeddings = embeddings.astype(np.float32)
     np.save(embeddings_path, embeddings)
@@ -65,56 +73,52 @@ def load_or_compute_embeddings(csv_path: str, embeddings_path: str):
 
 # --- End of New Caching Section ---
 
-### get response from gemini api with retry on overload
-def get_response_google(prompt, instruction, model_id):
-    overload_markers = [
-        "503",
-        "UNAVAILABLE",
-        "overloaded",
-        "The model is overloaded",
-        "Rate limit",
-        "try again later",
-    ]
+def get_response(prompt: str, instruction: str, backend: str = "google", model: Optional[str] = None, temperature: float = 0.1) -> str:
+    """
+    Generate a response using the selected backend (google or transformers).
+    For google, uses system_instruction + contents; for transformers, concatenates instruction and prompt.
+    Includes simple retry on transient overload for google.
+    """
+    backend = (backend or "google").lower()
 
-    while True:
-        try:
-            client = genai.Client()
-            response = client.models.generate_content(
-                model=model_id,
-                config=types.GenerateContentConfig(
-                    system_instruction=instruction),
-                contents=prompt
-            )
-            return response.text
-        except Exception as e:
-            msg = str(e)
-            if any(m in msg for m in overload_markers):
-                print("Gemini overloaded or temporarily unavailable. Waiting 30s before retry...")
-                time.sleep(30)
-                continue
-            raise
-
-#### get response from transformers pipeline
-def get_response(prompt, instruction, model_id):
-    try:
-        # Check if CUDA is available and use appropriate device configuration
-        if torch.cuda.is_available():
-            print(f"CUDA is available. Using GPU with {torch.cuda.device_count()} device(s)")
-            device_map = "auto"  # Let transformers automatically handle GPU allocation
-        else:
-            print("CUDA is not available. Using CPU")
-            device_map = None
-        
-        pipe = pipeline("text-generation", model=model_id, dtype="auto", device_map=device_map)
-        message = [
-            {"role": "system", "content": instruction},
-            {"role": "user", "content": prompt}
+    if backend == "google":
+        if genai is None or types is None:
+            raise RuntimeError("google-genai is not installed. Install google-genai to use backend=google.")
+        overload_markers = [
+            "503", "UNAVAILABLE", "overloaded", "The model is overloaded", "Rate limit", "try again later",
         ]
-        response = pipe(message, max_new_tokens=512)
-        return response[0]['generated_text'][-1]['content'].strip()
-    except Exception as e:
-        print(f"Error generating response: {e}")
-        return ""
+        model_id = model or os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+        while True:
+            try:
+                client = genai.Client()
+                resp = client.models.generate_content(
+                    model=model_id,
+                    config=types.GenerateContentConfig(system_instruction=instruction, temperature=float(temperature)),
+                    contents=prompt,
+                )
+                return resp.text
+            except Exception as e:
+                msg = str(e)
+                if any(m in msg for m in overload_markers):
+                    print("Gemini overloaded/unavailable. Waiting 30s before retry...")
+                    time.sleep(30)
+                    continue
+                raise
+
+    elif backend == "transformers":
+        if pipeline is None:
+            raise RuntimeError("transformers is not installed. Install transformers to use backend=transformers.")
+        model_id = model or os.getenv("HF_TEXTGEN_MODEL", "meta-llama/Llama-3.1-8B")
+        textgen = pipeline("text-generation", model=model_id, dtype=torch.bfloat16, trust_remote_code=True, device_map="auto")
+        combined = f"System Instruction:\n{instruction}\n\nUser:\n{prompt}"
+        outputs = textgen(combined, max_new_tokens=512, do_sample=False, temperature=float(temperature))
+        generated = outputs[0].get("generated_text", "").strip()
+        if generated.startswith(combined):
+            generated = generated[len(combined):].strip()
+        return generated
+
+    else:
+        raise ValueError(f"Unsupported backend: {backend}. Use 'google' or 'transformers'.")
 
 class ExtractionResult(BaseModel):
     Entities: List[str]
@@ -151,7 +155,7 @@ def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: 
         })
 
     # Encode sources (returns numpy by default as convert_to_numpy=True)
-    source_embeddings = model.encode(cleaned_sources, convert_to_numpy=True)
+    source_embeddings = embedding_model.encode(cleaned_sources, convert_to_numpy=True)
 
     # Convert numpy embeddings to torch tensors for util.cos_sim
     src_tensor = torch.from_numpy(source_embeddings) if isinstance(source_embeddings, np.ndarray) else torch.tensor(source_embeddings)
@@ -185,20 +189,18 @@ def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: 
     return top_df
 
 # Main function, modified to pass pre-computed embeddings
-def main(input_question):
+def main(input_question: str, backend: str = "google", model: Optional[str] = None, temperature: float = 0.1):
     # Load genai API key from .env file
     load_dotenv()
     
     # Print device information for debugging
-    print(f"PyTorch version: {torch.__version__}")
+    print(f"\nPyTorch version: {torch.__version__}")
     print(f"CUDA available: {torch.cuda.is_available()}")
     if torch.cuda.is_available():
-        print(f"CUDA device count: {torch.cuda.device_count()}")
+        print(f"\nCUDA device count: {torch.cuda.device_count()}")
         print(f"Current CUDA device: {torch.cuda.current_device()}")
         print(f"CUDA device name: {torch.cuda.get_device_name()}")
     
-    # model_id="meta-llama/Meta-Llama-3.1-8B-Instruct"
-    model_id = "databricks/dolly-v2-3b"
     instruction = """
         You are an expert in entity recognition and predicate extraction for scholarly data mining. 
         You will be given a question and you need to identify and extract all the entities and predicates mentioned in the question. 
@@ -216,8 +218,8 @@ def main(input_question):
         If no entities or predicates are found, please return empty lists within the JSON object.
         Do not wrap the JSON in any markdown code block, such as ```json or ```.
         """
-    response = get_response(input_question, instruction,model_id)
-    print(f"Raw LLM output:\n{response}\n")
+    response = get_response(input_question, instruction, backend=backend, model=model, temperature=temperature)
+    print(f"\nRaw LLM output:\n{response}\n")
     # print("Is response valid?", validate_response(response))
 
     # if the output contain extra text, try to extract the JSON part

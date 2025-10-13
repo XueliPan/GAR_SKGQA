@@ -99,7 +99,9 @@ def run_sparql_generation_pipeline(
     example_question: Optional[str] = None,
     example_sparql: Optional[str] = None,
     ontology_turtle: Optional[str] = None,
-    output_ttl: str = "subgraph.ttl"
+    backend: str = "google",
+    model: Optional[str] = None,
+    temperature: float = 0.1,
 ) -> dict:
     """
     Complete pipeline for SPARQL generation:
@@ -107,7 +109,6 @@ def run_sparql_generation_pipeline(
     2) Map top entity labels to IRIs
     3) Extract n-hop subgraph(s) around each IRI and merge
     4) Generate SPARQL query using enhanced prompt with all context
-    5) Save merged TTL and return results
     
     Returns a summary dict with selected IRIs, generated SPARQL, and output path.
     """
@@ -115,7 +116,7 @@ def run_sparql_generation_pipeline(
     
     # Step 1: Task1 - Entity and Property Extraction and Matching
     print("\nStep 1: Extracting entities and properties, finding candidates...")
-    entity_matches, property_matches = task1_main(question)
+    entity_matches, property_matches = task1_main(question, backend=backend, model=model, temperature=temperature)
     
     # Extract top-k candidate entity labels per source from task1 output DataFrame
     candidate_labels = []
@@ -151,11 +152,11 @@ def run_sparql_generation_pipeline(
     ORKGP = Namespace("http://orkg.org/orkg/predicate/")
     merged.bind("orkgp", ORKGP)
 
-    # Step 4: Save subgraph
-    print(f"\nStep 4: Saving subgraph")
-    merged.serialize(destination=output_ttl, format="turtle")
-    subgraph_turtle = open(output_ttl, 'r', encoding='utf-8').read()
-    print(f"Saved subgraph to {output_ttl}")
+    # Step 4: Prepare subgraph string (Turtle)
+    print(f"\nStep 4: Preparing subgraph (Turtle string)")
+    subgraph_turtle = merged.serialize(format="turtle")
+    if isinstance(subgraph_turtle, bytes):
+        subgraph_turtle = subgraph_turtle.decode("utf-8")
 
     # Step 5: Generate SPARQL with enhanced context
     print(f"\nStep 5: Generating SPARQL query...")
@@ -177,11 +178,14 @@ def run_sparql_generation_pipeline(
             example_question=example_question,
             example_sparql=example_sparql,
             ontology_turtle=ontology_turtle,
+            backend=backend,
+            model=model,
+            temperature=temperature,
         )
         
         # Clean markdown fences if present
         generated_sparql = _strip_markdown_fences(generated_sparql)
-        print(f"Generated SPARQL: {generated_sparql}")
+        print(f"Generated SPARQL: \n{generated_sparql}")
         
     except Exception as e:
         print(f"Error in Step 5 (SPARQL generation): {str(e)}")
@@ -210,17 +214,18 @@ def run_batch_sparql_generation(
     include_literals: bool,
     topk_candidates: int,
     topk_entities: int,
-    output_dir: str,
     summary_csv: str,
     one_shot_csv: Optional[str] = None,
-    ontology_turtle_path: Optional[str] = None
+    ontology_turtle_path: Optional[str] = None,
+    backend: str = "google",
+    model: Optional[str] = None,
+    temperature: float = 0.1,
 ) -> None:
     """
     Process a CSV with columns: question_id, question_string, sparql_query.
     For each row, run the complete SPARQL generation pipeline and write results.
     Save a summary CSV with results and metadata.
     """
-    os.makedirs(output_dir, exist_ok=True)
     df = pd.read_csv(input_csv)
     required_cols = {"question_id", "question_string", "sparql_query"}
     missing = required_cols - set(df.columns)
@@ -256,7 +261,6 @@ def run_batch_sparql_generation(
         print(f"Processing the {idx+1}th question")
         qid = row["question_id"]
         question = row["question_string"]
-        out_path = os.path.join(output_dir, f"{qid}_subgraph.ttl")
         
         # Determine per-question example if available
         per_example_question = None
@@ -279,7 +283,9 @@ def run_batch_sparql_generation(
                 example_question=per_example_question,
                 example_sparql=per_example_sparql,
                 ontology_turtle=ontology_turtle,
-                output_ttl=out_path,
+                backend=backend,
+                model=model,
+                temperature=temperature,
             )
             summary.update({
                 "question_id": qid,
@@ -293,7 +299,7 @@ def run_batch_sparql_generation(
             traceback.print_exc()
             summary = {
                 "question_id": qid,
-                "question": question,
+                "question_string": question,
                 "gold_sparql": row.get("sparql_query", ""),
                 "generated_sparql": "",
                 "seed_iris": [],
@@ -312,7 +318,7 @@ def run_batch_sparql_generation(
     result_df = pd.DataFrame(summaries)
     result_df[[
         "question_id",
-        "question",
+        "question_string",
         "gold_sparql",
         "generated_sparql",
         "seed_iris",
@@ -323,12 +329,7 @@ def run_batch_sparql_generation(
         "error"
     ]].to_csv(summary_csv, index=False)
     
-    # Save detailed results with entity/property matches
-    detailed_csv = summary_csv.replace('.csv', '_detailed.csv')
-    result_df.to_csv(detailed_csv, index=False)
-    
     print(f"Wrote summary results to {summary_csv}")
-    print(f"Wrote detailed results to {detailed_csv}")
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
@@ -341,10 +342,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--include_literals", type=str.lower, choices=["true", "false"], default="true", help="Include literal objects in subgraph (true/false)")
     parser.add_argument("--topk_candidates", type=int, default=1, help="Top-k candidates per source to take from task1 results")
     parser.add_argument("--topk_entities", type=int, default=1, help="Top entities to use as seeds")
-    parser.add_argument("--output_dir", default="results/subgraphs", help="Directory for per-question TTL outputs")
     parser.add_argument("--summary_csv", default="results/sparql_generation_summary.csv", help="Path to write pipeline summary CSV")
     parser.add_argument("--one_shot_csv", default=None, help="CSV with columns: id,test_question,test_query,best_train_question,best_train_query for per-question examples")
     parser.add_argument("--ontology_turtle_path", default=None, help="Optional path to ontology Turtle file")
+    parser.add_argument("--backend", choices=["google", "transformers"], default=os.getenv("SPARQL_BACKEND", "google"), help="Model backend to use for SPARQL generation")
+    parser.add_argument("--model", default=None, help="Optional model name/id for the selected backend")
+    parser.add_argument("--temperature", type=float, default=0.1, help="Decoding temperature for generation")
     return parser
 
 
@@ -370,13 +373,49 @@ def main():
         include_literals=include_literals,
         topk_candidates=args.topk_candidates,
         topk_entities=args.topk_entities,
-        output_dir=args.output_dir,
         summary_csv=args.summary_csv,
         one_shot_csv=args.one_shot_csv,
         ontology_turtle_path=args.ontology_turtle_path,
+        backend=args.backend,
+        model=args.model,
+        temperature=args.temperature,
     )
-    print(json.dumps({"status": "ok", "summary_csv": args.summary_csv, "output_dir": args.output_dir}, indent=2))
+    print(json.dumps({"status": "ok", "summary_csv": args.summary_csv}, indent=2))
 
 
 if __name__ == "__main__":
     main()
+
+
+
+# -------------use google gemini to generate the SPARQL query-------------
+# python codes/pipeline_sparql_generation.py \
+#   --input_csv datasets/sciqa/project_data/test_questions.csv \
+#   --entity_label_csv datasets/sciqa/project_data/orkg_entity_labels.csv \
+#   --orkg_rdf_dump datasets/sciqa/project_data/orkg-dump-14-02-2023.nt \
+#   --hops 1 \
+#   --direction both \
+#   --include_literals true \
+#   --topk_candidates 1 \
+#   --topk_entities 1 \
+#   --summary_csv results/sparql_generation_summary.csv \
+#   --one_shot_csv datasets/sciqa/project_data/all_handcrafted_questions.csv \
+#   --ontology_turtle_path datasets/sciqa/project_data/orkg_ontology_generated.ttl \
+#   --backend google \
+#   --model gemini-2.5-flash \
+#   --temperature 0.1
+
+# -------------use transformers to generate the SPARQL query-------------
+# python codes/pipeline_sparql_generation.py \
+#   --input_csv datasets/sciqa/project_data/test_questions.csv \
+#   --entity_label_csv datasets/sciqa/project_data/orkg_entity_labels.csv \
+#   --orkg_rdf_dump datasets/sciqa/project_data/orkg-dump-14-02-2023.nt \
+#   --hops 1 \
+#   --direction both \
+#   --include_literals true \
+#   --topk_candidates 1 \
+#   --topk_entities 1 \
+#   --summary_csv results/sparql_generation_summary.csv \
+#   --backend transformers \
+#   --model meta-llama/Llama-3.1-8B \
+#   --temperature 0.1

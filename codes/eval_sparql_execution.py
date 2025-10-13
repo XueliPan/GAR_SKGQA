@@ -12,13 +12,22 @@ def test(sparql_text):
         sparql.setQuery(sparql_txt)
         sparql.setReturnFormat(JSON)
         results = sparql.query().convert()
-        # Remove keys
-        results["head"].pop("link", None)
-        results["results"].pop("distinct", None)
-        results["results"].pop("ordered", None)
-        return json.dumps(results)
-    except:
-        print('Your database is not installed properly !!!')
+        # Handle ASK queries that return a boolean result
+        print("RAW RESULTS: ", results)
+        if isinstance(results, dict) and "boolean" in results:
+            return json.dumps({"boolean": results["boolean"]}), None
+        # Remove non-essential keys when result is bindings-based
+        if isinstance(results, dict):
+            if "head" in results and isinstance(results["head"], dict):
+                results["head"].pop("link", None)
+            if "results" in results and isinstance(results["results"], dict):
+                results["results"].pop("distinct", None)
+                results["results"].pop("ordered", None)
+        return json.dumps(results), None
+    except Exception as e:
+        # get the error message
+        print(e)
+        return None, str(e)
 
 def main(input_file, output_file):
     # Load data from CSV file with expected columns
@@ -45,19 +54,23 @@ def main(input_file, output_file):
     """
 
     execution_results = []
+    execution_errors = []
     for idx, row in df.iterrows():
         query_text = row.get("generated_sparql")
         if pd.isna(query_text) or not isinstance(query_text, str) or not query_text.strip():
             execution_results.append(None)
+            execution_errors.append(None)
             continue
-        result = test(sparql_text=f"{prefixes}\n{query_text}")
+        result, error_msg = test(sparql_text=f"{prefixes}\n{query_text}")
         print(f"Query for: {row.get('question_id')}")
         print(result)
         execution_results.append(result)
+        execution_errors.append(error_msg)
 
     # Save output CSV with the required columns
     out_df = df[["question_id", "question_string", "gold_sparql", "generated_sparql"]].copy()
     out_df["execution_results"] = execution_results
+    out_df["execution_error"] = execution_errors
     out_df.to_csv(output_file, index=False)
 
 if __name__ == "__main__":

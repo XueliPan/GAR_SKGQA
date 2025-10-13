@@ -1,0 +1,1411 @@
+class,label,frequency
+http://orkg.org/orkg/class/Contribution,Contribution,21243
+http://orkg.org/orkg/class/Paper,Paper,14538
+http://orkg.org/orkg/class/C0,qb:Observation,9335
+http://orkg.org/orkg/class/Model,Model,8732
+http://orkg.org/orkg/class/TemplateComponentClass,Template Component,7006
+http://orkg.org/orkg/class/Venue,Venue,6640
+http://orkg.org/orkg/class/Problem,Problem,5065
+http://orkg.org/orkg/class/Author,Author,3934
+http://orkg.org/orkg/class/Dataset,Dataset,3456
+http://orkg.org/orkg/class/Evaluation,Evaluation,3085
+http://orkg.org/orkg/class/Benchmark,Benchmark,2365
+http://orkg.org/orkg/class/C21038,Qualities,1833
+http://orkg.org/orkg/class/C40002,System measurements,1705
+http://orkg.org/orkg/class/PaperDeleted,PaperDeleted,1683
+http://orkg.org/orkg/class/C20077,Plasma measurement,1619
+http://orkg.org/orkg/class/C23008,Quantity Value,1476
+http://orkg.org/orkg/class/ContributionDeleted,ContributionDeleted,1458
+http://orkg.org/orkg/class/Metric,Metric,1437
+http://orkg.org/orkg/class/Software,Software,1351
+http://orkg.org/orkg/class/External,External,1289
+http://orkg.org/orkg/class/Comparison,Comparison,1132
+http://orkg.org/orkg/class/Method,Method,969
+http://orkg.org/orkg/class/Result,Result,966
+http://orkg.org/orkg/class/C27006,R186763,803
+http://orkg.org/orkg/class/ResearchField,ResearchField,709
+http://orkg.org/orkg/class/C22000,R159178,700
+http://orkg.org/orkg/class/C23007,qudt:Quantity,566
+http://orkg.org/orkg/class/Sentence,Sentence,506
+http://orkg.org/orkg/class/C29030,research data,463
+http://orkg.org/orkg/class/C27004,R186737,453
+http://orkg.org/orkg/class/ComparisonDraft,Comparison Draft,388
+http://orkg.org/orkg/class/ContributionTemplate,Contribution Template,362
+http://orkg.org/orkg/class/C27001,R186491,356
+http://orkg.org/orkg/class/C28004,Data Analysis Method,298
+http://orkg.org/orkg/class/Visualization,Visualization,296
+http://orkg.org/orkg/class/Material,Material,282
+http://orkg.org/orkg/class/C21064,R152170,257
+http://orkg.org/orkg/class/C20073,descriptive statistic,236
+http://orkg.org/orkg/class/C21063,R152160,216
+http://orkg.org/orkg/class/C2,qb:ComponentProperty,200
+http://orkg.org/orkg/class/C6,qb:ComponentSpecification,200
+http://orkg.org/orkg/class/C40003,Plasma resources,198
+http://orkg.org/orkg/class/C40018,R221194,196
+http://orkg.org/orkg/class/C20034,Ontology,190
+http://orkg.org/orkg/class/Section,Section,189
+http://orkg.org/orkg/class/ComparisonSection,Comparison Section,187
+http://orkg.org/orkg/class/C5,qb:MeasureProperty,172
+http://orkg.org/orkg/class/C34009,Food component,151
+http://orkg.org/orkg/class/C28008,hypothesis,142
+http://orkg.org/orkg/class/C40010,R217516,140
+http://orkg.org/orkg/class/C17002,R107801,139
+http://orkg.org/orkg/class/C20035,Chemical,127
+http://orkg.org/orkg/class/C22007,Measurement,121
+http://orkg.org/orkg/class/C32008,R198658,121
+http://orkg.org/orkg/class/Resources,Resource,119
+http://orkg.org/orkg/class/C22008,Quality,118
+http://orkg.org/orkg/class/C2005,time:Interval,115
+http://orkg.org/orkg/class/C40001,Quality type,111
+http://orkg.org/orkg/class/C16003,R76809,108
+http://orkg.org/orkg/class/DCLocation,dc:Location,98
+http://orkg.org/orkg/class/C29032,data source,94
+http://orkg.org/orkg/class/Results,Results,93
+http://orkg.org/orkg/class/C2003,obo:STATO_0000196,91
+http://orkg.org/orkg/class/C37000,R209291,91
+http://orkg.org/orkg/class/C40017,R220939,86
+http://orkg.org/orkg/class/C21029,R150685,84
+http://orkg.org/orkg/class/C22005,R159280,81
+http://orkg.org/orkg/class/C34000,Food group,78
+http://orkg.org/orkg/class/C7016,R48214,77
+http://orkg.org/orkg/class/OntologySection,Ontology Section,73
+http://orkg.org/orkg/class/Background,Background,72
+http://orkg.org/orkg/class/C17008,Machine learning algorithm,72
+http://orkg.org/orkg/class/C29012,machine learning,71
+http://orkg.org/orkg/class/C40020,Crop Yield,71
+http://orkg.org/orkg/class/C23026,VideoObject,70
+http://orkg.org/orkg/class/C12001,R54875,69
+http://orkg.org/orkg/class/C28005,inferential statistics,69
+http://orkg.org/orkg/class/C40028,R227989,69
+http://orkg.org/orkg/class/C22009,R159533,68
+http://orkg.org/orkg/class/C20069,Epidemiological surveillance user,68
+http://orkg.org/orkg/class/Methods,Methods,67
+http://orkg.org/orkg/class/C52011,Tabular dataset,67
+http://orkg.org/orkg/class/C17034,R111911,65
+http://orkg.org/orkg/class/ProblemStatement,ProblemStatement,63
+http://orkg.org/orkg/class/C23009,qudt:Unit,63
+http://orkg.org/orkg/class/C12000,R54009,62
+http://orkg.org/orkg/class/C29028,interview,57
+http://orkg.org/orkg/class/C29003,subquestion,57
+http://orkg.org/orkg/class/SmartReviewPublished,Smart Review Published,56
+http://orkg.org/orkg/class/VisualizationSection,Visualization Section,55
+http://orkg.org/orkg/class/C20119,Learning method,55
+http://orkg.org/orkg/class/C23005,R166612,52
+http://orkg.org/orkg/class/C29029,survey,52
+http://orkg.org/orkg/class/C14024,Metric,51
+http://orkg.org/orkg/class/C34001,Toughness,51
+http://orkg.org/orkg/class/BENCHMARK_DATASET,Benchmark Dataset,50
+http://orkg.org/orkg/class/C1007,obo:OBI_0000739,49
+http://orkg.org/orkg/class/C21008,R149514,49
+http://orkg.org/orkg/class/C20060,Software,49
+http://orkg.org/orkg/class/C32007,Strength,49
+http://orkg.org/orkg/class/C20072,Statistical Technique,48
+http://orkg.org/orkg/class/ContributionSmartReview,Contribution Smart Review,48
+http://orkg.org/orkg/class/SmartReview,Smart Review,47
+http://orkg.org/orkg/class/C5001,R44415,46
+http://orkg.org/orkg/class/C22010,R160259,46
+http://orkg.org/orkg/class/C40013,R217556,46
+http://orkg.org/orkg/class/C23033,Video application context,45
+http://orkg.org/orkg/class/C21075,has value,45
+http://orkg.org/orkg/class/C23034,R171811,44
+http://orkg.org/orkg/class/C21090,potential,44
+http://orkg.org/orkg/class/C31012,Ontology development method,44
+http://orkg.org/orkg/class/C21009,R149560,43
+http://orkg.org/orkg/class/C21011,R149601,43
+http://orkg.org/orkg/class/C20046,Particle size of nanoparticles,43
+http://orkg.org/orkg/class/C23037,R172526,42
+http://orkg.org/orkg/class/C21000,R149061,42
+http://orkg.org/orkg/class/C23006,Equipment,41
+http://orkg.org/orkg/class/C17011,R108555,41
+http://orkg.org/orkg/class/C28006,hypothesis testing,41
+http://orkg.org/orkg/class/C38001,Baseline,41
+http://orkg.org/orkg/class/C20094,study,40
+http://orkg.org/orkg/class/ListSection,List Section,38
+http://orkg.org/orkg/class/C8002,R49174,37
+http://orkg.org/orkg/class/C20041,qudt:quantityKind,37
+http://orkg.org/orkg/class/C33001,Young modulus,37
+http://orkg.org/orkg/class/C11000,Meter measurement,36
+http://orkg.org/orkg/class/C8001,R49156,36
+http://orkg.org/orkg/class/C20047,Zeta potential of nanoparticles,36
+http://orkg.org/orkg/class/C32003,R198132,36
+http://orkg.org/orkg/class/C40016,R220250,36
+http://orkg.org/orkg/class/C4000,R40006,34
+http://orkg.org/orkg/class/C22001,R159190,34
+http://orkg.org/orkg/class/C21014,Epidemiological surveillance,34
+http://orkg.org/orkg/class/C20113,Application domain,34
+http://orkg.org/orkg/class/C6000,R46269,33
+http://orkg.org/orkg/class/TextSection,Text Section,33
+http://orkg.org/orkg/class/C15002,Resource,33
+http://orkg.org/orkg/class/C20136,Energy band gap,32
+http://orkg.org/orkg/class/C20101,Epidemiological surveillance purpose,32
+http://orkg.org/orkg/class/C52018,R286070,32
+http://orkg.org/orkg/class/C22003,R159270,31
+http://orkg.org/orkg/class/C52006,SemTab system,31
+http://orkg.org/orkg/class/C21066,Atomic Resource,31
+http://orkg.org/orkg/class/C40025,Stress,31
+http://orkg.org/orkg/class/C40026,Strain,31
+http://orkg.org/orkg/class/C21032,R150770,30
+http://orkg.org/orkg/class/C21088,wavelength,30
+http://orkg.org/orkg/class/C27003,R186724,30
+http://orkg.org/orkg/class/C1,qb:DimensionProperty,29
+http://orkg.org/orkg/class/C52028,Problem in tabular data,29
+http://orkg.org/orkg/class/C17029,R111820,28
+http://orkg.org/orkg/class/C23038,study,27
+http://orkg.org/orkg/class/C29006,measures of central tendency,27
+http://orkg.org/orkg/class/C39001,R215121,27
+http://orkg.org/orkg/class/C8,qb:DataStructureDefinition,26
+http://orkg.org/orkg/class/FeaturedComparison,FeaturedComparison,26
+http://orkg.org/orkg/class/RelatedWork,RelatedWork,26
+http://orkg.org/orkg/class/C10018,NCBITaxon:227859,26
+http://orkg.org/orkg/class/C5004,R38248,26
+http://orkg.org/orkg/class/C21058,PlasmaUnit,26
+http://orkg.org/orkg/class/C21054,Cylodextrin-drug complex,26
+http://orkg.org/orkg/class/C20104,Limit,26
+http://orkg.org/orkg/class/C50003,R280556,26
+http://orkg.org/orkg/class/C50004,R280568,26
+http://orkg.org/orkg/class/QBDataset,qb:Dataset,25
+http://orkg.org/orkg/class/Conclusion,Conclusion,25
+http://orkg.org/orkg/class/C22006,R159441,25
+http://orkg.org/orkg/class/C21067,R153113,25
+http://orkg.org/orkg/class/C21068,R153118,25
+http://orkg.org/orkg/class/C20076,Epidemiological surveillance process,25
+http://orkg.org/orkg/class/C20070,User,25
+http://orkg.org/orkg/class/C31022,Ontology domain,25
+http://orkg.org/orkg/class/C45001,R260137,25
+http://orkg.org/orkg/class/C20078,Plasma characteristics,24
+http://orkg.org/orkg/class/C52013,SemTab keyword,24
+http://orkg.org/orkg/class/C7002,R48046,23
+http://orkg.org/orkg/class/C20040,Polymeric nanoparticles,23
+http://orkg.org/orkg/class/C17032,R111871,23
+http://orkg.org/orkg/class/C17021,R111221,23
+http://orkg.org/orkg/class/C52008,SemTab future work,23
+http://orkg.org/orkg/class/C31014,Ontology development tool,23
+http://orkg.org/orkg/class/C29021,Person,23
+http://orkg.org/orkg/class/C20123,Term,22
+http://orkg.org/orkg/class/C20042,Lipid based-nanoparticles,22
+http://orkg.org/orkg/class/C25006,Xray spectroscopy,22
+http://orkg.org/orkg/class/C22066,Papertype,21
+http://orkg.org/orkg/class/C14021,R38147,20
+http://orkg.org/orkg/class/C23027,VideoType,20
+http://orkg.org/orkg/class/C20109,Organic solar cells,20
+http://orkg.org/orkg/class/C20138,Short-circuit current density,20
+http://orkg.org/orkg/class/C20141,Mobility type,20
+http://orkg.org/orkg/class/C17027,R111507,20
+http://orkg.org/orkg/class/C31005,coding,20
+http://orkg.org/orkg/class/LiteratureList,Literature List,19
+http://orkg.org/orkg/class/C20140,Power conversion efficiency,19
+http://orkg.org/orkg/class/C52022,R286081,18
+http://orkg.org/orkg/class/C31016,R194212,18
+http://orkg.org/orkg/class/C39005,Aspect,18
+http://orkg.org/orkg/class/C40019,Soil,18
+http://orkg.org/orkg/class/C22064,Xray laser applications,17
+http://orkg.org/orkg/class/C21039,Component property,17
+http://orkg.org/orkg/class/C20135,HOMO,17
+http://orkg.org/orkg/class/C20134,LUMO,17
+http://orkg.org/orkg/class/C52017,SemTab purpose,17
+http://orkg.org/orkg/class/C1003,obo:OBI_0000175,16
+http://orkg.org/orkg/class/C1004,obo:OBI_0001931,16
+http://orkg.org/orkg/class/ComparisonRelatedFigure,Comparison Related Figure,16
+http://orkg.org/orkg/class/C23013,Guidance,16
+http://orkg.org/orkg/class/C23011,Guide,16
+http://orkg.org/orkg/class/C20125,Property,16
+http://orkg.org/orkg/class/C20100,Advantage,16
+http://orkg.org/orkg/class/C20137,Open circuit voltage,16
+http://orkg.org/orkg/class/C20139,Fill factor,16
+http://orkg.org/orkg/class/C17028,R111540,16
+http://orkg.org/orkg/class/C29007,measures of dispersion or variation,16
+http://orkg.org/orkg/class/C31008,Knowledge Graph,16
+http://orkg.org/orkg/class/Data,Data,15
+http://orkg.org/orkg/class/C23029,Content,15
+http://orkg.org/orkg/class/C21091,R155844,15
+http://orkg.org/orkg/class/C21089,lifetime,15
+http://orkg.org/orkg/class/C17026,R111494,15
+http://orkg.org/orkg/class/C17037,R112241,15
+http://orkg.org/orkg/class/C8021,Time duration,14
+http://orkg.org/orkg/class/ComparisonDeleted,ComparisonDeleted,14
+http://orkg.org/orkg/class/C20159,institution,14
+http://orkg.org/orkg/class/C18018,Software type,14
+http://orkg.org/orkg/class/C23010,Role,14
+http://orkg.org/orkg/class/C23031,Audience,14
+http://orkg.org/orkg/class/C52026,Tool,14
+http://orkg.org/orkg/class/C29014,secondary research,14
+http://orkg.org/orkg/class/C39002,R215731,14
+http://orkg.org/orkg/class/C44000,R259041,14
+http://orkg.org/orkg/class/C52000,Scientific challenge,14
+http://orkg.org/orkg/class/C7,qb:ConceptScheme,13
+http://orkg.org/orkg/class/FeaturedComparisonHomePage,Featured Comparison Home Page,13
+http://orkg.org/orkg/class/C11007,Substance,13
+http://orkg.org/orkg/class/C11006,Transient absorption,13
+http://orkg.org/orkg/class/PropertySection,Property Section,13
+http://orkg.org/orkg/class/C21093,R156306,13
+http://orkg.org/orkg/class/C21065,R152828,13
+http://orkg.org/orkg/class/C21034,Manufacturing Process,13
+http://orkg.org/orkg/class/C17035,R111947,13
+http://orkg.org/orkg/class/C17022,R111231,13
+http://orkg.org/orkg/class/C15000,Experiment,13
+http://orkg.org/orkg/class/C51000,Case study,13
+http://orkg.org/orkg/class/C37004,Dataset,13
+http://orkg.org/orkg/class/C40011,R217535,13
+http://orkg.org/orkg/class/C48000,R277000,13
+http://orkg.org/orkg/class/Discussion,Discussion,12
+http://orkg.org/orkg/class/C16005,Standard,12
+http://orkg.org/orkg/class/C29025,Person,12
+http://orkg.org/orkg/class/LiteratureListPublished,Literature List Published,12
+http://orkg.org/orkg/class/C21027,R150595,12
+http://orkg.org/orkg/class/C22057,Enzyme,12
+http://orkg.org/orkg/class/C20057,Architecture structure,12
+http://orkg.org/orkg/class/C20011,Exploited data,12
+http://orkg.org/orkg/class/C20010,User preferences form,12
+http://orkg.org/orkg/class/C28009,measures of frequency,12
+http://orkg.org/orkg/class/C31026,Software artefact,12
+http://orkg.org/orkg/class/Url,Url,12
+http://orkg.org/orkg/class/C51001,R282301,12
+http://orkg.org/orkg/class/C8007,Occupants experimental dependent variable,11
+http://orkg.org/orkg/class/C5005,R38098,11
+http://orkg.org/orkg/class/C21035,R150790,11
+http://orkg.org/orkg/class/C22063,recycling type,11
+http://orkg.org/orkg/class/C21071,year,11
+http://orkg.org/orkg/class/C21057,XrayResource,11
+http://orkg.org/orkg/class/C21041,IsoelectronicityClass,11
+http://orkg.org/orkg/class/C20118,Output format,11
+http://orkg.org/orkg/class/C20114,Learning data source,11
+http://orkg.org/orkg/class/C32002,Software component,11
+http://orkg.org/orkg/class/C39000,R215039,11
+http://orkg.org/orkg/class/C40004,Plasma units,11
+http://orkg.org/orkg/class/C51003,R282321,11
+http://orkg.org/orkg/class/C20129,Evaluation metric,11
+http://orkg.org/orkg/class/Motivation,Motivation,10
+http://orkg.org/orkg/class/Introduction,Introduction,10
+http://orkg.org/orkg/class/C8008,Occupants experimental independent variable,10
+http://orkg.org/orkg/class/Caption,Caption,10
+http://orkg.org/orkg/class/C21028,R150607,10
+http://orkg.org/orkg/class/C20031,Temperature,10
+http://orkg.org/orkg/class/C22002,Tailored Forming Measurement,10
+http://orkg.org/orkg/class/C20112,Learning purpose,10
+http://orkg.org/orkg/class/C20124,Relationship,10
+http://orkg.org/orkg/class/C20152,Permeation flux,10
+http://orkg.org/orkg/class/C25000,R182248,10
+http://orkg.org/orkg/class/C34004,oxygen barrier,10
+http://orkg.org/orkg/class/Version,Version,10
+http://orkg.org/orkg/class/C34006,Food Composition Tables,10
+http://orkg.org/orkg/class/C46000,R262008,10
+http://orkg.org/orkg/class/C43001,R255298,10
+http://orkg.org/orkg/class/C20015,Country,9
+http://orkg.org/orkg/class/C8003,Occupants study-type category,9
+http://orkg.org/orkg/class/C22048,Melting temperature,9
+http://orkg.org/orkg/class/C21076,R154390,9
+http://orkg.org/orkg/class/C21024,data format,9
+http://orkg.org/orkg/class/C20111,knowledge source,9
+http://orkg.org/orkg/class/C21012,Knowledge assessment,9
+http://orkg.org/orkg/class/C20081,sector,9
+http://orkg.org/orkg/class/C20014,City,9
+http://orkg.org/orkg/class/C20008,Recommendation method,9
+http://orkg.org/orkg/class/C29004,research paradigm,9
+http://orkg.org/orkg/class/C11017,Duration of absorption,8
+http://orkg.org/orkg/class/C8023,Time unit,8
+http://orkg.org/orkg/class/DatasetDescription,DatasetDescription,8
+http://orkg.org/orkg/class/ResourceSection,ResourceSection,8
+http://orkg.org/orkg/class/C21040,Material type,8
+http://orkg.org/orkg/class/C17009,Machine learning feature,8
+http://orkg.org/orkg/class/C22033,microneedles,8
+http://orkg.org/orkg/class/C22035,Basal diameter of microneedles,8
+http://orkg.org/orkg/class/C22036,Total height of Microneedles,8
+http://orkg.org/orkg/class/C22038,Insulin content,8
+http://orkg.org/orkg/class/C22039,Insulin dose in study,8
+http://orkg.org/orkg/class/C22041,Peak insulin concentration,8
+http://orkg.org/orkg/class/C22043,Time to peak insulin concentration,8
+http://orkg.org/orkg/class/C22044,Relative bioavailability ,8
+http://orkg.org/orkg/class/C22050,Glass-transition temperature,8
+http://orkg.org/orkg/class/C22046,Time to minimum glucose level,8
+http://orkg.org/orkg/class/C18000,R135229,8
+http://orkg.org/orkg/class/C21079,R154474,8
+http://orkg.org/orkg/class/C20130,data set,8
+http://orkg.org/orkg/class/C17024,R111267,8
+http://orkg.org/orkg/class/C20084,endogenous data,8
+http://orkg.org/orkg/class/C20052,Line broadening in plasmas Type,8
+http://orkg.org/orkg/class/C31021,Ontology evaluation,8
+http://orkg.org/orkg/class/C31027,R195759,8
+http://orkg.org/orkg/class/C36000,R206311,8
+http://orkg.org/orkg/class/C29018,CreativeWork,8
+http://orkg.org/orkg/class/C52027,Event,8
+http://orkg.org/orkg/class/FeaturedComparisonCategory,FeaturedComparisonCategory,7
+http://orkg.org/orkg/class/C8004,Occupants experimental detail,7
+http://orkg.org/orkg/class/C8022,Radiant energy,7
+http://orkg.org/orkg/class/C8019,Radiant energy,7
+http://orkg.org/orkg/class/C11012,Gram based unit,7
+http://orkg.org/orkg/class/Acknowledgements,Acknowledgements,7
+http://orkg.org/orkg/class/C7000,percent,7
+http://orkg.org/orkg/class/Materials,Materials,7
+http://orkg.org/orkg/class/C8005,Occupants results,7
+http://orkg.org/orkg/class/C22055,R161228,7
+http://orkg.org/orkg/class/C22045,minimum glucose level,7
+http://orkg.org/orkg/class/C22047,relative pharmacological availability ,7
+http://orkg.org/orkg/class/C21019,renewable,7
+http://orkg.org/orkg/class/C21073,Pressure,7
+http://orkg.org/orkg/class/C20115,Input format,7
+http://orkg.org/orkg/class/C20038,Organic dye,7
+http://orkg.org/orkg/class/C20004,Smart city Data source,7
+http://orkg.org/orkg/class/C52023,Technique,7
+http://orkg.org/orkg/class/C20120,Learning tool,7
+http://orkg.org/orkg/class/C29000,question type,7
+http://orkg.org/orkg/class/C31023,Domain knowledge,7
+http://orkg.org/orkg/class/C31028,model testing,7
+http://orkg.org/orkg/class/License,License,7
+http://orkg.org/orkg/class/C34005,water barrier,7
+http://orkg.org/orkg/class/C29016,ComputerLanguage,7
+http://orkg.org/orkg/class/C35001,R203645,7
+http://orkg.org/orkg/class/Release,Release,7
+http://orkg.org/orkg/class/C49003,R279223,7
+http://orkg.org/orkg/class/C11001,Meter based unit,6
+http://orkg.org/orkg/class/C10041,R51438,6
+http://orkg.org/orkg/class/C8012,Occupants study type,6
+http://orkg.org/orkg/class/C8017,Continent,6
+http://orkg.org/orkg/class/C11002,Transient absorption spectroscopy,6
+http://orkg.org/orkg/class/C14049,substrate,6
+http://orkg.org/orkg/class/C22056,molecular weight,6
+http://orkg.org/orkg/class/C22052,Life span,6
+http://orkg.org/orkg/class/C22051,Crystallinity,6
+http://orkg.org/orkg/class/C21007,obo:GAZ_00000071,6
+http://orkg.org/orkg/class/C21077,Methods of catalyst preparation,6
+http://orkg.org/orkg/class/C18013,R136324,6
+http://orkg.org/orkg/class/C21031,Process group,6
+http://orkg.org/orkg/class/C17030,PotentialType,6
+http://orkg.org/orkg/class/C20106,Electron,6
+http://orkg.org/orkg/class/C17025,Type,6
+http://orkg.org/orkg/class/C20037,Lanthanides,6
+http://orkg.org/orkg/class/C23035,Requirements Engineering phase,6
+http://orkg.org/orkg/class/C29022,R188448,6
+http://orkg.org/orkg/class/C34002,coating,6
+http://orkg.org/orkg/class/C40012,system,6
+http://orkg.org/orkg/class/C41000,Software feature,6
+http://orkg.org/orkg/class/C52030,Entity,6
+http://orkg.org/orkg/class/Classes,Class,6
+http://orkg.org/orkg/class/FeaturedPaper,FeaturedPaper,5
+http://orkg.org/orkg/class/C17001,Organization,5
+http://orkg.org/orkg/class/C8027,Radiant exposure,5
+http://orkg.org/orkg/class/C11004,Solution sample,5
+http://orkg.org/orkg/class/C11014,Meter measurement range,5
+http://orkg.org/orkg/class/C11013,Substance role,5
+http://orkg.org/orkg/class/C11018,TiO2 Process,5
+http://orkg.org/orkg/class/SoftwareType,SoftwareType,5
+http://orkg.org/orkg/class/C22061,treatment,5
+http://orkg.org/orkg/class/C22062,R161545,5
+http://orkg.org/orkg/class/C22037,Insulin loaded height of microneedles,5
+http://orkg.org/orkg/class/C22059,time,5
+http://orkg.org/orkg/class/C22058,R161312,5
+http://orkg.org/orkg/class/C20162,output data,5
+http://orkg.org/orkg/class/C18010,R135811,5
+http://orkg.org/orkg/class/C21078,content in wt%,5
+http://orkg.org/orkg/class/C18014,R136332,5
+http://orkg.org/orkg/class/C20075,Statistics software,5
+http://orkg.org/orkg/class/C20000,Smart city dimension,5
+http://orkg.org/orkg/class/C20013,Type of intellectual contribution,5
+http://orkg.org/orkg/class/C23039,study type,5
+http://orkg.org/orkg/class/C22054,Property,5
+http://orkg.org/orkg/class/C25005,Licence type,5
+http://orkg.org/orkg/class/C29013,classification type,5
+http://orkg.org/orkg/class/C34003,Solvent,5
+http://orkg.org/orkg/class/C35000,R203428,5
+http://orkg.org/orkg/class/C37003,R209505,5
+http://orkg.org/orkg/class/C39004,R215997,5
+http://orkg.org/orkg/class/C43002,R255305,5
+http://orkg.org/orkg/class/C52007,R285837,5
+http://orkg.org/orkg/class/C34011,Dataset type,5
+http://orkg.org/orkg/class/C8025,Device,4
+http://orkg.org/orkg/class/ComparisonRelatedResource,Comparison Related Resource,4
+http://orkg.org/orkg/class/FutureWork,FutureWork,4
+http://orkg.org/orkg/class/C20071,Statistical Modeling,4
+http://orkg.org/orkg/class/C22060,recycling,4
+http://orkg.org/orkg/class/C22053,R161153,4
+http://orkg.org/orkg/class/C20160,contact person,4
+http://orkg.org/orkg/class/C18005,R135413,4
+http://orkg.org/orkg/class/C18016,R136364,4
+http://orkg.org/orkg/class/C18015,R136348,4
+http://orkg.org/orkg/class/C20050,Line broadening in plasmas property,4
+http://orkg.org/orkg/class/C20032,Spectroscopic feature,4
+http://orkg.org/orkg/class/C20002,Smart city goal,4
+http://orkg.org/orkg/class/C20003,Smart city Application scope,4
+http://orkg.org/orkg/class/C20006,Recommended items,4
+http://orkg.org/orkg/class/C20012,Implementation level,4
+http://orkg.org/orkg/class/C20083,energy demand sector,4
+http://orkg.org/orkg/class/C17000,R107684,4
+http://orkg.org/orkg/class/C17033,RE Type,4
+http://orkg.org/orkg/class/C17010,Machine learning classification category,4
+http://orkg.org/orkg/class/C17031,DevelopmentType,4
+http://orkg.org/orkg/class/C23015,Url,4
+http://orkg.org/orkg/class/C25004,Type of annotation,4
+http://orkg.org/orkg/class/C28003,R187648,4
+http://orkg.org/orkg/class/C29008,measures of position,4
+http://orkg.org/orkg/class/C32001,Actor,4
+http://orkg.org/orkg/class/C32000,Ontology serialization language,4
+http://orkg.org/orkg/class/C32006,Software name,4
+http://orkg.org/orkg/class/C40029,R228749,4
+http://orkg.org/orkg/class/C48001,Scientific paper type,4
+http://orkg.org/orkg/class/C52001,Challenge name,4
+http://orkg.org/orkg/class/C52004,Challenge track,4
+http://orkg.org/orkg/class/C52009,Edition,4
+http://orkg.org/orkg/class/C52015,Tabular dataset annotation,4
+http://orkg.org/orkg/class/C3,qb:Concept,3
+http://orkg.org/orkg/class/C11019,MetaVisualizationNode,3
+http://orkg.org/orkg/class/C11005,Solid sample,3
+http://orkg.org/orkg/class/C10028,R51362,3
+http://orkg.org/orkg/class/Scenario,Scenario,3
+http://orkg.org/orkg/class/C8024,Radiant energy units,3
+http://orkg.org/orkg/class/C7017,R48451,3
+http://orkg.org/orkg/class/C8013,Occupants type of buildings,3
+http://orkg.org/orkg/class/C8014,Occupants building system,3
+http://orkg.org/orkg/class/C8015,Occupants study location,3
+http://orkg.org/orkg/class/C8018,R49308,3
+http://orkg.org/orkg/class/SupplementaryInformationDescription,SupplementaryInformationDescription,3
+http://orkg.org/orkg/class/C14025,Dataset,3
+http://orkg.org/orkg/class/C9000,R50545,3
+http://orkg.org/orkg/class/C8016,Occupants building HVAC type,3
+http://orkg.org/orkg/class/C8009,Occupants participants specification,3
+http://orkg.org/orkg/class/C14605,Prostaglandin,3
+http://orkg.org/orkg/class/C23030,Action,3
+http://orkg.org/orkg/class/C23028,Representation type,3
+http://orkg.org/orkg/class/C22068,dynamical system,3
+http://orkg.org/orkg/class/C18002,R135372,3
+http://orkg.org/orkg/class/C18004,R135394,3
+http://orkg.org/orkg/class/C21070,Funding Information,3
+http://orkg.org/orkg/class/C18009,R135799,3
+http://orkg.org/orkg/class/C20157,methodical focus,3
+http://orkg.org/orkg/class/C20158,acronym,3
+http://orkg.org/orkg/class/C18003,R135385,3
+http://orkg.org/orkg/class/C18001,R135242,3
+http://orkg.org/orkg/class/C18006,R135416,3
+http://orkg.org/orkg/class/C18019,R136400,3
+http://orkg.org/orkg/class/C18008,R135770,3
+http://orkg.org/orkg/class/C21015,licence,3
+http://orkg.org/orkg/class/C21055,Acetazolamide,3
+http://orkg.org/orkg/class/C21059,Dorzolamide,3
+http://orkg.org/orkg/class/C21030,Component,3
+http://orkg.org/orkg/class/C20082,client,3
+http://orkg.org/orkg/class/C20099,Health organization,3
+http://orkg.org/orkg/class/C20055,Surveillance approach,3
+http://orkg.org/orkg/class/C20058,phase cycle,3
+http://orkg.org/orkg/class/C20039,Emission intensity,3
+http://orkg.org/orkg/class/C20029,Sensor,3
+http://orkg.org/orkg/class/C20007,Recommendation approach,3
+http://orkg.org/orkg/class/C20016,Smart city actors,3
+http://orkg.org/orkg/class/C20005,Target users,3
+http://orkg.org/orkg/class/C21020,process,3
+http://orkg.org/orkg/class/C52024,spliting technique,3
+http://orkg.org/orkg/class/C52020,System module,3
+http://orkg.org/orkg/class/C25002,Acquisition method,3
+http://orkg.org/orkg/class/C25003,Task perfom on pictures,3
+http://orkg.org/orkg/class/C28007,regression analysis,3
+http://orkg.org/orkg/class/C29005,research question answer,3
+http://orkg.org/orkg/class/C29031,data type,3
+http://orkg.org/orkg/class/C31009,in-depth analysis,3
+http://orkg.org/orkg/class/C31015,Ontology development process,3
+http://orkg.org/orkg/class/C34017,type of diffractive optical element,3
+http://orkg.org/orkg/class/Diagram,Diagram,3
+http://orkg.org/orkg/class/C52003,Semantic annotation task,3
+http://orkg.org/orkg/class/C52005,Challenge platform,3
+http://orkg.org/orkg/class/C14096,Rattus norvegicus,2
+http://orkg.org/orkg/class/C11011,Liter based unit,2
+http://orkg.org/orkg/class/C11016,Transient absorption type,2
+http://orkg.org/orkg/class/C7003,bao:BAO_0000219,2
+http://orkg.org/orkg/class/C14127,FLIPR TETRA,2
+http://orkg.org/orkg/class/C2004,obo:APOLLO_SV_00000002,2
+http://orkg.org/orkg/class/C7009,single concentration,2
+http://orkg.org/orkg/class/C8006,R49194,2
+http://orkg.org/orkg/class/C14210,WKYMVm peptide,2
+http://orkg.org/orkg/class/C14118,U-2 OS cell,2
+http://orkg.org/orkg/class/C14281,ATPLite Luminescence Assay System,2
+http://orkg.org/orkg/class/C14274,Tumor necrosis factor,2
+http://orkg.org/orkg/class/C14278,Pluronic F-127,2
+http://orkg.org/orkg/class/C14472,Vybrant MTT Cell Proliferation Assay Kit,2
+http://orkg.org/orkg/class/C14587,Leishmania mexicana,2
+http://orkg.org/orkg/class/C14604,transmission electron microscopy,2
+http://orkg.org/orkg/class/C20074,descriptive statistics,2
+http://orkg.org/orkg/class/C15001,R74758,2
+http://orkg.org/orkg/class/C16004,Sustainable cities and communities ,2
+http://orkg.org/orkg/class/C23000,Mathematical theorem,2
+http://orkg.org/orkg/class/C22049,Melting temperature,2
+http://orkg.org/orkg/class/C22034,Tip diameter,2
+http://orkg.org/orkg/class/C22004,Layer,2
+http://orkg.org/orkg/class/C21084,Budesonide,2
+http://orkg.org/orkg/class/C21087,Voriconazole,2
+http://orkg.org/orkg/class/C21083,Midazolam,2
+http://orkg.org/orkg/class/C21082,Insulin,2
+http://orkg.org/orkg/class/C21080,Disoxaril,2
+http://orkg.org/orkg/class/C19000,R137220,2
+http://orkg.org/orkg/class/C19001,R137223,2
+http://orkg.org/orkg/class/C19002,R137248,2
+http://orkg.org/orkg/class/C21072,Reactor,2
+http://orkg.org/orkg/class/C21069,goalType,2
+http://orkg.org/orkg/class/C21053,Dexamethasone,2
+http://orkg.org/orkg/class/C21051,Cyclosporin,2
+http://orkg.org/orkg/class/C21061,Pilocarpine,2
+http://orkg.org/orkg/class/C21036,Process variant,2
+http://orkg.org/orkg/class/C21026,R150425,2
+http://orkg.org/orkg/class/C21021,uncertainty approach,2
+http://orkg.org/orkg/class/C20107,Algorithm,2
+http://orkg.org/orkg/class/C20098,Mobile software,2
+http://orkg.org/orkg/class/C20063,Free software,2
+http://orkg.org/orkg/class/C20108,PTB7-Th,2
+http://orkg.org/orkg/class/C20062,Open source software,2
+http://orkg.org/orkg/class/C20065,GIS software,2
+http://orkg.org/orkg/class/C20053,Software development approach,2
+http://orkg.org/orkg/class/C20048,Potential units,2
+http://orkg.org/orkg/class/C20018,Goals,2
+http://orkg.org/orkg/class/C20009,User preferences type,2
+http://orkg.org/orkg/class/C20001,Smart city action,2
+http://orkg.org/orkg/class/C18017,Component for power generation or conversion,2
+http://orkg.org/orkg/class/C20087,household sector,2
+http://orkg.org/orkg/class/C17015,Reference work,2
+http://orkg.org/orkg/class/C52021,Position,2
+http://orkg.org/orkg/class/C25001,Type of food,2
+http://orkg.org/orkg/class/C26000,population,2
+http://orkg.org/orkg/class/C26008,Has location,2
+http://orkg.org/orkg/class/C26001,invasive species,2
+http://orkg.org/orkg/class/C29033,hypothesis type,2
+http://orkg.org/orkg/class/C29009,thematic analysis,2
+http://orkg.org/orkg/class/C31013,Ontology development methodology,2
+http://orkg.org/orkg/class/C23003,R166011,2
+http://orkg.org/orkg/class/C32009,artefact analysis,2
+http://orkg.org/orkg/class/C34015,theoretical or practical type,2
+http://orkg.org/orkg/class/C34018,field property,2
+http://orkg.org/orkg/class/C34007,INFOODS regional data center,2
+http://orkg.org/orkg/class/C37002,internal combustion vehicle,2
+http://orkg.org/orkg/class/C37001,framework,2
+http://orkg.org/orkg/class/PaperVersion,Paper Version,2
+http://orkg.org/orkg/class/Abbreviation,Abbreviation,2
+http://orkg.org/orkg/class/AlternativeName,AlternativeName,2
+http://orkg.org/orkg/class/Citation,Citation,2
+http://orkg.org/orkg/class/C40014,R218292,2
+http://orkg.org/orkg/class/C44002,Machine or Human evaluation,2
+http://orkg.org/orkg/class/C44001,Type of evaluation,2
+http://orkg.org/orkg/class/C14004,Information source,1
+http://orkg.org/orkg/class/C1000,obo:STATO_0000304,1
+http://orkg.org/orkg/class/C10016,CLO:0000031,1
+http://orkg.org/orkg/class/C10037,bao:BAO_0002080,1
+http://orkg.org/orkg/class/C13008,Nymphaeaceae,1
+http://orkg.org/orkg/class/C14041,culture serum,1
+http://orkg.org/orkg/class/C14067,direct enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14077,low signal control,1
+http://orkg.org/orkg/class/C14087,ViewLux ultraHTS Microplate Imager,1
+http://orkg.org/orkg/class/C14097,inducer,1
+http://orkg.org/orkg/class/C14076,Adenosine triphosphate,1
+http://orkg.org/orkg/class/C14086,Tris,1
+http://orkg.org/orkg/class/C14106,steadylite HTS Reagent,1
+http://orkg.org/orkg/class/C10026,bao:BAO_0003009,1
+http://orkg.org/orkg/class/C10029,bao:BAO_0140017,1
+http://orkg.org/orkg/class/C10032,bao:BAO_0150076,1
+http://orkg.org/orkg/class/C10038,bao:BAO_0002084,1
+http://orkg.org/orkg/class/C10033,bao:BAO_0002162,1
+http://orkg.org/orkg/class/C10035,nanomolar,1
+http://orkg.org/orkg/class/C10039,bao:BAO_0000188,1
+http://orkg.org/orkg/class/C10036,bao:BAO_0002450,1
+http://orkg.org/orkg/class/C10040,bao:BAO_0080017,1
+http://orkg.org/orkg/class/C14197,IP-One HTRF Assay,1
+http://orkg.org/orkg/class/C14016,plasma membrane,1
+http://orkg.org/orkg/class/C13004,Prionus,1
+http://orkg.org/orkg/class/C21086,Rifampicin,1
+http://orkg.org/orkg/class/C10001,endpoint assay,1
+http://orkg.org/orkg/class/C10009,percent response,1
+http://orkg.org/orkg/class/C10002,homogeneous phase,1
+http://orkg.org/orkg/class/C10020,CHEBI:36044,1
+http://orkg.org/orkg/class/C10012,bao:BAO_0000452,1
+http://orkg.org/orkg/class/C10014,percent inhibition,1
+http://orkg.org/orkg/class/C10003,confirmatory assay,1
+http://orkg.org/orkg/class/C10015,inhibition,1
+http://orkg.org/orkg/class/C10004,biochemical format,1
+http://orkg.org/orkg/class/C10008,bao:BAO_0150055,1
+http://orkg.org/orkg/class/C8026,Radiant exposure units,1
+http://orkg.org/orkg/class/C10034,bao:BAO_0000190,1
+http://orkg.org/orkg/class/C10030,CellTiter-Glo Luminescent Cell Viability Assay,1
+http://orkg.org/orkg/class/C10000,96 well plate,1
+http://orkg.org/orkg/class/C14003,Research Methods,1
+http://orkg.org/orkg/class/C14116,kinase,1
+http://orkg.org/orkg/class/C14137,transfection agent,1
+http://orkg.org/orkg/class/C14147,BD Biosciences,1
+http://orkg.org/orkg/class/C14157,Steady-Glo Luciferase Assay System,1
+http://orkg.org/orkg/class/C14167,Opera QEHS,1
+http://orkg.org/orkg/class/C14177,beta galactosidase reporter gene assay,1
+http://orkg.org/orkg/class/C14187,cytosolic protein,1
+http://orkg.org/orkg/class/C10023,bao:BAO_0002457,1
+http://orkg.org/orkg/class/C10027,384 well plate,1
+http://orkg.org/orkg/class/C10019,target,1
+http://orkg.org/orkg/class/C10013,bao:BAO_0150016,1
+http://orkg.org/orkg/class/C5000,obo:IDO_0000513,1
+http://orkg.org/orkg/class/C13006,Coniferophyta,1
+http://orkg.org/orkg/class/Date,Date,1
+http://orkg.org/orkg/class/Number,Number,1
+http://orkg.org/orkg/class/C9004,unit,1
+http://orkg.org/orkg/class/C10005,bao:BAO_0000035,1
+http://orkg.org/orkg/class/C10006,bao:BAO_0000046,1
+http://orkg.org/orkg/class/C10007,flow cytometry,1
+http://orkg.org/orkg/class/C7006,viability measurement method,1
+http://orkg.org/orkg/class/C7005,cell number determination,1
+http://orkg.org/orkg/class/C7010,spectrophotometry method,1
+http://orkg.org/orkg/class/C7007,heterogeneous phase,1
+http://orkg.org/orkg/class/C7011,bao:BAO_0002146,1
+http://orkg.org/orkg/class/C7008,micromolar,1
+http://orkg.org/orkg/class/C7014,instrumentation manufacturer,1
+http://orkg.org/orkg/class/C7013,compound library manufacturer,1
+http://orkg.org/orkg/class/C7012,assay provider,1
+http://orkg.org/orkg/class/C7015,perturbagen,1
+http://orkg.org/orkg/class/C10017,bao:BAO_0000232,1
+http://orkg.org/orkg/class/C10011,bao:BAO_0002183,1
+http://orkg.org/orkg/class/C10022,bao:BAO_0002455,1
+http://orkg.org/orkg/class/C10025,percent cell viability,1
+http://orkg.org/orkg/class/C10031,bao:BAO_0140012,1
+http://orkg.org/orkg/class/C10021,cytotoxicity assay,1
+http://orkg.org/orkg/class/C10024,bao:BAO_0001103,1
+http://orkg.org/orkg/class/C10010,small molecule,1
+http://orkg.org/orkg/class/C10042,CHEBI:23888,1
+http://orkg.org/orkg/class/C13005,Pteridophyta,1
+http://orkg.org/orkg/class/C13002,Dendrobias,1
+http://orkg.org/orkg/class/C13007,Cycadophyta,1
+http://orkg.org/orkg/class/C13003,Palophagoides,1
+http://orkg.org/orkg/class/C14012,phaseolotoxin,1
+http://orkg.org/orkg/class/C7004,Cell-based format,1
+http://orkg.org/orkg/class/C14040,multiple repetition,1
+http://orkg.org/orkg/class/C14066,alternate target assay,1
+http://orkg.org/orkg/class/C26002,seed,1
+http://orkg.org/orkg/class/C14008,Coronatine,1
+http://orkg.org/orkg/class/C14014,cytokinin,1
+http://orkg.org/orkg/class/C14017,Syringopeptin,1
+http://orkg.org/orkg/class/C14009,tabtoxinine beta-lactam,1
+http://orkg.org/orkg/class/C14006,pipecolate,1
+http://orkg.org/orkg/class/C14007,cadaverine,1
+http://orkg.org/orkg/class/C14005,Oxygenase,1
+http://orkg.org/orkg/class/C14010,glutamine synthetase,1
+http://orkg.org/orkg/class/C14011,polysaccharide,1
+http://orkg.org/orkg/class/C14013,indole-3-acetate,1
+http://orkg.org/orkg/class/C14015,syringomycin,1
+http://orkg.org/orkg/class/C14046,stable transfection,1
+http://orkg.org/orkg/class/C14072,Invitrogen,1
+http://orkg.org/orkg/class/C14082,luciferase induction,1
+http://orkg.org/orkg/class/C14092,Probenecid,1
+http://orkg.org/orkg/class/C14102,calcium redistribution assay,1
+http://orkg.org/orkg/class/C14112,cytotoxicity,1
+http://orkg.org/orkg/class/C14123,protein complex format,1
+http://orkg.org/orkg/class/C14028,single readout,1
+http://orkg.org/orkg/class/C14054,G protein coupled receptor,1
+http://orkg.org/orkg/class/C14180,mutated,1
+http://orkg.org/orkg/class/C14190,Photinus pyralis,1
+http://orkg.org/orkg/class/C14200,lead optimization assay,1
+http://orkg.org/orkg/class/C14220,regulation of molecular function,1
+http://orkg.org/orkg/class/C14230,TransIT-CHO kit,1
+http://orkg.org/orkg/class/C14133,ATP coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14143,HyperCyt High Throughput Flow Cytometry System,1
+http://orkg.org/orkg/class/C14153,phosphatase,1
+http://orkg.org/orkg/class/C14163,ABD Bioquest,1
+http://orkg.org/orkg/class/C14173,absorbance,1
+http://orkg.org/orkg/class/C14032,recombinant expression,1
+http://orkg.org/orkg/class/C14058,fluorescence intensity,1
+http://orkg.org/orkg/class/C14233,blood plasma,1
+http://orkg.org/orkg/class/C14243,FlexStation II Microplate Reader,1
+http://orkg.org/orkg/class/C14253,chaperone coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14251,Brij-35,1
+http://orkg.org/orkg/class/C14038,assay Kit,1
+http://orkg.org/orkg/class/C14064,detergent,1
+http://orkg.org/orkg/class/C14287,membrane protein,1
+http://orkg.org/orkg/class/C14297,britelite plus,1
+http://orkg.org/orkg/class/C14307,Galanin,1
+http://orkg.org/orkg/class/C14317,degree Celsius,1
+http://orkg.org/orkg/class/C14211,cAMP redistribution assay,1
+http://orkg.org/orkg/class/C14221,cofactor,1
+http://orkg.org/orkg/class/C14231,Vero cell,1
+http://orkg.org/orkg/class/C14241,SpectraMax M5 Multi-Mode Microplate Reader,1
+http://orkg.org/orkg/class/C14043,1536 well plate,1
+http://orkg.org/orkg/class/C14069,purified,1
+http://orkg.org/orkg/class/C14079,high signal control,1
+http://orkg.org/orkg/class/C14089,molecular redistribution determination method,1
+http://orkg.org/orkg/class/C14099,beta lactamase induction,1
+http://orkg.org/orkg/class/C14109,substrate coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14120,CHO-K1 cell,1
+http://orkg.org/orkg/class/C14130,ADMET,1
+http://orkg.org/orkg/class/C14140,fused,1
+http://orkg.org/orkg/class/C14150,purification from natural source,1
+http://orkg.org/orkg/class/C14160,multiplexed readout,1
+http://orkg.org/orkg/class/C14033,negative control,1
+http://orkg.org/orkg/class/C14059,enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14263,regulation of gene expression,1
+http://orkg.org/orkg/class/C14202,alternate assay format,1
+http://orkg.org/orkg/class/C14212,Fluorescein,1
+http://orkg.org/orkg/class/C14222,G protein,1
+http://orkg.org/orkg/class/C14047,DMSO,1
+http://orkg.org/orkg/class/C14073,Promega,1
+http://orkg.org/orkg/class/C14083,artificial regulatory region,1
+http://orkg.org/orkg/class/C14093,Tween 20,1
+http://orkg.org/orkg/class/C14103,generic hydrolase,1
+http://orkg.org/orkg/class/C14113,LiveBLAzer FRET - B/G Loading Kit,1
+http://orkg.org/orkg/class/C14124,membrane potential measurement method,1
+http://orkg.org/orkg/class/C14134,fluorescence polarization,1
+http://orkg.org/orkg/class/C14144,plasma membrane potential assay,1
+http://orkg.org/orkg/class/C14154,protein redistribution assay,1
+http://orkg.org/orkg/class/C14164,ACTOne Membrane Potential Dye,1
+http://orkg.org/orkg/class/C14174,phosphatase activity assay,1
+http://orkg.org/orkg/class/C14184,DiscoveRx,1
+http://orkg.org/orkg/class/C14194,dye redistribution assay,1
+http://orkg.org/orkg/class/C14204,PHERAstar Plus,1
+http://orkg.org/orkg/class/C14214,radioligand binding assay,1
+http://orkg.org/orkg/class/C14034,multiple concentration,1
+http://orkg.org/orkg/class/C14060,reporter gene method,1
+http://orkg.org/orkg/class/C14232,radioligand binding method,1
+http://orkg.org/orkg/class/C14242,RBL-2H3,1
+http://orkg.org/orkg/class/C14252,chaperone activity assay,1
+http://orkg.org/orkg/class/C14262,BTC AM Fluorescent Dye Indicator,1
+http://orkg.org/orkg/class/C14272,TopCount NXT Microplate Scintillation Luminescence Counter,1
+http://orkg.org/orkg/class/C14282,DIVERSet,1
+http://orkg.org/orkg/class/C14292,P-selectin glycoprotein ligand 1,1
+http://orkg.org/orkg/class/C14048,single protein format,1
+http://orkg.org/orkg/class/C14074,Beta-lactamase,1
+http://orkg.org/orkg/class/C14084,reducing agent,1
+http://orkg.org/orkg/class/C14094,coupled substrate,1
+http://orkg.org/orkg/class/C14104,hydrolase activity assay,1
+http://orkg.org/orkg/class/C14114,cell death,1
+http://orkg.org/orkg/class/C14125,FDSS6000,1
+http://orkg.org/orkg/class/C14135,immunoassay,1
+http://orkg.org/orkg/class/C14145,Cisbio,1
+http://orkg.org/orkg/class/C14155,Fluo-8 No Wash Calcium Assay Kit,1
+http://orkg.org/orkg/class/C14165,luciferin coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14175,Beta-galactosidase,1
+http://orkg.org/orkg/class/C14185,alternate cell line assay,1
+http://orkg.org/orkg/class/C14195,Z-Arg-Arg-AMC,1
+http://orkg.org/orkg/class/C14205,Adenosine diphosphate,1
+http://orkg.org/orkg/class/C14215,Ketoconazole,1
+http://orkg.org/orkg/class/C14026,single perturbagen,1
+http://orkg.org/orkg/class/C14052,MLSMR library,1
+http://orkg.org/orkg/class/C14117,kinetic assay,1
+http://orkg.org/orkg/class/C14128,transient transfection,1
+http://orkg.org/orkg/class/C14042,single repetition,1
+http://orkg.org/orkg/class/C14068,competitive binding,1
+http://orkg.org/orkg/class/C14078,efficacy,1
+http://orkg.org/orkg/class/C14088,background control,1
+http://orkg.org/orkg/class/C14098,luciferin,1
+http://orkg.org/orkg/class/C14108,ATP quantitation,1
+http://orkg.org/orkg/class/C14119,kinase activity assay,1
+http://orkg.org/orkg/class/C14129,Ro 20-1724,1
+http://orkg.org/orkg/class/C14139,NP-40,1
+http://orkg.org/orkg/class/C14149,Escherichia coli,1
+http://orkg.org/orkg/class/C14159,Arrestin-GFP,1
+http://orkg.org/orkg/class/C14169,oxidoreductase activity assay,1
+http://orkg.org/orkg/class/C14050,primary assay,1
+http://orkg.org/orkg/class/C14107,truncated,1
+http://orkg.org/orkg/class/C14035,biologics and screening manufacturer,1
+http://orkg.org/orkg/class/C14061,reporter gene,1
+http://orkg.org/orkg/class/C14207,[3H]N-methylscopolamine,1
+http://orkg.org/orkg/class/C14217,Forskolin,1
+http://orkg.org/orkg/class/C14227,293T/17 cell,1
+http://orkg.org/orkg/class/C14237,filter assay,1
+http://orkg.org/orkg/class/C14247,Dopamine,1
+http://orkg.org/orkg/class/C14257,ELISA,1
+http://orkg.org/orkg/class/C14037,culture medium,1
+http://orkg.org/orkg/class/C14063,inhibitor,1
+http://orkg.org/orkg/class/C14267,Bio-Tek Instruments,1
+http://orkg.org/orkg/class/C14277,beta galactosidase induction,1
+http://orkg.org/orkg/class/C14030,Homo sapiens,1
+http://orkg.org/orkg/class/C14029,native form,1
+http://orkg.org/orkg/class/C14055,EnVision Multilabel Reader,1
+http://orkg.org/orkg/class/C14240,apoptotic process,1
+http://orkg.org/orkg/class/C14250,Boc-Gln-Gly-Arg-AMC,1
+http://orkg.org/orkg/class/C14260,viral transduction method,1
+http://orkg.org/orkg/class/C14270,"pyrimidine-4,6-dicarboxylic acid",1
+http://orkg.org/orkg/class/C14280,localization assay,1
+http://orkg.org/orkg/class/C14179,hydrolase,1
+http://orkg.org/orkg/class/C14036,functional,1
+http://orkg.org/orkg/class/C14062,activation,1
+http://orkg.org/orkg/class/C14031,Perkin Elmer,1
+http://orkg.org/orkg/class/C14057,buffer,1
+http://orkg.org/orkg/class/C14183,Carbachol,1
+http://orkg.org/orkg/class/C14193,homogeneous time resolved fluorescence,1
+http://orkg.org/orkg/class/C14203,Ubiquitin vinyl sulfone,1
+http://orkg.org/orkg/class/C14213,Lipofectamine 2000,1
+http://orkg.org/orkg/class/C14223,BODIPY GTP,1
+http://orkg.org/orkg/class/C14497,KOPN-8,1
+http://orkg.org/orkg/class/C14507,Oryza sativa Japonica Group,1
+http://orkg.org/orkg/class/C14517,Rauwolscine,1
+http://orkg.org/orkg/class/C14527,MurNAc-L-Ala-gamma-D-Glu-mDAP,1
+http://orkg.org/orkg/class/C14051,Luciferin 4-monooxygenase,1
+http://orkg.org/orkg/class/C14027,measured entity,1
+http://orkg.org/orkg/class/C14053,luminescence method,1
+http://orkg.org/orkg/class/C14138,7-amino-4-methylcoumarin,1
+http://orkg.org/orkg/class/C14148,HeLa cell,1
+http://orkg.org/orkg/class/C14158,NADPH,1
+http://orkg.org/orkg/class/C14168,generic membrane protein,1
+http://orkg.org/orkg/class/C14178,CHAPS,1
+http://orkg.org/orkg/class/C14188,luciferase enzyme activity assay,1
+http://orkg.org/orkg/class/C14198,Neuropeptide Y,1
+http://orkg.org/orkg/class/C14208,PathHunter Beta-Arrestin Assay,1
+http://orkg.org/orkg/class/C14218,Orexin A,1
+http://orkg.org/orkg/class/C14228,protein fragment complementation method,1
+http://orkg.org/orkg/class/C14238,Interleukin-6,1
+http://orkg.org/orkg/class/C14248,coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14170,ion channel,1
+http://orkg.org/orkg/class/C14039,positive control,1
+http://orkg.org/orkg/class/C14065,binding assessment method,1
+http://orkg.org/orkg/class/C14075,binding,1
+http://orkg.org/orkg/class/C14085,DTT,1
+http://orkg.org/orkg/class/C14095,HEPES,1
+http://orkg.org/orkg/class/C14105,percent activation,1
+http://orkg.org/orkg/class/C14115,protein-small molecule interaction assay,1
+http://orkg.org/orkg/class/C14126,Acetylcholine,1
+http://orkg.org/orkg/class/C14136,IntelliCyt Corporation,1
+http://orkg.org/orkg/class/C14146,nuclear receptor,1
+http://orkg.org/orkg/class/C14156,Isoproterenol,1
+http://orkg.org/orkg/class/C14166,compound toxicity assay,1
+http://orkg.org/orkg/class/C14176,millimolar,1
+http://orkg.org/orkg/class/C14186,Glutamate,1
+http://orkg.org/orkg/class/C14196,U937 (CD59+),1
+http://orkg.org/orkg/class/C14206,regulation of translation,1
+http://orkg.org/orkg/class/C14044,protein format,1
+http://orkg.org/orkg/class/C14070,assay serum,1
+http://orkg.org/orkg/class/C14080,CHO cell,1
+http://orkg.org/orkg/class/C14090,Molecular Devices,1
+http://orkg.org/orkg/class/C14100,protein-protein interaction assay,1
+http://orkg.org/orkg/class/C14110,oxidoreductase,1
+http://orkg.org/orkg/class/C14121,Hamamatsu,1
+http://orkg.org/orkg/class/C14131,alternate assay conditions,1
+http://orkg.org/orkg/class/C14141,Analyst HT,1
+http://orkg.org/orkg/class/C14151,Triton X-100,1
+http://orkg.org/orkg/class/C14161,chemiluminescence,1
+http://orkg.org/orkg/class/C14171,Kinase-Glo Luminescent Kinase Assay,1
+http://orkg.org/orkg/class/C14181,Phosphate buffered saline,1
+http://orkg.org/orkg/class/C14191,cytochrome P450 enzyme activity assay,1
+http://orkg.org/orkg/class/C14201,BMG Labtech,1
+http://orkg.org/orkg/class/C14045,secondary assay,1
+http://orkg.org/orkg/class/C14071,ViewLux CCD Imager,1
+http://orkg.org/orkg/class/C14081,luciferase reporter gene assay,1
+http://orkg.org/orkg/class/C14091,fluorescence resonance energy transfer,1
+http://orkg.org/orkg/class/C14101,Calcium,1
+http://orkg.org/orkg/class/C14111,time resolved fluorescence resonance energy transfer,1
+http://orkg.org/orkg/class/C14122,dye binding method,1
+http://orkg.org/orkg/class/C14132,Fluo-4 AM Calcium Indicator,1
+http://orkg.org/orkg/class/C14142,orthogonal assay technology,1
+http://orkg.org/orkg/class/C14152,Thallium,1
+http://orkg.org/orkg/class/C14162,GeneBLAzer,1
+http://orkg.org/orkg/class/C14172,orthogonal assay design,1
+http://orkg.org/orkg/class/C14182,transferase,1
+http://orkg.org/orkg/class/C14192,variant construct assay,1
+http://orkg.org/orkg/class/C14056,potentiator,1
+http://orkg.org/orkg/class/C14189,Mus musculus,1
+http://orkg.org/orkg/class/C14199,Cyclic adenosine monophosphate,1
+http://orkg.org/orkg/class/C14209,Inositol-1-phosphate,1
+http://orkg.org/orkg/class/C14219,Dako,1
+http://orkg.org/orkg/class/C14229,tissue-based format,1
+http://orkg.org/orkg/class/C14239,Potassium phosphoenolpyruvate,1
+http://orkg.org/orkg/class/C14249,Interferon gamma,1
+http://orkg.org/orkg/class/C14259,IP1 redistribution assay,1
+http://orkg.org/orkg/class/C14269,Fluo-8 Calcium Indicator,1
+http://orkg.org/orkg/class/C14279,7-amino-4-trifluoromethylcoumarin,1
+http://orkg.org/orkg/class/C14289,Quinidine,1
+http://orkg.org/orkg/class/C14261,mixture of perturbagens,1
+http://orkg.org/orkg/class/C14271,G alpha O-Alexa Fluor 488,1
+http://orkg.org/orkg/class/C14216,cell-free format,1
+http://orkg.org/orkg/class/C14226,chaperone,1
+http://orkg.org/orkg/class/C14236,Streptococcus pneumoniae D39,1
+http://orkg.org/orkg/class/C14246,Cy5,1
+http://orkg.org/orkg/class/C14256,U3A,1
+http://orkg.org/orkg/class/C14266,R18 peptide,1
+http://orkg.org/orkg/class/C14224,CyAn Flow Cytometer,1
+http://orkg.org/orkg/class/C14234,Staurosporine,1
+http://orkg.org/orkg/class/C14244,protein conformation assessment,1
+http://orkg.org/orkg/class/C14254,Doxorubicin,1
+http://orkg.org/orkg/class/C14264,Vasopressin,1
+http://orkg.org/orkg/class/C14225,LOPAC 1280,1
+http://orkg.org/orkg/class/C14235,Sodium orthovanadate,1
+http://orkg.org/orkg/class/C14245,conformation determination method,1
+http://orkg.org/orkg/class/C14255,HTRF cAMP Detection Kit,1
+http://orkg.org/orkg/class/C14265,Tetracycline,1
+http://orkg.org/orkg/class/C14275,Agilent Technologies,1
+http://orkg.org/orkg/class/C14285,protein stabilization,1
+http://orkg.org/orkg/class/C14295,Ac-WEHD-CHO,1
+http://orkg.org/orkg/class/C14305,unpurified,1
+http://orkg.org/orkg/class/C14315,Zaprinast,1
+http://orkg.org/orkg/class/C14325,Resorufin,1
+http://orkg.org/orkg/class/C14258,Phorbol myristate acetate,1
+http://orkg.org/orkg/class/C14268,BRL-54443,1
+http://orkg.org/orkg/class/C14288,PKLight,1
+http://orkg.org/orkg/class/C14298,COS-7,1
+http://orkg.org/orkg/class/C14308,Prostaglandin E2,1
+http://orkg.org/orkg/class/C14318,WRO,1
+http://orkg.org/orkg/class/C14328,Ubiquitin-Rho,1
+http://orkg.org/orkg/class/C14338,AAT Bioquest,1
+http://orkg.org/orkg/class/C14348,N2a,1
+http://orkg.org/orkg/class/C14273,Neuropeptide S,1
+http://orkg.org/orkg/class/C14283,Ionomycin,1
+http://orkg.org/orkg/class/C14293,nuclear magnetic resonance,1
+http://orkg.org/orkg/class/C14303,Fluorogenic triple-helical peptide 3,1
+http://orkg.org/orkg/class/C14313,4 Methylumbelliferyl-D-pyranoside,1
+http://orkg.org/orkg/class/C14323,Bruker,1
+http://orkg.org/orkg/class/C14333,TG003,1
+http://orkg.org/orkg/class/C14343,Sigma-Aldrich,1
+http://orkg.org/orkg/class/C14276,Oxytocin,1
+http://orkg.org/orkg/class/C14286,Furafylline,1
+http://orkg.org/orkg/class/C14296,isomerase activity assay,1
+http://orkg.org/orkg/class/C14306,H69AR cell,1
+http://orkg.org/orkg/class/C14316,TMR-pS259-Raf peptide,1
+http://orkg.org/orkg/class/C14326,SK-BR-3,1
+http://orkg.org/orkg/class/C14336,3-O-methyl-fluorescein,1
+http://orkg.org/orkg/class/C14346,MOPS,1
+http://orkg.org/orkg/class/C14284,saturation binding,1
+http://orkg.org/orkg/class/C14294,cell membrane format,1
+http://orkg.org/orkg/class/C14304,regulation of proteasomal protein catabolic process,1
+http://orkg.org/orkg/class/C14314,LJL BioSystems,1
+http://orkg.org/orkg/class/C14324,Thrombopoietin,1
+http://orkg.org/orkg/class/C14334,ChemBridge,1
+http://orkg.org/orkg/class/C14344,Chroma-Glo Luciferase Assay System,1
+http://orkg.org/orkg/class/C14354,ELx808 Absorbance Microplate Reader,1
+http://orkg.org/orkg/class/C14364,Beta-Glo Assay System,1
+http://orkg.org/orkg/class/C14374,P450-Glo CYP2C19 Screening System,1
+http://orkg.org/orkg/class/C14384,fMLFF peptide,1
+http://orkg.org/orkg/class/C14290,Monolight 2010 Luminometer,1
+http://orkg.org/orkg/class/C14300,organism-based format,1
+http://orkg.org/orkg/class/C14310,AK295 peptide,1
+http://orkg.org/orkg/class/C14320,cuvette,1
+http://orkg.org/orkg/class/C14330,SK-N-SH cell,1
+http://orkg.org/orkg/class/C14340,Bright-Glo Luciferase Assay System,1
+http://orkg.org/orkg/class/C14350,Schistosoma mansoni,1
+http://orkg.org/orkg/class/C14360,Apelin-13,1
+http://orkg.org/orkg/class/C14291,COS-7 cell,1
+http://orkg.org/orkg/class/C14301,GE Healthcare,1
+http://orkg.org/orkg/class/C14311,Saponin,1
+http://orkg.org/orkg/class/C14321,Wee1-like protein-Luciferin 4-monooxygenase,1
+http://orkg.org/orkg/class/C14331,enzyme regulator,1
+http://orkg.org/orkg/class/C14341,Thrombin Receptor Activator Peptide 6,1
+http://orkg.org/orkg/class/C14351,P450-Glo CYP1A2 Screening System,1
+http://orkg.org/orkg/class/C14299,generic transferase,1
+http://orkg.org/orkg/class/C14309,Mannose-6-phosphate,1
+http://orkg.org/orkg/class/C14319,H4,1
+http://orkg.org/orkg/class/C14329,siRNA,1
+http://orkg.org/orkg/class/C14339,Wallac MicroBeta Liquid Scintillation Counter,1
+http://orkg.org/orkg/class/C14349,Bisindolylmaleimide,1
+http://orkg.org/orkg/class/C14359,thermal shift,1
+http://orkg.org/orkg/class/C14302,isomerase,1
+http://orkg.org/orkg/class/C14312,FluxOR Thallium Detection Kit,1
+http://orkg.org/orkg/class/C14322,Estrogen-Alexa 633,1
+http://orkg.org/orkg/class/C14332,Fluorophosphonate-rhodamine,1
+http://orkg.org/orkg/class/C14342,whole cell lysate format,1
+http://orkg.org/orkg/class/C14352,lyase,1
+http://orkg.org/orkg/class/C14362,GW8510,1
+http://orkg.org/orkg/class/C14372,maximal activation,1
+http://orkg.org/orkg/class/C14327,rabbit reticulocyte lysate format,1
+http://orkg.org/orkg/class/C14337,transporter assay,1
+http://orkg.org/orkg/class/C14347,platelet activation assay,1
+http://orkg.org/orkg/class/C14357,Thapsigargin,1
+http://orkg.org/orkg/class/C14367,Pancreatic trypsin inhibitor,1
+http://orkg.org/orkg/class/C14335,P450-Glo CYP2D6 Screening System,1
+http://orkg.org/orkg/class/C14345,Dual-Luciferase Reporter Assay System,1
+http://orkg.org/orkg/class/C14355,Diphosphomevalonate,1
+http://orkg.org/orkg/class/C14365,platelet activation,1
+http://orkg.org/orkg/class/C14375,Hep G2 cell,1
+http://orkg.org/orkg/class/C14385,"1, 4 methyllumbelliferone",1
+http://orkg.org/orkg/class/C14395,unfolded conformation,1
+http://orkg.org/orkg/class/C14405,Photon Technology International,1
+http://orkg.org/orkg/class/C14415,cell growth assay,1
+http://orkg.org/orkg/class/C14425,Thyrotropin-releasing hormone,1
+http://orkg.org/orkg/class/C14435,"6,8-difluoro-4-methylumbelliferyl phosphate",1
+http://orkg.org/orkg/class/C14353,Leuconostoc mesenteroides,1
+http://orkg.org/orkg/class/C14363,Cysteine,1
+http://orkg.org/orkg/class/C14373,Estrogen,1
+http://orkg.org/orkg/class/C14383,protease,1
+http://orkg.org/orkg/class/C14393,lyase activity assay,1
+http://orkg.org/orkg/class/C14403,BJ,1
+http://orkg.org/orkg/class/C14413,protein unfolding assay,1
+http://orkg.org/orkg/class/C14423,Neuropeptide W,1
+http://orkg.org/orkg/class/C14433,aggregated,1
+http://orkg.org/orkg/class/C14443,MES,1
+http://orkg.org/orkg/class/C14356,Texas red,1
+http://orkg.org/orkg/class/C14366,Rhodamine,1
+http://orkg.org/orkg/class/C14376,Phosphoenolpyruvate,1
+http://orkg.org/orkg/class/C14386,SYPRO orange dye,1
+http://orkg.org/orkg/class/C14396,apoptosis assay,1
+http://orkg.org/orkg/class/C14358,Caspase Glo 3/7 Assay,1
+http://orkg.org/orkg/class/C14368,P450-Glo CYP3A4 Screening System,1
+http://orkg.org/orkg/class/C14378,MCF7 cell,1
+http://orkg.org/orkg/class/C14388,Arachidonic acid,1
+http://orkg.org/orkg/class/C14398,Epstein-Barr virus,1
+http://orkg.org/orkg/class/C14361,synthesis by a chemical process,1
+http://orkg.org/orkg/class/C14371,TransIT-LT1,1
+http://orkg.org/orkg/class/C14381,5-Carboxamidotryptamine,1
+http://orkg.org/orkg/class/C14391,secreted,1
+http://orkg.org/orkg/class/C14369,ULight poly-GT,1
+http://orkg.org/orkg/class/C14379,Glucose-6-phosphate,1
+http://orkg.org/orkg/class/C14389,Diminazene aceturate,1
+http://orkg.org/orkg/class/C14399,FDSS7000,1
+http://orkg.org/orkg/class/C14409,ONE-Glo Luciferase Assay System,1
+http://orkg.org/orkg/class/C14419,LANCE cAMP Detection Kit,1
+http://orkg.org/orkg/class/C14429,BSC-1,1
+http://orkg.org/orkg/class/C14370,GW5074,1
+http://orkg.org/orkg/class/C14380,molar,1
+http://orkg.org/orkg/class/C14390,Human immunodeficiency virus 1,1
+http://orkg.org/orkg/class/C14400,Cell Signaling,1
+http://orkg.org/orkg/class/C14410,OptEIA Human IL-8 ELISA Set,1
+http://orkg.org/orkg/class/C14420,Interleukin-8,1
+http://orkg.org/orkg/class/C14377,Thioflavine S,1
+http://orkg.org/orkg/class/C14387,Lysophosphatidylinositol,1
+http://orkg.org/orkg/class/C14397,Avance III,1
+http://orkg.org/orkg/class/C14407,8453 UV-Visible Spectrophotometer,1
+http://orkg.org/orkg/class/C14417,Interleukin-3,1
+http://orkg.org/orkg/class/C14427,DNA,1
+http://orkg.org/orkg/class/C14437,Thermo Fisher Scientific,1
+http://orkg.org/orkg/class/C14447,Lipofectin,1
+http://orkg.org/orkg/class/C14457,HTRF KinEASE-TK,1
+http://orkg.org/orkg/class/C14382,Cambrex,1
+http://orkg.org/orkg/class/C14392,drug transport,1
+http://orkg.org/orkg/class/C14402,ADP Hunter Plus,1
+http://orkg.org/orkg/class/C14412,Analytical Luminescence Laboratory,1
+http://orkg.org/orkg/class/C14394,P450-Glo CYP2C9 Screening System,1
+http://orkg.org/orkg/class/C14404,Pyr-RTKR-AMC,1
+http://orkg.org/orkg/class/C14414,L-AP4,1
+http://orkg.org/orkg/class/C14424,Chlorocebus aethiops,1
+http://orkg.org/orkg/class/C14434,C2C12,1
+http://orkg.org/orkg/class/C14401,VICTOR X3 Multilabel Plate Reader,1
+http://orkg.org/orkg/class/C14411,Zeiss,1
+http://orkg.org/orkg/class/C14421,Luciferin-H,1
+http://orkg.org/orkg/class/C14431,CBF-his/runx1-biotin protein complex,1
+http://orkg.org/orkg/class/C14441,24 well plate,1
+http://orkg.org/orkg/class/C14451,percent growth inhibition,1
+http://orkg.org/orkg/class/C14406,C6,1
+http://orkg.org/orkg/class/C14416,Schneider's Drosophila Line 2,1
+http://orkg.org/orkg/class/C14426,HTScan IKK-beta Kinase Assay Kit,1
+http://orkg.org/orkg/class/C14436,Sus scrofa,1
+http://orkg.org/orkg/class/C14446,GM-TriDAP peptide,1
+http://orkg.org/orkg/class/C14456,BacTiter-Glo Microbial Cell Viability Assay,1
+http://orkg.org/orkg/class/C14466,Bos taurus,1
+http://orkg.org/orkg/class/C14476,Ac-DEVD-CHO,1
+http://orkg.org/orkg/class/C14408,[125I]Y10-neuropeptide S,1
+http://orkg.org/orkg/class/C14418,Enterococcus faecalis,1
+http://orkg.org/orkg/class/C14428,Ac-DEVD-AFC,1
+http://orkg.org/orkg/class/C14438,Yersinia enterocolitica,1
+http://orkg.org/orkg/class/C14448,Beta-hydroxybutyryl coenzyme A,1
+http://orkg.org/orkg/class/C14458,cell morphology assay,1
+http://orkg.org/orkg/class/C14422,Trypanosoma brucei,1
+http://orkg.org/orkg/class/C14432,Pseudomonas aeruginosa PAO1,1
+http://orkg.org/orkg/class/C14442,signal transduction assay,1
+http://orkg.org/orkg/class/C14452,The NatProd Collection,1
+http://orkg.org/orkg/class/C14462,Gilson,1
+http://orkg.org/orkg/class/C14430,fluorescent protein reporter gene assay,1
+http://orkg.org/orkg/class/C14440,Proteasome-Glo Chymotrypsin-Like Assay,1
+http://orkg.org/orkg/class/C14450,peptide,1
+http://orkg.org/orkg/class/C14460,ion channel assay,1
+http://orkg.org/orkg/class/C14470,Doxycycline,1
+http://orkg.org/orkg/class/C14480,FLx800 Fluorescence Microplate Reader,1
+http://orkg.org/orkg/class/C14490,"phosphatidylinositol (3,4,5)-triphosphate",1
+http://orkg.org/orkg/class/C14439,Molecular Probes,1
+http://orkg.org/orkg/class/C14449,SpectraMax 190 Microplate Reader,1
+http://orkg.org/orkg/class/C14459,CD40,1
+http://orkg.org/orkg/class/C14444,Boc-Val-Pro-Arg-AMC,1
+http://orkg.org/orkg/class/C14454,Retinoic acid,1
+http://orkg.org/orkg/class/C14464,Sphingosine 1-phosphate,1
+http://orkg.org/orkg/class/C14474,isothermal titration calorimetry,1
+http://orkg.org/orkg/class/C14484,Luciferin-H EGE,1
+http://orkg.org/orkg/class/C14494,Z-Leu-Leu-Leu-al,1
+http://orkg.org/orkg/class/C14445,lysate based,1
+http://orkg.org/orkg/class/C14455,Ubiquitin-AMC,1
+http://orkg.org/orkg/class/C14453,Profluorescent 1-AMA,1
+http://orkg.org/orkg/class/C14463,MSC 80,1
+http://orkg.org/orkg/class/C14473,VICTOR X2 Multilabel Plate Reader,1
+http://orkg.org/orkg/class/C14483,NINDS library,1
+http://orkg.org/orkg/class/C14493,Thyroid-stimulating hormone,1
+http://orkg.org/orkg/class/C14503,CD4-TLR4,1
+http://orkg.org/orkg/class/C14513,Lithium chloride,1
+http://orkg.org/orkg/class/C14523,Calcium 5 Assay Kit,1
+http://orkg.org/orkg/class/C14533,hour,1
+http://orkg.org/orkg/class/C14543,LYMP2-003,1
+http://orkg.org/orkg/class/C14461,1-Aminoanthracene,1
+http://orkg.org/orkg/class/C14471,HEL cell,1
+http://orkg.org/orkg/class/C14481,Tecan,1
+http://orkg.org/orkg/class/C14491,PPC-1,1
+http://orkg.org/orkg/class/C14501,Yersinia pseudotuberculosis,1
+http://orkg.org/orkg/class/C14511,Angiotensin II,1
+http://orkg.org/orkg/class/C14521,Leukemia,1
+http://orkg.org/orkg/class/C14531,NOD2,1
+http://orkg.org/orkg/class/C14541,MicroCal,1
+http://orkg.org/orkg/class/C14465,foreign promoter region,1
+http://orkg.org/orkg/class/C14475,HTScan PKC-beta Kinase Assay Kit,1
+http://orkg.org/orkg/class/C14485,alphascreen,1
+http://orkg.org/orkg/class/C14495,Suc-Ala-Ala-Pro-Phe-AMC,1
+http://orkg.org/orkg/class/C14467,Caenorhabditis elegans,1
+http://orkg.org/orkg/class/C14477,High Performance PBX Calcium Assay Kit,1
+http://orkg.org/orkg/class/C14487,biofilm formation,1
+http://orkg.org/orkg/class/C14468,antibiotic resistance,1
+http://orkg.org/orkg/class/C14478,Ac-LEHD-AMC,1
+http://orkg.org/orkg/class/C14488,DABCYL-Thr-Pro-Leu-Lys~Ser-Pro-Pro-Pro-Ser-Pro-Arg-EDANS,1
+http://orkg.org/orkg/class/C14498,Resorufin alpha-D-pyranoside,1
+http://orkg.org/orkg/class/C14508,cofactor coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14518,NBD C6-HPC,1
+http://orkg.org/orkg/class/C14469,SNC80,1
+http://orkg.org/orkg/class/C14479,MicroSource Discovery Systems,1
+http://orkg.org/orkg/class/C14489,ML-2,1
+http://orkg.org/orkg/class/C14499,Phosphomevalonate,1
+http://orkg.org/orkg/class/C14509,A23187,1
+http://orkg.org/orkg/class/C14519,protein-DNA interaction assay,1
+http://orkg.org/orkg/class/C14482,point mutated,1
+http://orkg.org/orkg/class/C14492,API 4000 LC/MS/MS System,1
+http://orkg.org/orkg/class/C14502,Tunicamycin,1
+http://orkg.org/orkg/class/C14512,IPEGAL,1
+http://orkg.org/orkg/class/C14522,viral entry into host cell,1
+http://orkg.org/orkg/class/C14532,Infinite PF200,1
+http://orkg.org/orkg/class/C14542,LYMP2-006,1
+http://orkg.org/orkg/class/C14552,Dy647-pS136-Bad peptide,1
+http://orkg.org/orkg/class/C14562,LYMP2-022,1
+http://orkg.org/orkg/class/C14572,LYMP2-014,1
+http://orkg.org/orkg/class/C14486,AB SCIEX,1
+http://orkg.org/orkg/class/C14496,structural,1
+http://orkg.org/orkg/class/C14506,HEC-1-A,1
+http://orkg.org/orkg/class/C14500,Influenza virus,1
+http://orkg.org/orkg/class/C14510,CSM14.1,1
+http://orkg.org/orkg/class/C14520,THP-1 cell,1
+http://orkg.org/orkg/class/C14530,NOD1,1
+http://orkg.org/orkg/class/C14504,Infectious bronchitis virus,1
+http://orkg.org/orkg/class/C14514,Glucose,1
+http://orkg.org/orkg/class/C14524,MV-4-11,1
+http://orkg.org/orkg/class/C14534,protein-turnover assay,1
+http://orkg.org/orkg/class/C14544,LYMP2-004,1
+http://orkg.org/orkg/class/C14554,counts per second,1
+http://orkg.org/orkg/class/C14564,LYMP2-026,1
+http://orkg.org/orkg/class/C14505,fMLFK-FITC,1
+http://orkg.org/orkg/class/C14515,FluoZin,1
+http://orkg.org/orkg/class/C14525,Rolipram,1
+http://orkg.org/orkg/class/C14535,mass spectrometry,1
+http://orkg.org/orkg/class/C14545,LYMP2-009,1
+http://orkg.org/orkg/class/C14555,AxioVert 200M Fluorescence Light Microscope,1
+http://orkg.org/orkg/class/C14516,VP-ITC Isothermal Titration Calorimeter,1
+http://orkg.org/orkg/class/C14526,[35S]GTP-gamma S,1
+http://orkg.org/orkg/class/C14536,HPLC System,1
+http://orkg.org/orkg/class/C14546,LYMP2-007,1
+http://orkg.org/orkg/class/C14556,protease activity assay,1
+http://orkg.org/orkg/class/C14528,alternate confirmatory assay,1
+http://orkg.org/orkg/class/C14538,LYMP2-001,1
+http://orkg.org/orkg/class/C14548,ChemDiv,1
+http://orkg.org/orkg/class/C14529,HTScan PKC-theta Kinase Assay Kit,1
+http://orkg.org/orkg/class/C14539,LYMP2-002,1
+http://orkg.org/orkg/class/C14549,thrombocyte differentiation,1
+http://orkg.org/orkg/class/C14559,LYMP2-023,1
+http://orkg.org/orkg/class/C14569,LYMP2-011,1
+http://orkg.org/orkg/class/C14579,"6,8-difluoro-7-hydroxy-4-methylcoumarin",1
+http://orkg.org/orkg/class/C14589,Stibavirin,1
+http://orkg.org/orkg/class/C14599,HTRF cAMP HiRange Detection Kit,1
+http://orkg.org/orkg/class/C14609,Phosphoethanolamine,1
+http://orkg.org/orkg/class/C14537,Dynorphin A,1
+http://orkg.org/orkg/class/C14547,LYMP2-008,1
+http://orkg.org/orkg/class/C14557,Microtubule-associated protein tau,1
+http://orkg.org/orkg/class/C14567,LYMP2-013,1
+http://orkg.org/orkg/class/C14577,LYMP1-002,1
+http://orkg.org/orkg/class/C14597,brain,1
+http://orkg.org/orkg/class/C14540,LYMP2-005,1
+http://orkg.org/orkg/class/C14550,HTFC Screening System,1
+http://orkg.org/orkg/class/C14560,LYMP2-024,1
+http://orkg.org/orkg/class/C14570,LYMP2-016,1
+http://orkg.org/orkg/class/C14580,fluorescent protein induction,1
+http://orkg.org/orkg/class/C14590,Indo-1 Calcium Indicator,1
+http://orkg.org/orkg/class/C14551,OCI-Ly3,1
+http://orkg.org/orkg/class/C14561,LYMP2-021,1
+http://orkg.org/orkg/class/C14571,LYMP2-017,1
+http://orkg.org/orkg/class/C14581,Kinase-Glo Plus Luminescent Kinase Assay,1
+http://orkg.org/orkg/class/C14591,Mevalonate,1
+http://orkg.org/orkg/class/C14601,DLD-1 cell,1
+http://orkg.org/orkg/class/C14553,Saccharomyces cerevisiae,1
+http://orkg.org/orkg/class/C14563,LYMP2-025,1
+http://orkg.org/orkg/class/C14573,LYMP2-015,1
+http://orkg.org/orkg/class/C14583,transferase activity assay,1
+http://orkg.org/orkg/class/C14593,Coenzyme A,1
+http://orkg.org/orkg/class/C14603,FluoZin-2,1
+http://orkg.org/orkg/class/C14558,LYMP2-020,1
+http://orkg.org/orkg/class/C14568,LYMP2-010,1
+http://orkg.org/orkg/class/C14578,LYMP1-003,1
+http://orkg.org/orkg/class/C14588,circadian rhythm,1
+http://orkg.org/orkg/class/C14598,RS repeat peptide,1
+http://orkg.org/orkg/class/C14608,Equus caballus,1
+http://orkg.org/orkg/class/C14565,growth inhibition,1
+http://orkg.org/orkg/class/C14575,LYMP2-018,1
+http://orkg.org/orkg/class/C14585,West Nile virus,1
+http://orkg.org/orkg/class/C14595,Packard Fusion Microplate Reader,1
+http://orkg.org/orkg/class/C14566,LYMP2-012,1
+http://orkg.org/orkg/class/C14576,LYMP2-019,1
+http://orkg.org/orkg/class/C14586,Macrophage inflammatory protein 3 alpha,1
+http://orkg.org/orkg/class/C14596,protein stability assay,1
+http://orkg.org/orkg/class/C14606,fluorometer,1
+http://orkg.org/orkg/class/C14574,FuGENE 6,1
+http://orkg.org/orkg/class/C14584,Triiodothyronine,1
+http://orkg.org/orkg/class/C14594,Para-nitrophenol,1
+http://orkg.org/orkg/class/C14582,AMINCO-Bowman Series 2 Luminescence Spectrometer,1
+http://orkg.org/orkg/class/C14592,Rhodamine-conjugated sulfonate ester,1
+http://orkg.org/orkg/class/C14602,protease coupled enzyme activity measurement method,1
+http://orkg.org/orkg/class/C14600,DAMGO,1
+http://orkg.org/orkg/class/C14610,Lonza,1
+http://orkg.org/orkg/class/C14607,WIN55212,1
+http://orkg.org/orkg/class/C15039,Amplex Red Glucose/Glucose Oxidase Assay Kit,1
+http://orkg.org/orkg/class/C15037,Salmonella enterica subsp. enterica serovar Typhi,1
+http://orkg.org/orkg/class/C15041,Muramyl dipeptide,1
+http://orkg.org/orkg/class/C15016,AlphaScreen Beads,1
+http://orkg.org/orkg/class/C15044,regulation of RNA splicing,1
+http://orkg.org/orkg/class/C15031,Tango GPCR Assay System,1
+http://orkg.org/orkg/class/C15038,LI-COR Biosciences,1
+http://orkg.org/orkg/class/C15030,phosphorylated,1
+http://orkg.org/orkg/class/C15024,selectivity assay,1
+http://orkg.org/orkg/class/C15014,Geobacillus stearothermophilus,1
+http://orkg.org/orkg/class/C15026,Adapta Universal Kinase Assay Kit,1
+http://orkg.org/orkg/class/C15028,ratio,1
+http://orkg.org/orkg/class/C15029,14LckpCAP394 peptide,1
+http://orkg.org/orkg/class/C15034,Vibrio harveyi,1
+http://orkg.org/orkg/class/C15021,quorum sensing,1
+http://orkg.org/orkg/class/C15033,Phospho(Thr180/Tyr182)/Total p38 Assay Whole Cell Lysate Kit,1
+http://orkg.org/orkg/class/C15032,partially purified,1
+http://orkg.org/orkg/class/C15019,Fluorescein Di-beta-D-Glucopyranoside,1
+http://orkg.org/orkg/class/C15025,Calcium Assay Kit,1
+http://orkg.org/orkg/class/C15013,Plasmodium falciparum,1
+http://orkg.org/orkg/class/C15045,ligase,1
+http://orkg.org/orkg/class/C15011,Boc-Leu-Gly-Arg-AMC,1
+http://orkg.org/orkg/class/C15053,Odyssey Infrared Imager,1
+http://orkg.org/orkg/class/C15009,western blot,1
+http://orkg.org/orkg/class/C15051,Venezuelan equine encephalitis virus,1
+http://orkg.org/orkg/class/C15022,MSD SECTOR instrument,1
+http://orkg.org/orkg/class/C15017,organism behavior assay,1
+http://orkg.org/orkg/class/C15010,mitogen-activated protein kinase 1,1
+http://orkg.org/orkg/class/C15052,viral genome replication,1
+http://orkg.org/orkg/class/C15015,Resorufin beta-D-glucopyranoside,1
+http://orkg.org/orkg/class/C15012,H5N1 subtype,1
+http://orkg.org/orkg/class/C15007,Go6976,1
+http://orkg.org/orkg/class/C15049,Mitogen-activated protein kinase 14,1
+http://orkg.org/orkg/class/C15005,Canis lupus familiaris,1
+http://orkg.org/orkg/class/C15047,cell permeability assay,1
+http://orkg.org/orkg/class/C15008,H-Leu-NHMec,1
+http://orkg.org/orkg/class/C15006,beta lactamase reporter gene assay,1
+http://orkg.org/orkg/class/C15048,Meso Scale Discovery,1
+http://orkg.org/orkg/class/C15004,phosphorylation assay,1
+http://orkg.org/orkg/class/C15046,Alpha-D-glucose,1
+http://orkg.org/orkg/class/C15018,BSR,1
+http://orkg.org/orkg/class/C15020,ELISA cAMP Competition Assay using cAMP-Screen Direct System,1
+http://orkg.org/orkg/class/C15023,VERO 76 cell,1
+http://orkg.org/orkg/class/C15027,Bluetongue virus 10,1
+http://orkg.org/orkg/class/C15035,Applied Biosystems,1
+http://orkg.org/orkg/class/C15036,LDV peptide,1
+http://orkg.org/orkg/class/C15040,Glycogen,1
+http://orkg.org/orkg/class/C15042,Cyclin B1-Luciferin 4-monooxygenase,1
+http://orkg.org/orkg/class/C15043,Arabidopsis thaliana,1
+http://orkg.org/orkg/class/C15050,Melanin-concentrating hormone,1
+http://orkg.org/orkg/class/C6001,R46273,1
+http://orkg.org/orkg/class/C17012,About LUBM,1
+http://orkg.org/orkg/class/C17006,algorithm type,1
+http://orkg.org/orkg/class/C22025,Artesunate,1
+http://orkg.org/orkg/class/C22021,Azithromycin,1
+http://orkg.org/orkg/class/C22022,Nisoldipine,1
+http://orkg.org/orkg/class/C22027,Nifedipine,1
+http://orkg.org/orkg/class/C22026,Atovaquone,1
+http://orkg.org/orkg/class/C22028,Suvorexant,1
+http://orkg.org/orkg/class/C22029,Naproxen,1
+http://orkg.org/orkg/class/C22030,Lornoxicam,1
+http://orkg.org/orkg/class/C22031,Olanzapine,1
+http://orkg.org/orkg/class/C22032,Osthole,1
+http://orkg.org/orkg/class/C22013,Lactitol,1
+http://orkg.org/orkg/class/C22042,Concentration units,1
+http://orkg.org/orkg/class/C22014,Indomethacin,1
+http://orkg.org/orkg/class/C22015,Copovidone,1
+http://orkg.org/orkg/class/C22016,Arginine,1
+http://orkg.org/orkg/class/C22012,Mannitol,1
+http://orkg.org/orkg/class/C22017,Efavirenz,1
+http://orkg.org/orkg/class/C22020,Felodipine,1
+http://orkg.org/orkg/class/C22018,Xylitol,1
+http://orkg.org/orkg/class/C22019,Itraconazole,1
+http://orkg.org/orkg/class/C22011,Tadalafil,1
+http://orkg.org/orkg/class/C22040,Dose units,1
+http://orkg.org/orkg/class/C22023,Ibuprofen,1
+http://orkg.org/orkg/class/C22024,isonicotinamide,1
+http://orkg.org/orkg/class/C21085,Recombinant human growth hormone,1
+http://orkg.org/orkg/class/C21010,obo:SO_0000704,1
+http://orkg.org/orkg/class/C21081,Estradiol,1
+http://orkg.org/orkg/class/C21074,Pressure unit,1
+http://orkg.org/orkg/class/C21042,Xray laser capillaries,1
+http://orkg.org/orkg/class/C21062,Buserelin,1
+http://orkg.org/orkg/class/C21060,Hydrocortisone,1
+http://orkg.org/orkg/class/C21050,intraocular pressure,1
+http://orkg.org/orkg/class/C21049,Bioavailability,1
+http://orkg.org/orkg/class/C21017,Indicator,1
+http://orkg.org/orkg/class/C21052,Solubility,1
+http://orkg.org/orkg/class/C21006,obo:NCIT_C153598,1
+http://orkg.org/orkg/class/C21047,Sytem sub sub quality,1
+http://orkg.org/orkg/class/C21003,Phase 2 clinical trial,1
+http://orkg.org/orkg/class/C21002,Phase 1 clinical trial,1
+http://orkg.org/orkg/class/C21004,Pilot Study,1
+http://orkg.org/orkg/class/C20145,risperidone,1
+http://orkg.org/orkg/class/C20147,Soybean Oil,1
+http://orkg.org/orkg/class/C20144,Cremophor,1
+http://orkg.org/orkg/class/C20150,flaxseed oil,1
+http://orkg.org/orkg/class/C20154,Permeation flux units,1
+http://orkg.org/orkg/class/C20151,Safflower Oil,1
+http://orkg.org/orkg/class/C20148,Sodium oleate,1
+http://orkg.org/orkg/class/C20143,"Lecithin, Soybean",1
+http://orkg.org/orkg/class/C20142,Docetaxel,1
+http://orkg.org/orkg/class/C20155,Tarcolimus,1
+http://orkg.org/orkg/class/C20149,saquinavir,1
+http://orkg.org/orkg/class/C20103,Research Hypothesis,1
+http://orkg.org/orkg/class/C20102,Research finding,1
+http://orkg.org/orkg/class/C20090,energy transformation sector,1
+http://orkg.org/orkg/class/C20091,electricity sector,1
+http://orkg.org/orkg/class/C20043,Biological nanoparticles,1
+http://orkg.org/orkg/class/C20066,Database,1
+http://orkg.org/orkg/class/C20036,Thermometers,1
+http://orkg.org/orkg/class/C20028,Synthesis,1
+http://orkg.org/orkg/class/C20156,betamethasone,1
+http://orkg.org/orkg/class/C20021,Interface,1
+http://orkg.org/orkg/class/C20022,Technology,1
+http://orkg.org/orkg/class/C20019,Data,1
+http://orkg.org/orkg/class/C20020,Application,1
+http://orkg.org/orkg/class/C19006,A set of Reference Indicators for Cities,1
+http://orkg.org/orkg/class/C21018,demand,1
+http://orkg.org/orkg/class/C20146,Medium chain triglycerides,1
+http://orkg.org/orkg/class/C17007,Matrix,1
+http://orkg.org/orkg/class/C17016,Reference Work,1
+http://orkg.org/orkg/class/C17019,OWL web ontology language reference,1
+http://orkg.org/orkg/class/C17014,More about Query optimization,1
+http://orkg.org/orkg/class/C17013,About SPARQL,1
+http://orkg.org/orkg/class/C20131,wind,1
+http://orkg.org/orkg/class/C20079,biogas,1
+http://orkg.org/orkg/class/C20088,industry sector,1
+http://orkg.org/orkg/class/C20080,coal,1
+http://orkg.org/orkg/class/C20086,commercial sector,1
+http://orkg.org/orkg/class/C20095,transport sector,1
+http://orkg.org/orkg/class/C20092,heat pump,1
+http://orkg.org/orkg/class/C24000,Week,1
+http://orkg.org/orkg/class/C52019,Matching strategy,1
+http://orkg.org/orkg/class/C26005,island habitat,1
+http://orkg.org/orkg/class/C26006,island,1
+http://orkg.org/orkg/class/C26003,seedling,1
+http://orkg.org/orkg/class/C20126,Axiom,1
+http://orkg.org/orkg/class/C26007,island group,1
+http://orkg.org/orkg/class/C26004,plant community,1
+http://orkg.org/orkg/class/C1006,obo:OBI_0000751,1
+http://orkg.org/orkg/class/C29011,grounded theory,1
+http://orkg.org/orkg/class/C30000,Value Specification,1
+http://orkg.org/orkg/class/C31004,category analysis,1
+http://orkg.org/orkg/class/C29010,content analysis,1
+http://orkg.org/orkg/class/C31003,triangulation,1
+http://orkg.org/orkg/class/C31001,regularity analysis,1
+http://orkg.org/orkg/class/C31002,comparative analysis,1
+http://orkg.org/orkg/class/C31007,sentiment analysis,1
+http://orkg.org/orkg/class/C31000,error analysis,1
+http://orkg.org/orkg/class/C31020,stakeholder analysis,1
+http://orkg.org/orkg/class/C31017,R194267,1
+http://orkg.org/orkg/class/C31024,literature analysis,1
+http://orkg.org/orkg/class/C29027,action research,1
+http://orkg.org/orkg/class/C21022,hardware,1
+http://orkg.org/orkg/class/C34014,R201946,1
+http://orkg.org/orkg/class/C30001,R186441,1
+http://orkg.org/orkg/class/C29020,Organization,1
+http://orkg.org/orkg/class/C34020,design of diffractive optical element,1
+http://orkg.org/orkg/class/C34016,diffractive optical element,1
+http://orkg.org/orkg/class/C34022,design algorithm,1
+http://orkg.org/orkg/class/C34024,horizontal and vertical,1
+http://orkg.org/orkg/class/C34027,results of diffractive optical element,1
+http://orkg.org/orkg/class/C11008,Liter measurement,1
+http://orkg.org/orkg/class/C39006,R216526,1
+http://orkg.org/orkg/class/C21043,System qualities,1
+http://orkg.org/orkg/class/C40027,R223104,1
+http://orkg.org/orkg/class/C7001,obo:UO_0000000,1
+http://orkg.org/orkg/class/C27002,R186701,1
+http://orkg.org/orkg/class/C43000,R255271,1
+http://orkg.org/orkg/class/C50000,R280212,1
+http://orkg.org/orkg/class/C28002,R187494,1
+http://orkg.org/orkg/class/C28000,R187136,1
+http://orkg.org/orkg/class/C48002,File format,1
+http://orkg.org/orkg/class/C52029,Lesson learned,1
+http://orkg.org/orkg/class/C34012,Dataset format,1
+http://orkg.org/orkg/class/C34010,R201585,1
