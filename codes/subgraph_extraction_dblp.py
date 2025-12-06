@@ -79,7 +79,22 @@ Return strictly the SPARQL query, without commentary. Remove any markdown format
 Question: {question}
 Entities: {entities}
 Relations: {relations}
+
+The DBLP ontology is available here for reference. Pay attention to the classes and properties defined within it. Some range of properties is xsd:date or other literal types not URIs.
+Ontology-----------------
+{ontology}
 """
+
+# read the ontology file for inclusion in the prompt
+ONTOLOGY_PATH = Path("/Users/sherrypan/GitHub/GAR_SKGQA/datasets/dblp/project_data/dblp_schema.ttl")
+if ONTOLOGY_PATH.exists():
+    ONTOLOGY_CONTENT = ONTOLOGY_PATH.read_text(encoding="utf-8")
+    PROMPT_TEMPLATE = PROMPT_TEMPLATE.replace("{ontology}", ONTOLOGY_CONTENT)
+else:
+    PROMPT_TEMPLATE = PROMPT_TEMPLATE.replace("{ontology}", "N/A")
+
+
+
 
 
 
@@ -291,7 +306,6 @@ def save_graph(graph: Graph, output_path: Path) -> str:
 def run_pipeline(
     json_path: Path,
     rdf_path: Path,
-    output_dir: Path,
     summary_csv: Path,
     backend: str,
     model: str,
@@ -306,7 +320,6 @@ def run_pipeline(
     graph = None if endpoint_url else load_graph(rdf_path)
     print(f"Loaded RDF graph from {rdf_path}")
     summaries = []
-    output_dir.mkdir(parents=True, exist_ok=True)
 
     for idx, record in enumerate(question_records(df[0:]), start=1):  # to resume from 0
         try:
@@ -317,7 +330,7 @@ def run_pipeline(
             )
             print(
                 f"\nGenerated prompt for {record.id} (#{idx}):\n"
-                f"PROMPT start ******************\n{prompt}\nPROMPT end ******************"
+                # f"PROMPT start ******************\n{prompt}\nPROMPT end ******************"
             )
             if record.template_id:
                 prompt += f"\nKnown template: {record.template_id}"
@@ -344,12 +357,11 @@ def run_pipeline(
             # Sleep between requests to avoid rate limiting on LLM / endpoint
             time.sleep(10)
 
-            # Execute CONSTRUCT query and persist subgraph
+            # Execute CONSTRUCT query and serialize subgraph
             subgraph = execute_construct(
                 construct_query, graph=graph, endpoint_url=endpoint_url
             )
-            ttl_path = output_dir / f"{record.id}_subgraph.ttl"
-            ttl_data = save_graph(subgraph, ttl_path)
+            ttl_data = subgraph.serialize(format="turtle")
 
             summaries.append(
                 {
@@ -357,14 +369,15 @@ def run_pipeline(
                     "question": record.question_string,
                     "construct_query": construct_query,
                     "ground_truth_sparql": record.sparql_query,
+                    "entities": ", ".join(record.entities) if record.entities else "",
+                    "relations": ", ".join(record.relations) if record.relations else "",
                     "triples": len(subgraph),
-                    "output_path": str(ttl_path),
                     "subgraph_ttl": ttl_data,
                     "status": "ok",
                     "error_message": "",
                 }
             )
-            print(f"Saved subgraph for {record.id} -> {ttl_path}")
+            print(f"Processed subgraph for {record.id} ({len(subgraph)} triples)")
 
         except Exception as e:
             # Catch any failure for this record so the pipeline can continue.
@@ -378,8 +391,9 @@ def run_pipeline(
                     "question": record.question_string,
                     "construct_query": None,
                     "ground_truth_sparql": record.sparql_query,
+                    "entities": ", ".join(record.entities) if record.entities else "",
+                    "relations": ", ".join(record.relations) if record.relations else "",
                     "triples": 0,
-                    "output_path": "",
                     "subgraph_ttl": "",
                     "status": "error",
                     "error_message": str(e),
@@ -406,11 +420,6 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/datasets/dblp/dblp-2022-03-01.nt.gz"),
     )
     parser.add_argument(
-        "--output_dir",
-        type=Path,
-        default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/results/dblp/subgraphs"),
-    )
-    parser.add_argument(
         "--summary_csv",
         type=Path,
         default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/results/dblp/subgraph_summary.csv"),
@@ -428,7 +437,6 @@ def main() -> None:
     run_pipeline(
         json_path=args.json_path,
         rdf_path=args.rdf_path,
-        output_dir=args.output_dir,
         summary_csv=args.summary_csv,
         backend=args.backend,
         model=args.model,
@@ -442,4 +450,4 @@ if __name__ == "__main__":
     main()
 
 
-# python codes/subgraph_extraction_dblp.py --model gemini-2.5-pro --backend google --json_path datasets/dblp/test/questions.json --rdf_path datasets/dblp/dblp-2022-03-01.nt.gz --output_dir results/dblp/subgraps --summary_csv results/dblp/subgraph_summary.csv
+# python codes/subgraph_extraction_dblp.py --model gemini-2.5-pro --backend google --json_path datasets/dblp/test/questions.json --rdf_path datasets/dblp/dblp-2022-03-01.nt.gz --summary_csv results/dblp/subgraph_summary.csv
