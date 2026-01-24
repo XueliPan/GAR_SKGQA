@@ -1,0 +1,523 @@
+question_id,question_string,sparql_query,goldComparisonIRI,goldComparisonLabel,predicted_comparison_label,predicted_comparison_IRI,cosine_scores,correct_predictions
+HQ0013,What was the most common type of approach for summarization before 2002?,"SELECT ?approach ?approach_label
+WHERE {
+  orkgr:R6948 orkgp:compareContribution ?cont.
+  ?cont orkgp:P15 ?implementation.
+  ?implementation orkgp:P5043 ?approach.
+  ?approach rdfs:label ?approach_label.
+}
+ORDER BY DESC(COUNT(?approach_label))
+LIMIT 1",R6948,Summarization before 2002,"['Summarization before 2002', 'Semantic representations of scholarly communication', 'Semantic representations of scholarly communication']","['R6948', 'R8364', 'R8364']",[0.81868416 0.29212445 0.29212445],1
+HQ0061,Which vegetables are utilized for betanin extraction?,"SELECT ?vegetables, ?vegetables_labels
+WHERE {
+  orkgr:R75363 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P35147 ?compounds.
+  ?compounds rdfs:label ?compounds_labels.
+  FILTER(REGEX(?compounds_labels, ""etanin""))
+  ?contrib orkgp:P35148 ?vegetables.
+  ?vegetables rdfs:label ?vegetables_labels.
+}",R75363,Pulsed electric field (PEF) treatment for bioactive compounds extraction,"['Pulsed electric field (PEF) treatment for bioactive compounds extraction', 'Toxins produced by phytopathogenic Pseudomonas species and pathovars', 'Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes']","['R75363', 'R69027', 'R155621']",[0.31580895 0.21628493 0.17624506],1
+HQ0049,What is the average energy generation of all energy sources considered?,"SELECT (AVG(?elec_gen_value) AS ?average_elec_gen_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43134 ?electricity_generation.
+  FILTER(REGEX(?energy_sources_labels, ""all sources""))
+  ?electricity_generation orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?elec_gen_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.45773014 0.45773014 0.45773014],1
+HQ0002,"What is the scope of ""Decentralised Authoring, Annotations and Notifications for a Read-Write Web with Dokieli""?","SELECT ?scope 
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?title.
+  ?cont orkgp:P7046 ?sys.
+  ?sys orkgp:P7047 ?scope.
+  FILTER(REGEX(STR(?title), ""Decentralised Authoring, Annotations and Notifications for a Read-Write Web with dokieli""))
+}",R8364,Semantic representations of scholarly communication,"['Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles']","['R8342', 'R8342', 'R8342']",[0.3319203 0.3319203 0.3319203],0
+HQ0072,What is the most common drug in the studies?,"SELECT ?drug, ?drug_labels
+WHERE {
+  orkgr:R155621 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37578 ?drug.
+  ?drug rdfs:label ?drug_labels.
+}
+ORDER BY DESC(COUNT(?drug))
+LIMIT 1",R155621,"Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes","['Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes', 'Pilot mini collection of studies on libraries as third places.', 'Trends and methodological implications of psychodrama psychotherapy research']","['R155621', 'R110361', 'R44980']",[0.28183842 0.27690575 0.27017918],1
+HQ0025,Which scholarly knowledge graphs support RDF?,"SELECT ?title
+WHERE {
+  orkgr:R78023 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7009 ?has_rdf.
+  FILTER(REGEX(?has_rdf, ""T""))
+  ?cont rdfs:label ?title
+}",R78023,Comparison of scholarly knowledge graphs,"['Comparison of scholarly knowledge graphs', 'Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles']","['R78023', 'R8342', 'R8342']",[0.7814981 0.5728284 0.5728284],1
+HQ0029,How many studies are published after 2019?,"SELECT (COUNT(?date) AS ?number_of_studies)
+WHERE {
+  orkgr:R110393 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P9040 ?date.
+  filter(?date > ""2019""^^xsd:string)
+}",R110393,The Use of Silicon Carbide Thin Films in Different Device Types,"['Pilot mini collection of studies on libraries as third places.', 'COVID-19 Reproductive Number Estimates', 'Comparison of scholarly knowledge graphs']","['R110361', 'R44930', 'R78023']",[0.4385382  0.29524207 0.2951927 ],0
+HQ0044,What is the total number of species examined in the studies?,"SELECT (SUM(?number) AS ?total)
+WHERE {
+  orkgr:R58002 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P31024 ?number_of_species.
+  BIND(xsd:integer(?number_of_species) AS ?number)
+}",R58002,Invasion Biology- Enemy release hypothesis,"['COVID-19 Reproductive Number Estimates', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Assessment of picophytoplankton abundance in the Indian Ocean']","['R44930', 'R149849', 'R155584']",[0.39728868 0.36698136 0.31543192],0
+HQ0036,What is the full name of the EXPO ontology?,"SELECT ?full_name
+WHERE {
+  orkgr:R8342 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7034 ?ontology.
+  ?ontology rdfs:label ?ont_lbl;
+            orkgp:P7035 ?full_name. 
+  FILTER(REGEX(STR(?ont_lbl), ""expo"", ""i""))
+}",R8342,Ontologies for describing scholarly articles,"['Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles']","['R8342', 'R8342', 'R8342']",[0.52239907 0.52239907 0.52239907],1
+HQ0073,Do all studies include open ocean sampling?,"ASK {
+  {
+    SELECT (COUNT(?ocean_sampling) AS ?counter)
+    WHERE {
+      orkgr:R155561 orkgp:compareContribution ?contrib.
+      ?contrib orkgp:P41379 ?ocean_sampling.
+      FILTER(?ocean_sampling = ""F""^^xsd:string)
+    }
+  }
+  FILTER(?counter = 0)
+}",R155561 ,Assessment of picophytoplankton abundance in the Ocean,"['Assessment of picophytoplankton abundance in the Ocean', 'Assessment of picophytoplankton abundance in the Indian Ocean', 'Pilot mini collection of studies on libraries as third places.']","['R155561 ', 'R155584', 'R110361']",[0.35771644 0.32847393 0.32722178],1
+HQ0004,Who is responsible for acquisition in the RASH system?,"SELECT ?acq
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7046 orkgr:R8350.
+  orkgr:R8350 orkgp:P7049 ?acq.
+}",R8364,Semantic representations of scholarly communication,"['Invasion Biology- Enemy release hypothesis', 'Toxins produced by phytopathogenic Pseudomonas species and pathovars', 'Trends and methodological implications of psychodrama psychotherapy research']","['R58002', 'R69027', 'R44980']",[0.23909459 0.15968095 0.14071305],0
+HQ0015,What is the maximum sample size?,"SELECT ?sample_size
+WHERE {
+  orkgr:R135371 orkgp:compareContribution ?cont.
+  ?cont orkgp:P15687 ?sample_size
+}
+ORDER BY DESC(?sample_size)
+LIMIT 1",R135371,Comparison of Impact of Covid-19 on mobility behaviour,"['Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'COVID-19 Reproductive Number Estimates', 'Assessment of picophytoplankton abundance in the Ocean']","['R149849', 'R44930', 'R155561 ']",[0.40153027 0.24126863 0.14489853],0
+HQ0030,Which toxins do pseudomonas species produce?,"SELECT DISTINCT ?toxins, ?toxins_labels
+WHERE {
+  orkgr:R69027 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P34037 ?toxins.
+  ?toxins rdfs:label ?toxins_labels.
+}",R69027,Toxins produced by phytopathogenic Pseudomonas species and pathovars,"['Toxins produced by phytopathogenic Pseudomonas species and pathovars', 'Anuran antimicrobial peptides activity and mechanism against different biological membranes', 'Invasion Biology- Enemy release hypothesis']","['R69027', 'R75638', 'R58002']",[0.8105704  0.3215635  0.20456931],1
+HQ0035,Which scenario factsheets from the Open Energy Platform are used in studies with public funding?,"SELECT ?paper
+WHERE {
+  orkgr:R113171 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont.
+  ?cont orkgp:P37586 ?hasFacts.
+  ?hasFacts orkgp:P37675 ?study.
+  ?study orkgp:P37663 ?sourceOfFunding.
+  FILTER(REGEX(?sourceOfFunding, ""public""))
+}",R113171,Comparison of Scenario Factsheets from the Open Energy Platform,"['Comparison of Scenario Factsheets from the Open Energy Platform', 'Comparison of Scenario Factsheets from the Open Energy Platform', ""Comparison of Scenario Factsheets from the Open Energy Platform; Comparison of Studies on Germany's Energy Supply in 2050""]","['R150337', 'R113171', 'R150337; R153801']",[0.7908752  0.7908752  0.73131955],1
+HQ0054,What is the minimum and maximum installed capacity for each energy source considered?,"SELECT ?energy_sources_labels (MIN(?installed_cap_value) AS ?min_installed_cap_value) (MAX(?installed_cap_value) AS ?max_installed_cap_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43133 ?installed_capacity.
+  ?installed_capacity orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?installed_cap_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Scenario Factsheets from the Open Energy Platform; Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R150337; R153801', 'R153801', 'R153801']",[0.39255458 0.3755758  0.3755758 ],1
+HQ0056,What is the average installed capacity for each energy source considered in 5 year intervals?,"SELECT ?rangeId ?energy_sources_labels (AVG(?installed_cap_value AS ?avg_installed_cap_value))
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?paper orkgp:P31 ?contrib;
+         orkgp:P29 ?year.
+  BIND(xsd:int(?year) AS ?y).
+  VALUES(?rangeId ?min ?max) {
+    (""2001-2005"" 2001 2005)
+    (""2006-2010"" 2006 2010)
+    (""2011-2015"" 2011 2015)
+    (""2016-2020"" 2016 2020)
+  }
+  FILTER(?min <= ?y && ?y <= ?max).
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43133 ?installed_capacity.
+  ?installed_capacity orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?installed_cap_value).
+}
+ORDER BY ASC(?rangeId)",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.45268923 0.45268923 0.45268923],1
+HQ0034,How many studies do use Chloride as major anion?,"SELECT COUNT(?anions_labels) AS ?chloride_count
+WHERE {
+  orkgr:R110597 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37458 ?anions.
+  ?anions rdfs:label ?anions_labels.
+  FILTER(REGEX(?anions_labels, ""Chloride""^^xsd:string))
+}",R110597,Sources of major ion evolution in groundwater chemistry of developing urban areas,"['Sources of major ion evolution in groundwater chemistry of developing urban areas', 'Pilot mini collection of studies on libraries as third places.', 'Anuran antimicrobial peptides activity and mechanism against different biological membranes']","['R110597', 'R110361', 'R75638']",[0.35766107 0.26892924 0.22319897],1
+HQ0033,What risk factors for OSA are discovered in the paper with 100% OSA frequency?,"SELECT ?risk_factors, ?risk_factors_labels
+WHERE {
+  orkgr:R110932 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37530 ?osa_frequency.
+  ?osa_frequency rdfs:label ?osa_frequency_values.
+  ?contrib orkgp:P37528 ?risk_factors.
+  ?risk_factors rdfs:label ?risk_factors_labels.
+  FILTER(REGEX(?osa_frequency_values, ""100""^^xsd:string))
+}",R110932,Comparison of the frequency of obstructive sleep apnea (OSA) in patients with mucopolysaccharidosis (MPS),"['Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'QA evaluations on QALD-6', 'QA evaluations on QALD-5']","['R149849', 'R6898', 'R6946']",[0.23866022 0.21120214 0.20588912],0
+HQ0048,What is the maximum female percentage?,"SELECT ?female_percantage
+WHERE {
+  orkgr:R44978 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P23154 ?female_percantage.
+}
+ORDER BY DESC(?female_percantage)
+LIMIT 1",R44978,Brief psychotherapy for depression studies,"['COVID-19 Reproductive Number Estimates', 'Assessment of picophytoplankton abundance in the Ocean', 'Prevalence of epilepsy in Europe']","['R44930', 'R155561 ', 'R75729']",[0.42111492 0.14653261 0.13349296],0
+HQ0020,Which ontology has the most classes?,"SELECT ?ont ?ont_label
+WHERE {
+  orkgr:R8342 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7034 ?ont.
+  ?ont orkgp:P7038 ?cls_cnt;
+       rdfs:label ?ont_label.
+}
+ORDER BY DESC(MAX(xsd:int(?cls_cnt)))
+LIMIT 1",R8342,Ontologies for describing scholarly articles,"['Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles']","['R8342', 'R8342', 'R8342']",[0.49717176 0.49717176 0.49717176],1
+HQ0062,What are the objectives for Sepsis prediction?,"SELECT DISTINCT ?objectives
+WHERE {
+  orkgr:R70642 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15051 ?objectives.
+}",R70642,Survey of most suitable computational intelligence technique for prediction of Sepsis using physiological data as features,"['Survey of most suitable computational intelligence technique for prediction of Sepsis using physiological data as features', 'The effect of the COVID-19 pandemic on well-being', 'Comparison of studies related to psychotherapeutic interventions in cancer']","['R70642', 'R78492', 'R44979']",[0.62854093 0.24240178 0.189701  ],1
+HQ0051,What is the average energy generation for each energy source considered?,"SELECT ?energy_sources_labels (AVG(?elec_gen_value) AS ?average_elec_gen_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43134 ?elec_gen.
+  ?elec_gen orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?elec_gen_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.48562497 0.48562497 0.48562497],1
+HQ0075,What is the average efficency for experiments?,"SELECT AVG(?efficency_values)
+WHERE {
+  orkgr:R155266 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43156 ?efficency.
+  ?efficency rdfs:label ?efficency_labels.
+  BIND(xsd:float(?efficency_labels) AS ?efficency_values)
+}",R155266,Fullerene-based photocatalysts in organic pollutants degradation,"['Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Pilot mini collection of studies on libraries as third places.', 'Cost functions estimation for port sector']","['R149849', 'R110361', 'R34493']",[0.2940301  0.21983601 0.21135262],0
+HQ0028,Which indicators for well-being are used in the studies on the effect of COVID-19?,"SELECT DISTINCT ?indicators, ?indicators_labels
+WHERE {
+  orkgr:R78492 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P36089 ?indicators.
+  ?indicators rdfs:label ?indicators_labels.
+}",R78492,The effect of the COVID-19 pandemic on well-being,"['The effect of the COVID-19 pandemic on well-being', 'Comparison of Impact of Covid-19 on mobility behaviour', 'COVID-19 Reproductive Number Estimates']","['R78492', 'R135371', 'R44930']",[0.81638324 0.5061816  0.430767  ],1
+HQ0065,What is the maximum egg mass in studies?,"SELECT MAX(?egg_masses_float)
+WHERE {
+  orkgr:R34845 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15692 ?egg_masses.
+  BIND(xsd:float(?egg_masses) AS ?egg_masses_float)
+}",R34845,Results of studies on embryonic eggshell thickness erosion in three groups of birds representing different developmental modes,"['COVID-19 Reproductive Number Estimates', 'Results of studies on embryonic eggshell thickness erosion in three groups of birds representing different developmental modes', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)']","['R44930', 'R34845', 'R149849']",[0.32938218 0.28241295 0.24178657],1
+HQ0074,For what product minimum conversion was obtained?,"SELECT ?product, ?product_label
+WHERE {
+  orkgr:R155272 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43149 ?product;
+           orkgp:P43148 ?conversion.
+  ?product rdfs:label ?product_label.
+  ?conversion rdfs:label ?conversion_label.
+}
+ORDER BY ASC(xsd:float(?conversion_label))
+LIMIT 1",R155272,"Transforming lignin-derived monomers to catechol, phenol, and benzene by heterogeneous catalysts","['Cost functions estimation for port sector', 'Catalysts for the Liquid-Phase Hydrogenation of Alkynes overview', 'The Use of Silicon Carbide Thin Films in Different Device Types']","['R34493', 'R25900', 'R110393']",[0.19895628 0.18197906 0.15541115],0
+HQ0067,In which papers are energy system scenarios used that consider the 2050 time frame?,"SELECT ?paper
+WHERE {
+  {
+    orkgr:R150337 orkgp:compareContribution ?contrib.
+  } UNION {
+    orkgr:R153801 orkgp:compareContribution ?contrib.
+  }
+  ?paper orkgp:P31 ?contrib.
+  {
+     ?contrib orkgp:P37586 ?scenarios.
+     ?scenarios orkgp:P37675 ?studies.
+     ?studies orkgp:P35205 ?timeframes.
+  } UNION {
+     ?contrib orkgp:P37581 ?scenario.
+     ?scenario orkgp:P43138 ?goal.
+     ?goal orkgp:P43139 ?timeframes.
+  }
+  FILTER(xsd:int(?timeframes) = 2050)
+}",R150337; R153801,Comparison of Scenario Factsheets from the Open Energy Platform; Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Scenario Factsheets from the Open Energy Platform; Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R150337; R153801', 'R153801', 'R153801']",[0.65266126 0.597365   0.597365  ],1
+HQ0018,Which methods are used?,"SELECT DISTINCT ?methods, ?methods_labels
+WHERE {
+  orkgr:R110361 orkgp:compareContribution ?cont.
+  ?cont orkgp:HAS_METHOD ?methods.
+  ?methods rdfs:label ?methods_labels.
+}",R110361,Pilot mini collection of studies on libraries as third places.,"['Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes', 'QA evaluations on QALD-5', 'Trends and methodological implications of psychodrama psychotherapy research']","['R155621', 'R6946', 'R44980']",[0.23576657 0.21381585 0.21372703],0
+HQ0050,What is the average installed capacity of all energy sources considered?,"SELECT (AVG(?installed_cap_value) AS ?average_installed_cap_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43133 ?installed_capacity.
+  FILTER(REGEX(?energy_sources_labels, ""all sources""))
+  ?installed_capacity orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?installed_cap_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.4236588 0.4236588 0.4236588],1
+HQ0066,What is the most common substrate for catalysts?,"SELECT ?substrate
+WHERE {
+  orkgr:R25900 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15090 ?substrate.
+}
+ORDER BY DESC(COUNT(?substrate))
+LIMIT 1",R25900,Catalysts for the Liquid-Phase Hydrogenation of Alkynes overview,"['Transforming lignin-derived monomers to catechol, phenol, and benzene by heterogeneous catalysts', 'Catalytic activation of C-O bond', 'Catalysts for the Liquid-Phase Hydrogenation of Alkynes overview']","['R155272', 'R137086', 'R25900']",[0.38634825 0.36044458 0.3070799 ],1
+HQ0047,What is the average reproductive number for studies?,"SELECT (AVG(?reproductive_number) AS ?average_reproductive_number)
+WHERE {
+  orkgr:R44930 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P23140 ?basic_reproductive_number.
+  ?basic_reproductive_number orkgp:HAS_VALUE ?value
+  BIND(xsd:float(?value) AS ?reproductive_number)
+}",R44930,COVID-19 Reproductive Number Estimates,"['COVID-19 Reproductive Number Estimates', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Prevalence of epilepsy in Europe']","['R44930', 'R149849', 'R75729']",[0.5935751  0.36789867 0.2396103 ],1
+HQ0071,What are areas of study?,"SELECT DISTINCT ?areas, ?areas_labels
+WHERE {
+  orkgr:R155445 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37041 ?areas.
+  ?areas rdfs:label ?areas_labels.
+}",R155445,Mineralogical analysis of Mars in Visible-infrared wavelength range of electromagnetic spectrum using MRO's CRISM-3,"['Pilot mini collection of studies on libraries as third places.', 'Semantic representations of scholarly communication', 'Semantic representations of scholarly communication']","['R110361', 'R8364', 'R8364']",[0.40645725 0.24568596 0.24568596],0
+HQ0053,What is the minimum and maximum energy generation for each energy source considered?,"SELECT ?energy_sources_labels (MIN(?elec_gen_value) AS ?min_elec_gen_value) (MAX(?elec_gen_value) AS ?max_elec_gen_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43134 ?elec_gen.
+  ?elec_gen orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?elec_gen_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.42597067 0.42597067 0.42597067],1
+HQ0076,What preprocessing methods are used?,"SELECT DISTINCT ?prep_methods, ?prep_methods_labels
+WHERE {
+  orkgr:R155154 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41006 ?prep_methods.
+  ?prep_methods rdfs:label ?prep_methods_labels.
+}",R155154,A review of Airborne visible/infrared imaging spectrometer- Next Generation (AVIRIS-NG) hyperspectral images for the identification and characterization of minerals,"['QA evaluations on QALD-6', 'QA evaluations on QALD-5', 'Summarization before 2002']","['R6898', 'R6946', 'R6948']",[0.2175293  0.20858216 0.17215565],0
+HQ0045,In what country was conducted research with the largest number of participants?,"SELECT ?country
+WHERE {
+  orkgr:R44980 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15249 ?country;
+           orkgp:P23169 ?number_of_participants.
+}
+ORDER BY DESC(?number_of_participants)
+LIMIT 1",R44980,Trends and methodological implications of psychodrama psychotherapy research,"['Pilot mini collection of studies on libraries as third places.', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Trends and methodological implications of psychodrama psychotherapy research']","['R110361', 'R149849', 'R44980']",[0.3679995  0.25227413 0.24451496],1
+HQ0023,"what are the evidence and limitations of paper ""Evaluating the Use of Social Networks in Author Name Disambiguation in Digital Libraries""?","SELECT ?evidence ?evidence_title ?limitation
+WHERE {
+  orkgr:R6751 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?paper_title.
+  ?cont orkgp:P5004 ?evidence;
+        orkgp:P5006 ?limitation.
+  ?evidence rdfs:label ?evidence_title.
+  FILTER(REGEX(STR(?paper_title), ""Evaluating the Use of Social Networks in Author Name Disambiguation in Digital Libraries"", ""i""))
+}",R6751,Graph-based author name disambiguation,"['Graph-based author name disambiguation', 'Semi-supervised author name disambiguation', 'Semantic representations of scholarly communication']","['R6751', 'R6187', 'R8364']",[0.66792715 0.60104734 0.42821693],1
+HQ0021,"What is the base URL of ""The Document Components Ontology""?","SELECT ?iri
+WHERE {
+  orkgr:R8342 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7034 ?ont.
+  ?ont orkgp:P7042 ?iri;
+       orkgp:P7035 ?full_name.
+  FILTER(REGEX(STR(?full_name), ""Document Components Ontology"", ""i""))
+}",R8342,Ontologies for describing scholarly articles,"['Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles', 'Ontologies for describing scholarly articles']","['R8342', 'R8342', 'R8342']",[0.4551878 0.4551878 0.4551878],1
+HQ0009,What is the precision and recall of SemGraphQA?,"SELECT ?precision ?recall
+WHERE {
+  orkgr:R6898 orkgp:compareContribution ?cont. 
+  ?cont orkgp:P34 ?eval.
+  ?eval rdfs:label ?eval_labels.
+  FILTER(REGEX(?eval_labels, ""SemGraphQA""))
+  ?eval orkgp:P3004 ?precision;
+        orkgp:P5015 ?recall.
+}",R6898,QA evaluations on QALD-6,"['QA evaluations on QALD-6', 'QA evaluations on QALD-5', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)']","['R6898', 'R6946', 'R149849']",[0.28674778 0.2693611  0.26690602],1
+HQ0064,What is the total number of patients in the studies?,"SELECT SUM(?number_of_patients)
+WHERE {
+  orkgr:R33008 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15585 ?patients.
+  BIND(xsd:integer(?patients) AS ?number_of_patients)
+}",R33008,Prevalence of chromosome 1 abnor- malities in hematologic malignancies,"['COVID-19 Reproductive Number Estimates', 'Comparison of studies related to psychotherapeutic interventions in cancer', 'Trends and methodological implications of psychodrama psychotherapy research']","['R44930', 'R44979', 'R44980']",[0.31598386 0.290166   0.2806455 ],0
+HQ0003,What is the most common Knowledge representation method?,"SELECT (COUNT(?repr) AS ?cnt) ?repr
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?cont orkgp:P7046 ?sys.
+  ?sys orkgp:P7056 ?repr.
+}
+GROUP BY ?repr
+ORDER BY DESC(?cnt)
+LIMIT 1",R8364,Semantic representations of scholarly communication,"['Comparison of scholarly knowledge graphs', 'Semantic representations of scholarly communication', 'Semantic representations of scholarly communication']","['R78023', 'R8364', 'R8364']",[0.34597668 0.34073412 0.34073412],1
+HQ0057,Where can all the data sets used in the compared studies be found?,"SELECT DISTINCT ?URL
+WHERE {
+  orkgr:R112387 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:HAS_DATASET ?URL.
+  FILTER(!REGEX(?URL, ""Not""))
+}",R112387,Overview of Approaches that Classify User Feedback as Feature Request,"['Pilot mini collection of studies on libraries as third places.', 'Comparison of scholarly knowledge graphs', 'Comparison of Scenario Factsheets from the Open Energy Platform']","['R110361', 'R78023', 'R113171']",[0.40761542 0.3839431  0.2913717 ],0
+HQ0097,What types of nanocarriers do have therapeutic effect?,"SELECT ?types_of_nanocarriers, ?types_of_nanocarriers_labels
+WHERE {
+  orkgr:R144364 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41740 ?types_of_nanocarriers.
+  ?contrib orkgp:P41743 ?therapeutic_effect.
+  FILTER(?therapeutic_effect = ""T""^^xsd:string)
+  ?types_of_nanocarriers rdfs:label ?types_of_nanocarriers_labels.
+}",R144364,Different nanocarriers used as drug delivery vehicles for the CNS,"['Different nanocarriers used as drug delivery vehicles for the CNS', 'Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes', 'Characteristics of Biosensors Based on ZnO One-Dimensional Nanostructures']","['R144364', 'R155621', 'R151435']",[0.7180892  0.37423953 0.27710524],1
+HQ0043,Which are 3 the most common variables for the atmosphere models?,"SELECT ?variables
+WHERE {
+  orkgr:R68871 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P7144 ?models.
+  ?models rdfs:label ?models_labels.
+  FILTER(REGEX(?models_labels, ""tmospher""))
+  ?models orkgp:P26032 ?variables.
+}
+ORDER BY DESC(COUNT(?variables))
+LIMIT 3",R68871,Comparison of prognostic atmospheric variables of CMIP5 GCMs,"['Comparison of prognostic atmospheric variables of CMIP5 GCMs', 'Comparison of Scenario Factsheets from the Open Energy Platform', 'Comparison of Scenario Factsheets from the Open Energy Platform']","['R68871', 'R150337', 'R113171']",[0.34692737 0.26779452 0.26779452],1
+HQ0078,Where did the study with maximal geographic scale take place?,"SELECT ?location, ?location_label
+WHERE {
+  {
+    SELECT (MAX(?geo_scale) AS ?max_geo_scale)
+    WHERE {
+      orkgr:R149849 orkgp:compareContribution ?contrib.
+      ?contrib orkgp:P41568 ?geo_scale.
+    }
+  }
+  orkgr:R149849 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41568 ?geo_scale;
+           orkgp:P37524 ?location.
+  ?location rdfs:label ?location_label.
+  FILTER(?geo_scale = ?max_geo_scale)
+}",R149849,Genetic variability (COI variation) in studies large sampled (>1000 sequences),"['Pilot mini collection of studies on libraries as third places.', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Prevalence of epilepsy in Europe']","['R110361', 'R149849', 'R75729']",[0.29038793 0.20513064 0.18981382],1
+HQ0022,"Does paper ""Disambiguating authors in citations on the web and authorship correlations"" employe Cosine similarity?","ASK
+WHERE {
+  orkgr:R6187 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?paper_title.
+  ?cont orkgp:P5002 orkgr:R6006.
+  FILTER(REGEX(STR(?paper_title), ""Disambiguating authors in citations on the web and authorship correlations"", ""i""))
+}",R6187,Semi-supervised author name disambiguation,"['Graph-based author name disambiguation', 'Semi-supervised author name disambiguation', 'Comparison of scholarly knowledge graphs']","['R6751', 'R6187', 'R78023']",[0.58820987 0.54931796 0.38993612],1
+HQ0099,For what piezoresistive material the least response time was obtained?,"SELECT ?piezoresistive_materials WHERE {
+  orkgr:R138374 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41021 ?piezoresistive_materials.
+  ?contrib orkgp:P41022 ?response_time.
+}
+ORDER BY ASC(?response_time)
+LIMIT 1",R138374,Comparison of flexible piezoresistive pressure sensors based on different materials,"['Comparison of flexible piezoresistive pressure sensors based on different materials', ""Mineralogical analysis of Mars in Visible-infrared wavelength range of electromagnetic spectrum using MRO's CRISM-3"", 'Rare-earth complexes and their applications']","['R138374', 'R155445', 'R111045']",[0.4129788  0.27836856 0.1872314 ],1
+HQ0032,What is the most common lead compound?,"SELECT ?compound
+WHERE {
+  orkgr:R75638 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P35194 ?compound.
+}
+ORDER BY DESC(COUNT(?compound))
+LIMIT 1",R75638,Anuran antimicrobial peptides activity and mechanism against different biological membranes,"['Rare-earth complexes and their applications', 'Sources of major ion evolution in groundwater chemistry of developing urban areas', 'Toxins produced by phytopathogenic Pseudomonas species and pathovars']","['R111045', 'R110597', 'R69027']",[0.26215187 0.20174994 0.1884627 ],0
+HQ0017,What is the most common location in the studies?,"SELECT ?locations
+WHERE {
+  orkgr:R111045 orkgp:compareContribution ?cont.
+  ?cont orkgp:P37537 ?locations.
+}
+ORDER BY DESC(COUNT(?locations))
+LIMIT 1",R111045,Rare-earth complexes and their applications,"['Pilot mini collection of studies on libraries as third places.', 'Semantic representations of scholarly communication', 'Semantic representations of scholarly communication']","['R110361', 'R8364', 'R8364']",[0.52282745 0.2533856  0.2533856 ],0
+HQ0027,For which country of study overall prevalence of epilepsy is the highest?,"SELECT ?country, ?country_label
+WHERE {
+  orkgr:R75729 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15512 ?country.
+  ?contrib orkgp:P16013 ?overall_prevalence.
+  ?country rdfs:label ?country_label.
+  ?overall_prevalence rdfs:label ?overall_prevalence_value
+}
+ORDER BY DESC(?overall_prevalence_value)
+LIMIT 1",R75729,Prevalence of epilepsy in Europe,"['Prevalence of epilepsy in Europe', 'Trends and methodological implications of psychodrama psychotherapy research', 'Pilot mini collection of studies on libraries as third places.']","['R75729', 'R44980', 'R110361']",[0.7881073  0.2560756  0.21332303],1
+HQ0046,Are children examined in the studies?,"ASK {
+  orkgr:R44979 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P23161 ?population.
+  FILTER(REGEX(?population, ""ildren""))
+}",R44979,Comparison of studies related to psychotherapeutic interventions in cancer,"['Pilot mini collection of studies on libraries as third places.', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Comparison of studies related to psychotherapeutic interventions in cancer']","['R110361', 'R149849', 'R44979']",[0.31428605 0.2149338  0.2066417 ],1
+HQ0058,"What are the precision, recall, and f1 values of all compared studies that used the algorithm naive bayes in combination with the machine learning feature bag of words to classfy user feedback as feature request? ","SELECT ?precision ?recall ?f1
+WHERE {
+  orkgr:R112387 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15006 ?algorithms.
+  ?algorithms rdfs:label ?alg_names.
+  FILTER(REGEX(?alg_names, ""Naive bayes""))
+  ?algorithms orkgp:P36075 ?features.
+  ?features rdfs:label ?fea_names.
+  FILTER(REGEX(?fea_names, ""Bag of words""))
+  ?features orkgp:P37029 ?categories.
+  ?categories rdfs:label ?cat_names.
+  FILTER(REGEX(?cat_names, ""Feature request""))
+  ?categories orkgp:P3004 ?precision;
+              orkgp:P5015 ?recall;
+              orkgp:P18037 ?f1.
+}",R112387,Overview of Approaches that Classify User Feedback as Feature Request,"['Overview of Approaches that Classify User Feedback as Feature Request', 'Overview of Approaches that Classify User Feedback as Feature Request', 'QA evaluations on QALD-6']","['R112387', 'R112387', 'R6898']",[0.46964574 0.46964574 0.2811222 ],1
+HQ0055,What is the average energy generation for each energy source considered in 5 year intervals?,"SELECT ?rangeId ?energy_sources_labels (AVG(?eng_gen_value) AS ?avg_eng_gen_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?paper orkgp:P31 ?contrib;
+         orkgp:P29 ?year.
+  BIND(xsd:int(?year) AS ?y).
+  VALUES (?rangeId ?min ?max) {
+    (""2001-2005"" 2001 2005)
+    (""2006-2010"" 2006 2010)
+    (""2011-2015"" 2011 2015)
+    (""2016-2020"" 2016 2020)
+  }
+  FILTER(?min <= ?y && ?y <= ?max).
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43134 ?energy_generation.
+  ?energy_generation orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?eng_gen_value).
+}
+ORDER BY ASC(?rangeId)",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.48890167 0.48890167 0.48890167],1
+HQ0077,What is the most common type of biosensor?,"SELECT ?biosensor
+WHERE {
+  orkgr:R151435 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43095 ?biosensor.
+}
+ORDER BY DESC(COUNT(?biosensor))
+LIMIT 1",R151435,Characteristics of Biosensors Based on ZnO One-Dimensional Nanostructures,"['Characteristics of Biosensors Based on ZnO One-Dimensional Nanostructures', 'Different nanocarriers used as drug delivery vehicles for the CNS', 'Comparison of flexible piezoresistive pressure sensors based on different materials']","['R151435', 'R144364', 'R138374']",[0.4469334  0.321172   0.28967658],1
+HQ0052,What is the average installed capacity for each energy source considered?,"SELECT ?energy_sources_labels (AVG(?installed_cap_value) AS ?average_installed_cap_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43133 ?installed_capacity.
+  ?installed_capacity orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?installed_cap_value)
+}",R153801,Comparison of Studies on Germany's Energy Supply in 2050,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.41588753 0.41588753 0.41588753],1
+HQ0011,Which system has the worst recall?,"SELECT ?evaluation ?system_name
+WHERE {
+  orkgr:R6946 orkgp:compareContribution ?cont.
+  ?cont orkgp:P34 ?evaluation.
+  ?evaluation orkgp:P5015 ?recall;
+              rdfs:label ?system_name.
+  BIND(xsd:float(?recall) AS ?r)
+}
+ORDER BY ?r
+LIMIT 1",R6946,QA evaluations on QALD-5,"['QA evaluations on QALD-6', 'QA evaluations on QALD-5', 'Genetic variability (COI variation) in studies large sampled (>1000 sequences)']","['R6898', 'R6946', 'R149849']",[0.21441704 0.20880854 0.19462821],1
+HQ0100,What is the maximum reaction yield for the studies?,"SELECT ?reactions_yield WHERE {
+  orkgr:R137086 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37560 ?reactions_yield.
+}
+ORDER BY DESC(?reactions_yield)
+LIMIT 1",R137086,Catalytic activation of C-O bond,"['Sources of major ion evolution in groundwater chemistry of developing urban areas', 'Invasion Biology- Enemy release hypothesis', 'Catalytic activation of C-O bond']","['R110597', 'R58002', 'R137086']",[0.25096163 0.22955996 0.22751345],1
+HQ0070,For which region of data collection the number of sampling stations is the largest?,"SELECT ?region
+WHERE {
+  orkgr:R155584 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41068 ?number_of_stations;
+           orkgp:P27029 ?region.
+}
+ORDER BY DESC(?number_of_stations)
+LIMIT 1",R155584,Assessment of picophytoplankton abundance in the Indian Ocean,"['Genetic variability (COI variation) in studies large sampled (>1000 sequences)', 'Assessment of picophytoplankton abundance in the Ocean', 'Assessment of picophytoplankton abundance in the Indian Ocean']","['R149849', 'R155561 ', 'R155584']",[0.31455132 0.23221418 0.22328107],1
+HQ0069,Which sector is the most commonly modeled energy sector?,"SELECT ?label (COUNT(?label) AS ?number)
+WHERE {
+  ?sector rdfs:label ?label;
+          a ?class.
+  ?class owl:equivalentClass <http://openenergy-platform.org/ontology/oeo/OEO_00000367>.
+  orkgr:R150337 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37586 ?scenario.
+  ?scenario orkgp:P37675 ?study.
+  ?study orkgp:P37668 ?sector.
+  
+}
+ORDER BY DESC(?number)
+LIMIT 1",R150337,Comparison of Scenario Factsheets from the Open Energy Platform,"[""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050"", ""Comparison of Studies on Germany's Energy Supply in 2050""]","['R153801', 'R153801', 'R153801']",[0.48165444 0.48165444 0.48165444],0
+HQ0063,Is Cobb-Douglas functional applied in the studies?,"ASK {
+  orkgr:R34493 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15661 ?funcionals.
+  ?funcionals rdfs:label ?funtionals_labels.
+  FILTER(REGEX(?funtionals_labels, ""Cobb-Douglas""))
+}",R34493,Cost functions estimation for port sector,"['Pilot mini collection of studies on libraries as third places.', 'Trends and methodological implications of psychodrama psychotherapy research', 'Transforming lignin-derived monomers to catechol, phenol, and benzene by heterogeneous catalysts']","['R110361', 'R44980', 'R155272']",[0.2814432  0.21227856 0.16631201],0
+HQ0001,"What type of data does the system proposed in paper titled ""Open Research Knowledge Graph"" support?","SELECT ?datatype 
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?title.
+  ?cont  orkgp:P7046 ?sys.
+  ?sys orkgp:P7055 ?datatype.
+  FILTER(REGEX(STR(?title), ""Open Research Knowledge Graph""))
+}",R8364,Semantic representations of scholarly communication,"['Comparison of scholarly knowledge graphs', 'Semantic representations of scholarly communication', 'Semantic representations of scholarly communication']","['R78023', 'R8364', 'R8364']",[0.5468803  0.41834688 0.41834688],1

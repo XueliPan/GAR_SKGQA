@@ -13,3 +13,6 @@ entity_embeddings.npy
 property_embeddings.npy
 datasets/dblp/dblp-2022-03-01.nt.gz
 datasets/sciqa/project_data/orkg-dump-14-02-2023.nt
+entity_embeddings.npy
+property_embeddings.npy
+*.npy

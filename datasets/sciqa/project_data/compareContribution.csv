@@ -1,0 +1,2098 @@
+comparisonIRI,comparisonLabel,question_id,question_string,gold_sparql
+http://orkg.org/orkg/resource/R6187,Semi-supervised author name disambiguation,HQ0040,Which countries are considered in the papers about geopolitics?,"SELECT DISTINCT ?location
+WHERE {
+?_ orkgp:compareContribution [
+orkgp:P32 [
+rdfs:label ?label
+];
+orkgp:P5049 ?location
+]
+FILTER(REGEX(STR(?label), ""geopoli?tics""))
+}"
+http://orkg.org/orkg/resource/R6751,Graph-based author name disambiguation,HQ0013,What was the most common type of approach for summarization before 2002?,"SELECT ?approach ?approach_label
+WHERE {
+orkgr:R6948 orkgp:compareContribution ?cont.
+?cont orkgp:P15 ?implementation.
+?implementation orkgp:P5043 ?approach.
+?approach rdfs:label ?approach_label.
+}
+ORDER BY DESC(COUNT(?approach_label))
+LIMIT 1"
+http://orkg.org/orkg/resource/R6757,Question answering systems,HQ0061,Which vegetables are utilized for betanin extraction?,"SELECT ?vegetables, ?vegetables_labels
+WHERE {
+orkgr:R75363 orkgp:compareContribution ?contrib.
+?contrib orkgp:P35147 ?compounds.
+?compounds rdfs:label ?compounds_labels.
+FILTER(REGEX(?compounds_labels, ""etanin""))
+?contrib orkgp:P35148 ?vegetables.
+?vegetables rdfs:label ?vegetables_labels.
+}"
+http://orkg.org/orkg/resource/R6946,QA evaluations on QALD-5,HQ0086,What are the research problems Vernier Effect is related to?,"SELECT DISTINCT ?problems, ?problems_labels
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""Vernier Effect"", ""i""))
+?papers orkgp:P31 ?contrib.
+?contrib orkgp:P32 ?problems.
+?problems rdfs:label ?problems_labels.
+}"
+http://orkg.org/orkg/resource/R6947,Recent summarization efforts,HQ0049,What is the average energy generation of all energy sources considered?,"SELECT (AVG(?elec_gen_value) AS ?average_elec_gen_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43134 ?electricity_generation.
+FILTER(REGEX(?energy_sources_labels, ""all sources""))
+?electricity_generation orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?elec_gen_value)
+}"
+http://orkg.org/orkg/resource/R6755,General visualization systems,HQ0002,"What is the scope of ""Decentralised Authoring, Annotations and Notifications for a Read-Write Web with Dokieli""?","SELECT ?scope 
+WHERE {
+orkgr:R8364 orkgp:compareContribution ?cont.
+?paper orkgp:P31 ?cont;
+rdfs:label ?title.
+?cont orkgp:P7046 ?sys.
+?sys orkgp:P7047 ?scope.
+FILTER(REGEX(STR(?title), ""Decentralised Authoring, Annotations and Notifications for a Read-Write Web with dokieli""))
+}"
+http://orkg.org/orkg/resource/R6756,Knowledge graph visualizations,HQ0072,What is the most common drug in the studies?,"SELECT ?drug, ?drug_labels
+WHERE {
+orkgr:R155621 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37578 ?drug.
+?drug rdfs:label ?drug_labels.
+}
+ORDER BY DESC(COUNT(?drug))
+LIMIT 1"
+http://orkg.org/orkg/resource/R6898,QA evaluations on QALD-6,HQ0093,What are the research problems of the cultural history field?,"SELECT DISTINCT ?research_problems, ?research_problems_labels
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers orkgp:P30 ?research_fields.
+?research_fields rdfs:label ?research_fields_labels. 
+FILTER(REGEX(?research_fields_labels, ""cultural history"", ""i""))
+?papers orkgp:P31 ?contrib.
+?contrib orkgp:P32 ?research_problems.
+?research_problems rdfs:label ?research_problems_labels.
+}"
+http://orkg.org/orkg/resource/R6948,Summarization before 2002,HQ0094,Who are the co-authors of Kurt Thomas?,"SELECT ?co_authors
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers orkgp:P27 ?authors.
+FILTER(REGEX(?authors, ""Kurt Thomas""))
+?papers orkgp:P27 ?co_authors.
+FILTER(?co_authors != ""Kurt Thomas""^^xsd:string)
+}"
+http://orkg.org/orkg/resource/R6949,Supervised author name disambiguation,HQ0025,Which scholarly knowledge graphs support RDF?,"SELECT ?title
+WHERE {
+orkgr:R78023 orkgp:compareContribution ?cont.
+?cont orkgp:P7009 ?has_rdf.
+FILTER(REGEX(?has_rdf, ""T""))
+?cont rdfs:label ?title
+}"
+http://orkg.org/orkg/resource/R6950,Unsupervised author name disambiguation,HQ0029,How many studies are published after 2019?,"SELECT (COUNT(?date) AS ?number_of_studies)
+WHERE {
+orkgr:R110393 orkgp:compareContribution ?contrib.
+?contrib orkgp:P9040 ?date.
+filter(?date > ""2019""^^xsd:string)
+}"
+http://orkg.org/orkg/resource/R25093,Overview of Various Studies for Personality Recognition from Online Social Networks,HQ0014,"What are the metrics used by paper ""Using NMF-based text summarization to improve supervised and unsupervised classification?","SELECT ?metrics, ?metrics_labels
+WHERE {
+?papers rdfs:label ?title.
+FILTER(REGEX(?title, ""NMF-based text summarization""))
+?papers orkgp:P31 ?cont.
+?cont orkgp:P34 ?eval.
+?eval orkgp:P2006 ?metrics.
+?metrics rdfs:label ?metrics_labels.
+}"
+http://orkg.org/orkg/resource/R8340,Semi-supervised author name disambiguation,HQ0059,Which are five the most common research fields for papers?,"SELECT ?research_field, ?research_field_labels
+WHERE {
+?papers orkgp:P30 ?research_field.
+?research_field rdfs:label ?research_field_labels.
+}
+ORDER BY DESC(COUNT(?research_field_labels))
+LIMIT 5"
+http://orkg.org/orkg/resource/R8341,Semi-supervised author name disambiguation,HQ0044,What is the total number of species examined in the studies?,"SELECT (SUM(?number) AS ?total)
+WHERE {
+orkgr:R58002 orkgp:compareContribution ?contrib.
+?contrib orkgp:P31024 ?number_of_species.
+BIND(xsd:integer(?number_of_species) AS ?number)
+}"
+http://orkg.org/orkg/resource/R8342,Ontologies for describing scholarly articles,HQ0036,What is the full name of the EXPO ontology?,"SELECT ?full_name
+WHERE {
+orkgr:R8342 orkgp:compareContribution ?cont.
+?cont orkgp:P7034 ?ontology.
+?ontology rdfs:label ?ont_lbl;
+orkgp:P7035 ?full_name. 
+FILTER(REGEX(STR(?ont_lbl), ""expo"", ""i""))
+}"
+http://orkg.org/orkg/resource/R8364,Semantic representations of scholarly communication,HQ0073,Do all studies include open ocean sampling?,"ASK {
+{
+SELECT (COUNT(?ocean_sampling) AS ?counter)
+WHERE {
+orkgr:R155561 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41379 ?ocean_sampling.
+FILTER(?ocean_sampling = ""F""^^xsd:string)
+}
+}
+FILTER(?counter = 0)
+}"
+http://orkg.org/orkg/resource/R8453,Disambiguation Tecnology compare,HQ0004,Who is responsible for acquisition in the RASH system?,"SELECT ?acq
+WHERE {
+orkgr:R8364 orkgp:compareContribution ?cont.
+?cont orkgp:P7046 orkgr:R8350.
+orkgr:R8350 orkgp:P7049 ?acq.
+}"
+http://orkg.org/orkg/resource/R8618,Semantic representation comparison of papers,HQ0010,What metric will be used to evaluate question answering systems?,"SELECT DISTINCT ?name
+WHERE {
+[
+orkgp:P34 [
+rdfs:label ?name 
+]
+].
+FILTER(STRLEN(?name) > 0)
+}
+ORDER BY ?name"
+http://orkg.org/orkg/resource/R25115,A comparison of multiple participatory design evaluations,HQ0015,What is the maximum sample size?,"SELECT ?sample_size
+WHERE {
+orkgr:R135371 orkgp:compareContribution ?cont.
+?cont orkgp:P15687 ?sample_size
+}
+ORDER BY DESC(?sample_size)
+LIMIT 1"
+http://orkg.org/orkg/resource/R25160,Overview of methods per system used to develop an in-vehicle light display ,HQ0030,Which toxins do pseudomonas species produce?,"SELECT DISTINCT ?toxins, ?toxins_labels
+WHERE {
+orkgr:R69027 orkgp:compareContribution ?contrib.
+?contrib orkgp:P34037 ?toxins.
+?toxins rdfs:label ?toxins_labels.
+}"
+http://orkg.org/orkg/resource/R25201,Overview of offline signature verification systems,HQ0035,Which scenario factsheets from the Open Energy Platform are used in studies with public funding?,"SELECT ?paper
+WHERE {
+orkgr:R113171 orkgp:compareContribution ?cont.
+?paper orkgp:P31 ?cont.
+?cont orkgp:P37586 ?hasFacts.
+?hasFacts orkgp:P37675 ?study.
+?study orkgp:P37663 ?sourceOfFunding.
+FILTER(REGEX(?sourceOfFunding, ""public""))
+}"
+http://orkg.org/orkg/resource/R25223,The Pros and Cons of the various replication techniques of content distribution in Peer to Peer Networks,HQ0054,What is the minimum and maximum installed capacity for each energy source considered?,"SELECT ?energy_sources_labels (MIN(?installed_cap_value) AS ?min_installed_cap_value) (MAX(?installed_cap_value) AS ?max_installed_cap_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43133 ?installed_capacity.
+?installed_capacity orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?installed_cap_value)
+}"
+http://orkg.org/orkg/resource/R12251,Reproductive number estimates 2019-nCoV,HQ0056,What is the average installed capacity for each energy source considered in 5 year intervals?,"SELECT ?rangeId ?energy_sources_labels (AVG(?installed_cap_value AS ?avg_installed_cap_value))
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?paper orkgp:P31 ?contrib;
+orkgp:P29 ?year.
+BIND(xsd:int(?year) AS ?y).
+VALUES(?rangeId ?min ?max) {
+(""2001-2005"" 2001 2005)
+(""2006-2010"" 2006 2010)
+(""2011-2015"" 2011 2015)
+(""2016-2020"" 2016 2020)
+}
+FILTER(?min <= ?y && ?y <= ?max).
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43133 ?installed_capacity.
+?installed_capacity orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?installed_cap_value).
+}
+ORDER BY ASC(?rangeId)"
+http://orkg.org/orkg/resource/R12250,Comparison of the published reproductive number estimates for 2019-nCoV,HQ0042,Who is the author of the most recent paper about insects?,"SELECT ?author_name
+WHERE {
+{
+SELECT ?publication_date_ AS ?date_of_the_latest_paper {
+?paper_ a orkgc:Paper;
+rdfs:label ?title_;
+orkgp:P28 ?publication_month_;
+orkgp:P29 ?publication_year_.
+OPTIONAL {
+?publication_month_ rdfs:label ?publication_month_label_
+}
+OPTIONAL {
+?publication_year_ rdfs:label ?publication_year_label_
+}
+BIND(
+xsd:integer(
+IF(
+BOUND(?publication_month_label_),
+?publication_month_label_,
+?publication_month_
+)
+) AS ?publication_month_as_number_
+)
+BIND(
+xsd:integer(
+IF(
+BOUND(?publication_year_label_),
+?publication_year_label_,
+?publication_year_
+)
+) AS ?publication_year_as_number_
+)
+BIND(
+xsd:dateTime(
+CONCAT(
+?publication_year_as_number_,
+""-"",
+?publication_month_as_number_,
+""-01T00:00:00.000-00:00""
+)
+)
+AS ?publication_date_
+)
+FILTER(
+?publication_month_as_number_ > 0 && ?publication_month_as_number_ < 13 && ?publication_year_as_number_ > 0 && ?publication_year_as_number_ < 2023
+)
+FILTER(REGEX(STR(?title_), ""insect""))
+}
+ORDER BY DESC(?publication_date_)
+LIMIT 1
+}
+?paper a orkgc:Paper;
+rdfs:label ?title;
+orkgp:P27 ?author;
+orkgp:P28 ?publication_month;
+orkgp:P29 ?publication_year.
+OPTIONAL {
+?publication_month rdfs:label ?publication_month_label
+}
+OPTIONAL {
+?publication_year rdfs:label ?publication_year_label
+}
+OPTIONAL {
+?author rdfs:label ?author_label
+}
+BIND(
+IF(
+BOUND(?author_label),
+?author_label,
+?author
+) AS ?author_name
+)
+BIND(
+xsd:integer(
+IF(
+BOUND(?publication_month_label),
+?publication_month_label,
+?publication_month
+)
+) AS ?publication_month_as_number
+)
+BIND(
+xsd:integer(
+IF(
+BOUND(?publication_year_label),
+?publication_year_label,
+?publication_year
+)
+) AS ?publication_year_as_number
+)
+BIND(
+xsd:dateTime(
+CONCAT(
+?publication_year_as_number,
+""-"",
+?publication_month_as_number,
+""-01T00:00:00.000-00:00""
+)
+)
+AS ?publication_date
+)
+FILTER(
+?publication_month_as_number > 0 && ?publication_month_as_number < 13 && ?publication_year_as_number > 0 && ?publication_year_as_number < 2023
+)
+FILTER(
+REGEX(
+STR(?title),
+""insect""
+) && ?publication_date = ?date_of_the_latest_paper
+)
+}"
+http://orkg.org/orkg/resource/R12249,Comparison of the published reproductive number estimates for 2019-nCoV,HQ0019,"Does ""PRISMA hyperspectral mission"" use ENVI software?","SELECT ?uses_ENVI
+WHERE {
+?papers rdfs:label ?titles.
+FILTER(REGEX(?titles, ""PRISMA""))
+?papers orkgp:P31 ?cont.
+?cont orkgp:P23031 ?software.
+?software rdfs:label ?software_labels.
+BIND(
+IF(?software_labels = ""ENVI""^^<http://www.w3.org/2001/XMLSchema#string>, ""Yes"", ""No"") 
+AS ?uses_ENVI
+)
+}
+ORDER BY DESC(?uses_ENVI)
+LIMIT 1"
+http://orkg.org/orkg/resource/R12317,Comparison,HQ0087,When the earliest paper related to X-rays was published?,"SELECT ?publication_years
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""X-ray"", ""i""))
+?papers orkgp:P29 ?publication_years. 
+}
+ORDER BY ASC(?publication_years)
+LIMIT 1"
+http://orkg.org/orkg/resource/R70545,Survey of most suitable computational intelligence technique for prediction of influenza using physiological data as features,HQ0041,What can one use instead of wheat flour?,"SELECT DISTINCT ?flour
+WHERE {
+?_ orkgp:P37571 ?flour.
+}"
+http://orkg.org/orkg/resource/R70518,95% confidence interval of Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000 and the 1.5° C scenario,HQ0034,How many studies do use Chloride as major anion?,"SELECT COUNT(?anions_labels) AS ?chloride_count
+WHERE {
+orkgr:R110597 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37458 ?anions.
+?anions rdfs:label ?anions_labels.
+FILTER(REGEX(?anions_labels, ""Chloride""^^xsd:string))
+}"
+http://orkg.org/orkg/resource/R56945,Invasion Biology- Invasional meltdown Hypothesis,HQ0033,What risk factors for OSA are discovered in the paper with 100% OSA frequency?,"SELECT ?risk_factors, ?risk_factors_labels
+WHERE {
+orkgr:R110932 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37530 ?osa_frequency.
+?osa_frequency rdfs:label ?osa_frequency_values.
+?contrib orkgp:P37528 ?risk_factors.
+?risk_factors rdfs:label ?risk_factors_labels.
+FILTER(REGEX(?osa_frequency_values, ""100""^^xsd:string))
+}"
+http://orkg.org/orkg/resource/R70287,SARS-CoV-2 BioAssays,HQ0060,What are economics subfields?,"SELECT DISTINCT ?subfields, ?subfields_labels
+WHERE {
+?papers orkgp:P30 ?research_fields.
+?research_fields rdfs:label ""Economics""^^xsd:string.
+?research_fields orkgp:P36 ?subfields.
+?subfields rdfs:label ?subfields_labels. 
+}"
+http://orkg.org/orkg/resource/R56110,Invasion Biology- Island susceptibility hypothesis,HQ0048,What is the maximum female percentage?,"SELECT ?female_percantage
+WHERE {
+orkgr:R44978 orkgp:compareContribution ?contrib.
+?contrib orkgp:P23154 ?female_percantage.
+}
+ORDER BY DESC(?female_percantage)
+LIMIT 1"
+http://orkg.org/orkg/resource/R70630,Survey of most suitable computational intelligence technique for prediction of SSI (Surgical Site Infection) using physiological data as features,HQ0020,Which ontology has the most classes?,"SELECT ?ont ?ont_label
+WHERE {
+orkgr:R8342 orkgp:compareContribution ?cont.
+?cont orkgp:P7034 ?ont.
+?ont orkgp:P7038 ?cls_cnt;
+rdfs:label ?ont_label.
+}
+ORDER BY DESC(MAX(xsd:int(?cls_cnt)))
+LIMIT 1"
+http://orkg.org/orkg/resource/R70212, Comparison of different platforms for big data analytics,HQ0062,What are the objectives for Sepsis prediction?,"SELECT DISTINCT ?objectives
+WHERE {
+orkgr:R70642 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15051 ?objectives.
+}"
+http://orkg.org/orkg/resource/R70584,Survey of most suitable computational intelligence technique for prediction of Sepsis using physiological data as features,HQ0024,"What is the research problem addressed by paper ""LIMSI participant at QADL-5@CLEF""?","SELECT ?problem ?problem_lbl
+WHERE {
+?paper orkgp:P31 ?cont;
+rdfs:label ?paper_title.
+?cont orkgp:P32 ?problem.
+?problem rdfs:label ?problem_lbl.
+FILTER(REGEX(STR(?paper_title), ""LIMSI participation at QALD-5@CLEF"", ""i""))
+}"
+http://orkg.org/orkg/resource/R54867,Invasion Biology- Disturbance Hypothesis,HQ0005,"What research problem is addressed in the paper titled ""6th Open Challenge on Question Answering over Linked Data (QALD-6)""?","SELECT DISTINCT ?concept ?rlabel 
+WHERE {
+orkgr:R6386 orkgp:P31 ?x .
+?x orkgp:P32 ?concept.
+?concept rdfs:label ?rlabel.
+}
+LIMIT 1"
+http://orkg.org/orkg/resource/R70605, Survey of most suitable computational intelligence technique for prediction of CDI (Clostridium difficile infection) using physiological data as features,HQ0051,What is the average energy generation for each energy source considered?,"SELECT ?energy_sources_labels (AVG(?elec_gen_value) AS ?average_elec_gen_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43134 ?elec_gen.
+?elec_gen orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?elec_gen_value)
+}"
+http://orkg.org/orkg/resource/R70632, Survey of most suitable computational intelligence technique for prediction of CDI (Clostridium difficile infection) using physiological data as features,HQ0075,What is the average efficency for experiments?,"SELECT AVG(?efficency_values)
+WHERE {
+orkgr:R155266 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43156 ?efficency.
+?efficency rdfs:label ?efficency_labels.
+BIND(xsd:float(?efficency_labels) AS ?efficency_values)
+}"
+http://orkg.org/orkg/resource/R54244,Invasion Biology- Phenotypic plasticity Hypothesis,HQ0082,What is another name for Bisphenol A?,"SELECT ?same_name_label
+WHERE {
+?resources rdfs:label ?resources_labels.
+FILTER(REGEX(?resources_labels, ""Bisphenol A"", ""i""))
+?resources orkgp:SAME_AS ?same_name.
+?same_name rdfs:label ?same_name_label.
+}"
+http://orkg.org/orkg/resource/R53407,Invasion Biology- Darwin's naturalization Hypothesis,HQ0012,"Does ""ZoomRDF"" uses filters?","SELECT ?uses_filter
+WHERE {
+?paper orkgp:P5025 ?filter;
+rdfs:label ?title.
+FILTER(REGEX(?title, ""ZoomRDF""))
+BIND(
+IF(?filter = ""T""^^xsd:string, ""Yes"", ""No"")
+AS ?uses_filter
+)
+}"
+http://orkg.org/orkg/resource/R70633, Survey of most suitable computational intelligence technique for prediction of CDI (Clostridium difficile infection) using physiological data as features,HQ0028,Which indicators for well-being are used in the studies on the effect of COVID-19?,"SELECT DISTINCT ?indicators, ?indicators_labels
+WHERE {
+orkgr:R78492 orkgp:compareContribution ?contrib.
+?contrib orkgp:P36089 ?indicators.
+?indicators rdfs:label ?indicators_labels.
+}"
+http://orkg.org/orkg/resource/R53040,comparison of crowd evacuation models,HQ0083,What is the amount of questions for LC-QuAD 2.0 dataset?,"SELECT ?number_of_questions
+WHERE {
+orkgr:R154290 orkgp:P31 ?contrib.
+?contrib orkgp:P41923 ?number_of_questions.
+}"
+http://orkg.org/orkg/resource/R57501,Invasion Biology-  Biotic resistance hypothesis,HQ0065,What is the maximum egg mass in studies?,"SELECT MAX(?egg_masses_float)
+WHERE {
+orkgr:R34845 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15692 ?egg_masses.
+BIND(xsd:float(?egg_masses) AS ?egg_masses_float)
+}"
+http://orkg.org/orkg/resource/R52143,Invasion Biology- Limiting Similarity Hypothesis,HQ0074,For what product minimum conversion was obtained?,"SELECT ?product, ?product_label
+WHERE {
+orkgr:R155272 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43149 ?product;
+orkgp:P43148 ?conversion.
+?product rdfs:label ?product_label.
+?conversion rdfs:label ?conversion_label.
+}
+ORDER BY ASC(xsd:float(?conversion_label))
+LIMIT 1"
+http://orkg.org/orkg/resource/R25255,Summary of Arabic Sentiment Lexicons ,HQ0067,In which papers are energy system scenarios used that consider the 2050 time frame?,"SELECT ?paper
+WHERE {
+{
+orkgr:R150337 orkgp:compareContribution ?contrib.
+} UNION {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+}
+?paper orkgp:P31 ?contrib.
+{
+?contrib orkgp:P37586 ?scenarios.
+?scenarios orkgp:P37675 ?studies.
+?studies orkgp:P35205 ?timeframes.
+} UNION {
+?contrib orkgp:P37581 ?scenario.
+?scenario orkgp:P43138 ?goal.
+?goal orkgp:P43139 ?timeframes.
+}
+FILTER(xsd:int(?timeframes) = 2050)
+}"
+http://orkg.org/orkg/resource/R25358,Aspect-based and Fuzziness-based Classification Approaches in the Context of On-The-Fly Computing ,HQ0018,Which methods are used?,"SELECT DISTINCT ?methods, ?methods_labels
+WHERE {
+orkgr:R110361 orkgp:compareContribution ?cont.
+?cont orkgp:HAS_METHOD ?methods.
+?methods rdfs:label ?methods_labels.
+}"
+http://orkg.org/orkg/resource/R25400,Review of Traceability Approaches between Software Architecture and Source Code,HQ0089,Does FEEM Sustainability Index consider air quality?,"ASK {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""FEEM Sustainability Index""))
+?papers orkgp:P31 ?contrib.
+?contrib ?properties ?properties_values.
+?properties rdfs:label ?properties_labels.
+FILTER(REGEX(?properties_labels, ""air quality"", ""i""))
+FILTER(?properties_values = ""yes"")
+}"
+http://orkg.org/orkg/resource/R25447,Review of the Reliability of Composite Web Service in Service-Oriented Architecture,HQ0079,Which energy system modeling papers indicate where to find their simulation software and whether there are associated simulation scenarios mentioned in ORKG?,"SELECT ?repo ?scenario ?simulation_parameters
+WHERE {
+?paper orkgp:P31 ?contrib.
+?contrib orkgp:P37586 ?model.
+?model orkgp:P39010 ?code.
+?code orkgp:P4077 ?repo.
+OPTIONAL {
+?model orkgp:P43146 ?scenario.
+{
+SELECT ?scenario ?simulation_parameters
+WHERE {
+?scenario orkgp:P31 ?contrib2.
+?contrib2 orkgp:P37586 ?model2.
+?model2 orkgp:P37583 ?data.
+?data orkgp:HAS_DATASET ?dataset.
+?dataset orkgp:P37343 ?type;
+orkgp:P4059 ?simulation_parameters.
+?type rdfs:label ?label.
+FILTER(REGEX(?label, ""Technical""))
+}
+}
+}
+}"
+http://orkg.org/orkg/resource/R25495,Continuous Blood Glucose Monitoring and Suggesting the Quantity of Insulin or Artificial Pancreas (AP) for Diabetic Type 1 Patients overview,HQ0092,Does ViCoMap support aggregation?,"SELECT ?has_aggregation_support
+WHERE {
+?application rdfs:label ""ViCoMap""^^xsd:string;
+orkgp:P5038 ?has_aggregation_support_.
+BIND(
+IF(?has_aggregation_support_ = ""T""^^xsd:string, ""yes"", ""no"")
+AS ?has_aggregation_support
+)
+}"
+http://orkg.org/orkg/resource/R25529,"Overview for Crowdfunding as Feedback Channel 
+",HQ0050,What is the average installed capacity of all energy sources considered?,"SELECT (AVG(?installed_cap_value) AS ?average_installed_cap_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43133 ?installed_capacity.
+FILTER(REGEX(?energy_sources_labels, ""all sources""))
+?installed_capacity orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?installed_cap_value)
+}"
+http://orkg.org/orkg/resource/R25583,Model-driven Game Development approaches ,HQ0066,What is the most common substrate for catalysts?,"SELECT ?substrate
+WHERE {
+orkgr:R25900 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15090 ?substrate.
+}
+ORDER BY DESC(COUNT(?substrate))
+LIMIT 1"
+http://orkg.org/orkg/resource/R25629,Overview of Empirical Studies on Agile Usage,HQ0047,What is the average reproductive number for studies?,"SELECT (AVG(?reproductive_number) AS ?average_reproductive_number)
+WHERE {
+orkgr:R44930 orkgp:compareContribution ?contrib.
+?contrib orkgp:P23140 ?basic_reproductive_number.
+?basic_reproductive_number orkgp:HAS_VALUE ?value
+BIND(xsd:float(?value) AS ?reproductive_number)
+}"
+http://orkg.org/orkg/resource/R25663,A Literature Review of the Acceptance of Warehouse Picking Systems ,HQ0071,What are areas of study?,"SELECT DISTINCT ?areas, ?areas_labels
+WHERE {
+orkgr:R155445 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37041 ?areas.
+?areas rdfs:label ?areas_labels.
+}"
+http://orkg.org/orkg/resource/R25694,Overview of Generic Visualization Systems ,HQ0016,"What is major reactant for ""Microwave-Assisted Cobinamide Synthesis""?","SELECT ?reactant
+WHERE {
+?papers rdfs:label ?titles.
+FILTER(REGEX(?titles, ""Microwave-Assisted Cobinamide Synthesis""))
+?papers orkgp:P31 ?cont.
+?cont orkgp:P37557 ?reactant.
+}"
+http://orkg.org/orkg/resource/R25726,"Overview of Graph-based Visualization Systems 
+",HQ0053,What is the minimum and maximum energy generation for each energy source considered?,"SELECT ?energy_sources_labels (MIN(?elec_gen_value) AS ?min_elec_gen_value) (MAX(?elec_gen_value) AS ?max_elec_gen_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43134 ?elec_gen.
+?elec_gen orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?elec_gen_value)
+}"
+http://orkg.org/orkg/resource/R25762,Comparison of Execution times of different Algorithms for mining the frequent itemsets and association rules from large databases ,HQ0096,Who is the author with the largest number of papers about semantic representation in music research problem?,"SELECT ?author
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers orkgp:P31 ?contrib.
+?contrib orkgp:P32 ?research_problems.
+?research_problems rdfs:label ?research_problems_labels.
+FILTER(REGEX(?research_problems_labels, ""semantic representation in music"", ""i""))
+?papers orkgp:P27 ?authors.
+OPTIONAL {
+?authors rdfs:label ?authors_labels
+}
+BIND(IF(BOUND(?authors_labels), ?authors_labels, ?authors) AS ?author)
+}
+ORDER BY DESC(COUNT(?author))
+LIMIT 1"
+http://orkg.org/orkg/resource/R25768,"Comparison of Memory Usage of different Algorithms 
+for mining the frequent itemsets and association rules from large databases ",HQ0098,Does OWLMAP imply integrity constraints?,"ASK {
+?approach rdfs:label ""OWLMAP""^^xsd:string.
+?contrib ?predicate ?approach.
+?contrib orkgp:P41333 ?integrity_constraints.
+FILTER(?integrity_constraints = ""t""^^xsd:string)
+}"
+http://orkg.org/orkg/resource/R25857,Catalysts for the Gas-Phase Selective Hydrogenation of Alkynes overview,HQ0076,What preprocessing methods are used?,"SELECT DISTINCT ?prep_methods, ?prep_methods_labels
+WHERE {
+orkgr:R155154 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41006 ?prep_methods.
+?prep_methods rdfs:label ?prep_methods_labels.
+}"
+http://orkg.org/orkg/resource/R25900,Catalysts for the Liquid-Phase Hydrogenation of Alkynes overview,HQ0045,In what country was conducted research with the largest number of participants?,"SELECT ?country
+WHERE {
+orkgr:R44980 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15249 ?country;
+orkgp:P23169 ?number_of_participants.
+}
+ORDER BY DESC(?number_of_participants)
+LIMIT 1"
+http://orkg.org/orkg/resource/R25920,Overview of lateral flow (immuno)assays: detection of infectious agents,HQ0023,"what are the evidence and limitations of paper ""Evaluating the Use of Social Networks in Author Name Disambiguation in Digital Libraries""?","SELECT ?evidence ?evidence_title ?limitation
+WHERE {
+orkgr:R6751 orkgp:compareContribution ?cont.
+?paper orkgp:P31 ?cont;
+rdfs:label ?paper_title.
+?cont orkgp:P5004 ?evidence;
+orkgp:P5006 ?limitation.
+?evidence rdfs:label ?evidence_title.
+FILTER(REGEX(STR(?paper_title), ""Evaluating the Use of Social Networks in Author Name Disambiguation in Digital Libraries"", ""i""))
+}"
+http://orkg.org/orkg/resource/R25931,Overview of lateral flow (immuno)assays: detection of metabolic disorders,HQ0021,"What is the base URL of ""The Document Components Ontology""?","SELECT ?iri
+WHERE {
+orkgr:R8342 orkgp:compareContribution ?cont.
+?cont orkgp:P7034 ?ont.
+?ont orkgp:P7042 ?iri;
+orkgp:P7035 ?full_name.
+FILTER(REGEX(STR(?full_name), ""Document Components Ontology"", ""i""))
+}"
+http://orkg.org/orkg/resource/R25948,Overview of lateral flow (immuno)assays: detection of toxic compounds,HQ0088,Who are the authors of the SOSA ontology?,"SELECT ?authors
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""^SOSA""))
+?papers orkgp:P27 ?authors.
+}"
+http://orkg.org/orkg/resource/R25961,Overview of lateral flow (immuno)assays: miscellaneous applications,HQ0009,What is the precision and recall of SemGraphQA?,"SELECT ?precision ?recall
+WHERE {
+orkgr:R6898 orkgp:compareContribution ?cont. 
+?cont orkgp:P34 ?eval.
+?eval rdfs:label ?eval_labels.
+FILTER(REGEX(?eval_labels, ""SemGraphQA""))
+?eval orkgp:P3004 ?precision;
+orkgp:P5015 ?recall.
+}"
+http://orkg.org/orkg/resource/R25999,Summary of  experiments involving various logical structure analysis algorithms,HQ0007,Which papers use the dataset DBLP?,"SELECT DISTINCT ?title
+WHERE {
+?paper a orkgc:Paper;
+orkgp:P31 [
+orkgp:P2005 [
+rdfs:label ""DBLP""^^xsd:string
+]
+];
+rdfs:label ?title.
+}
+ORDER BY ?title"
+http://orkg.org/orkg/resource/R26017,Analysis of state-of-the-art document logical structure analysis algorithms,HQ0039,How many comparisons are there which don't have a class link?,"SELECT ?ratio
+WHERE {
+{
+SELECT (COUNT(?comparison) AS ?n_valid_comparisons)
+WHERE {
+?comparison a orkgc:Comparison.
+}
+}
+{
+SELECT (COUNT(DISTINCT ?comparison_) AS ?n_comparisons_with_missing_class) {
+?comparison_ orkgp:compareContribution ?contribution.
+FILTER(
+NOT EXISTS {
+?comparison_ a orkgc:Comparison
+}
+)
+}
+}
+BIND(
+CONCAT(
+ROUND(
+xsd:double(?n_comparisons_with_missing_class) / xsd:double(?n_valid_comparisons + ?n_comparisons_with_missing_class) * 100
+),
+"" %""
+) AS ?ratio
+)
+}"
+http://orkg.org/orkg/resource/R26063,Summary of both linear and nonlinear two-dimensional analytical models available in the literature,HQ0064,What is the total number of patients in the studies?,"SELECT SUM(?number_of_patients)
+WHERE {
+orkgr:R33008 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15585 ?patients.
+BIND(xsd:integer(?patients) AS ?number_of_patients)
+}"
+http://orkg.org/orkg/resource/R26083,Summary of studies investigating the importance of environmental conditions on overall satisfaction with IEQ.,HQ0006,What kind of graph does ADANA use?,"SELECT ?graph ?graph_label
+WHERE {
+?paper orkgp:P31 ?cont;
+rdfs:label ?title.
+FILTER(REGEX(?title, ""ADANA""))
+?cont orkgp:P5008 ?graph. 
+?graph rdfs:label ?graph_label.
+}"
+http://orkg.org/orkg/resource/R26107,Summary of studies examining the effects of individual characteristics of building occupants on satisfaction with IEQ.,HQ0038,What is the mean capacity of a carbon-based fuel?,"SELECT (AVG(?numerical_capacity) AS ?mean) 
+WHERE {
+?paper a orkgc:Paper;
+orkgp:P31 [
+orkgp:P15483 ?capacity
+];
+rdfs:label ?title.
+BIND(
+xsd:double(
+REPLACE(
+STR(
+REPLACE(
+?capacity,
+""([0-9]+),([0-9]+)"",
+""$1$2""
+)
+),
+""([0-9]+).*"",
+""$1""
+) 
+) AS ?numerical_capacity
+)
+FILTER(REGEX(STR(?title), ""(fuel|CO2)""))
+}"
+http://orkg.org/orkg/resource/R26127,Overview of informal sector in studies of developed countries ,HQ0003,What is the most common Knowledge representation method?,"SELECT (COUNT(?repr) AS ?cnt) ?repr
+WHERE {
+orkgr:R8364 orkgp:compareContribution ?cont.
+?cont orkgp:P7046 ?sys.
+?sys orkgp:P7056 ?repr.
+}
+GROUP BY ?repr
+ORDER BY DESC(?cnt)
+LIMIT 1"
+http://orkg.org/orkg/resource/R26146,Overview of informal sector in studies of less developed countries ,HQ0057,Where can all the data sets used in the compared studies be found?,"SELECT DISTINCT ?URL
+WHERE {
+orkgr:R112387 orkgp:compareContribution ?contrib.
+?contrib orkgp:HAS_DATASET ?URL.
+FILTER(!REGEX(?URL, ""Not""))
+}"
+http://orkg.org/orkg/resource/R26194,Characteristics of central papers with instant time horizon.,HQ0081,What quantity of iron oxide was discovered on Elorza crater?,"SELECT ?properties_values, ?property_description
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""Elorza crater"", ""i""))
+?papers orkgp:P31 ?contrib.
+?contrib ?properties ?properties_values.
+?properties rdfs:label ?properties_labels.
+FILTER(REGEX(?properties_labels, ""FeO""))
+?properties orkgp:description ?property_description.
+}"
+http://orkg.org/orkg/resource/R26262,Characteristics of central papers with finite time horizon.,HQ0097,What types of nanocarriers do have therapeutic effect?,"SELECT ?types_of_nanocarriers, ?types_of_nanocarriers_labels
+WHERE {
+orkgr:R144364 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41740 ?types_of_nanocarriers.
+?contrib orkgp:P41743 ?therapeutic_effect.
+FILTER(?therapeutic_effect = ""T""^^xsd:string)
+?types_of_nanocarriers rdfs:label ?types_of_nanocarriers_labels.
+}"
+http://orkg.org/orkg/resource/R26352,Characteristics of central papers with infinite planning horizon.,HQ0043,Which are 3 the most common variables for the atmosphere models?,"SELECT ?variables
+WHERE {
+orkgr:R68871 orkgp:compareContribution ?contrib.
+?contrib orkgp:P7144 ?models.
+?models rdfs:label ?models_labels.
+FILTER(REGEX(?models_labels, ""tmospher""))
+?models orkgp:P26032 ?variables.
+}
+ORDER BY DESC(COUNT(?variables))
+LIMIT 3"
+http://orkg.org/orkg/resource/R26377,Routing and inventory management aspects of industrial cases.,HQ0091,What is Raman spectroscopy?,"SELECT ?definitions
+WHERE {
+?terms orkgp:P24009 ?definitions.
+?terms rdfs:label ?terms_labels.
+FILTER(REGEX(?terms_labels, ""Raman spectroscopy""))
+}"
+http://orkg.org/orkg/resource/R26421,Examples of identified chitosanases.,HQ0085,What data format does CHEMDNER corpus have?,"SELECT ?data_format, ?data_format_label
+WHERE {
+orkgr:R150596 orkgp:P31 ?contrib.
+?contrib orkgp:P42011 ?data_format.
+?data_format rdfs:label ?data_format_label.
+}"
+http://orkg.org/orkg/resource/R26550,Overview of Applications of chitosan.,HQ0078,Where did the study with maximal geographic scale take place?,"SELECT ?location, ?location_label
+WHERE {
+{
+SELECT (MAX(?geo_scale) AS ?max_geo_scale)
+WHERE {
+orkgr:R149849 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41568 ?geo_scale.
+}
+}
+orkgr:R149849 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41568 ?geo_scale;
+orkgp:P37524 ?location.
+?location rdfs:label ?location_label.
+FILTER(?geo_scale = ?max_geo_scale)
+}"
+http://orkg.org/orkg/resource/R26608,Comparison of the first attempts clustering approaches,HQ0022,"Does paper ""Disambiguating authors in citations on the web and authorship correlations"" employe Cosine similarity?","ASK
+WHERE {
+orkgr:R6187 orkgp:compareContribution ?cont.
+?paper orkgp:P31 ?cont;
+rdfs:label ?paper_title.
+?cont orkgp:P5002 orkgr:R6006.
+FILTER(REGEX(STR(?paper_title), ""Disambiguating authors in citations on the web and authorship correlations"", ""i""))
+}"
+http://orkg.org/orkg/resource/R26654,Comparison of LEACH-based clustering protocols,HQ0026,Which QA benchmarks incorporating more than 10000 questions?,"SELECT ?papers, ?papers_labels
+WHERE {
+?papers rdf:type orkgc:Paper;
+orkgp:P31 ?contrib;
+rdfs:label ?papers_labels.
+?contrib orkgp:P41923 ?questions_number_str.
+BIND(REPLACE(?questions_number_str, ""[+]"", """") AS ?questions_number_preprocessed)
+BIND(xsd:integer(REPLACE(?questions_number_preprocessed, """","""", """")) AS ?questions_number)
+FILTER(?questions_number > 10000)
+}"
+http://orkg.org/orkg/resource/R26729,Comparison of equal-sized clustering algorithms,HQ0099,For what piezoresistive material the least response time was obtained?,"SELECT ?piezoresistive_materials WHERE {
+orkgr:R138374 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41021 ?piezoresistive_materials.
+?contrib orkgp:P41022 ?response_time.
+}
+ORDER BY ASC(?response_time)
+LIMIT 1"
+http://orkg.org/orkg/resource/R26775,Comparison of unequal-sized clustering protocols,HQ0037,Who has contributed to the largest number of articles about coronavirus?,"SELECT ?author_name
+WHERE {
+{
+SELECT (COUNT(?paper_) as ?max_n_papers)
+WHERE {
+?paper_ a orkgc:Paper;
+rdfs:label ?title_;
+orkgp:P27 ?author_.
+FILTER(REGEX(STR(?title_), ""2019-nCoV""))
+}
+GROUP BY ?author_
+ORDER BY DESC(?max_n_papers)
+LIMIT 1
+}
+?paper a orkgc:Paper;
+rdfs:label ?title;
+orkgp:P27 ?author.
+OPTIONAL {
+?author rdfs:label ?author_label
+}
+BIND(IF(BOUND(?author_label), ?author_label, ?author) as ?author_name)
+FILTER(REGEX(STR(?title), ""2019-nCoV""))
+}
+GROUP BY ?author ?type ?author_name ?max_n_papers
+HAVING(COUNT(?paper) = ?max_n_papers)"
+http://orkg.org/orkg/resource/R26850,Papers on the standard fleet size and mix vehicle routing problem.,HQ0031,What coolant does ASTRID reactor use?,"SELECT ?coolant ?coolant_label
+WHERE {
+?ASTRID_reactor ?rdfs_label ""ASTRID""^^xsd:string.
+?contrib ?reactor_predicate ?ASTRID_reactor.
+?contrib ?predicates ?coolant.
+?predicates rdfs:label ?predicates_label.
+FILTER(REGEX(?predicates_label, ""coolant""))
+?coolant rdfs:label ?coolant_label.
+}"
+http://orkg.org/orkg/resource/R26881,Papers on the heterogeneous fixed fleet vehicle routing problem.,HQ0032,What is the most common lead compound?,"SELECT ?compound
+WHERE {
+orkgr:R75638 orkgp:compareContribution ?contrib.
+?contrib orkgp:P35194 ?compound.
+}
+ORDER BY DESC(COUNT(?compound))
+LIMIT 1"
+http://orkg.org/orkg/resource/R26918,Papers on fleet composition and routing problems with time windows. ,HQ0084,What is the emergency type of AMBER Alert?,"SELECT DISTINCT ?emergency_type
+WHERE {
+orkgr:R153500 orkgp:P31 ?contrib.
+?contrib orkgp:P43093 ?emergency_type.
+}"
+http://orkg.org/orkg/resource/R26927,Papers on fleet composition and routing problems with multiple depots.,HQ0017,What is the most common location in the studies?,"SELECT ?locations
+WHERE {
+orkgr:R111045 orkgp:compareContribution ?cont.
+?cont orkgp:P37537 ?locations.
+}
+ORDER BY DESC(COUNT(?locations))
+LIMIT 1"
+http://orkg.org/orkg/resource/R26982,Papers that focus on road-based applications.,HQ0027,For which country of study overall prevalence of epilepsy is the highest?,"SELECT ?country, ?country_label
+WHERE {
+orkgr:R75729 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15512 ?country.
+?contrib orkgp:P16013 ?overall_prevalence.
+?country rdfs:label ?country_label.
+?overall_prevalence rdfs:label ?overall_prevalence_value
+}
+ORDER BY DESC(?overall_prevalence_value)
+LIMIT 1"
+http://orkg.org/orkg/resource/R27039,Papers that focus on maritime applications.,HQ0046,Are children examined in the studies?,"ASK {
+orkgr:R44979 orkgp:compareContribution ?contrib.
+?contrib orkgp:P23161 ?population.
+FILTER(REGEX(?population, ""ildren""))
+}"
+http://orkg.org/orkg/resource/R27061,Overview of taxonomy of smart city definitions,HQ0068,Which sectors are modeled as energy sectors and how often?,"SELECT ?label COUNT(?label)
+WHERE {
+?sector rdfs:label ?label;
+a ?class.
+?class owl:equivalentClass <http://openenergy-platform.org/ontology/oeo/OEO_00000367>.
+[
+orkgp:P37668 ?sector
+].
+}"
+http://orkg.org/orkg/resource/R27089,Covalent coupling methods of enzymes: activation of matrix hydroxyl functions,HQ0058,"What are the precision, recall, and f1 values of all compared studies that used the algorithm naive bayes in combination with the machine learning feature bag of words to classfy user feedback as feature request?","SELECT ?precision ?recall ?f1
+WHERE {
+orkgr:R112387 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15006 ?algorithms.
+?algorithms rdfs:label ?alg_names.
+FILTER(REGEX(?alg_names, ""Naive bayes""))
+?algorithms orkgp:P36075 ?features.
+?features rdfs:label ?fea_names.
+FILTER(REGEX(?fea_names, ""Bag of words""))
+?features orkgp:P37029 ?categories.
+?categories rdfs:label ?cat_names.
+FILTER(REGEX(?cat_names, ""Feature request""))
+?categories orkgp:P3004 ?precision;
+orkgp:P5015 ?recall;
+orkgp:P18037 ?f1.
+}"
+http://orkg.org/orkg/resource/R27123,Covalent coupling methods of enzymes: modification of the polymer backbone to produce an activated group,HQ0090,What museums were involved in the IntARSI project?,"SELECT ?museums, ?museums_labels
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""IntARSI""))
+?papers orkgp:P31 ?contrib.
+?contrib orkgp:P41242 ?museums.
+?museums rdfs:label ?museums_labels.
+}"
+http://orkg.org/orkg/resource/R27235,Overview of Exchange Rate Volatility and Trade ,HQ0055,What is the average energy generation for each energy source considered in 5 year intervals?,"SELECT ?rangeId ?energy_sources_labels (AVG(?eng_gen_value) AS ?avg_eng_gen_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?paper orkgp:P31 ?contrib;
+orkgp:P29 ?year.
+BIND(xsd:int(?year) AS ?y).
+VALUES (?rangeId ?min ?max) {
+(""2001-2005"" 2001 2005)
+(""2006-2010"" 2006 2010)
+(""2011-2015"" 2011 2015)
+(""2016-2020"" 2016 2020)
+}
+FILTER(?min <= ?y && ?y <= ?max).
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43134 ?energy_generation.
+?energy_generation orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?eng_gen_value).
+}
+ORDER BY ASC(?rangeId)"
+http://orkg.org/orkg/resource/R27264,Comparisons of the attributes of the main robotics middleware.,HQ0077,What is the most common type of biosensor?,"SELECT ?biosensor
+WHERE {
+orkgr:R151435 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43095 ?biosensor.
+}
+ORDER BY DESC(COUNT(?biosensor))
+LIMIT 1"
+http://orkg.org/orkg/resource/R27278,Overview of the Elements of an entrepreneurial university ,HQ0052,What is the average installed capacity for each energy source considered?,"SELECT ?energy_sources_labels (AVG(?installed_cap_value) AS ?average_installed_cap_value)
+WHERE {
+orkgr:R153801 orkgp:compareContribution ?contrib.
+?contrib orkgp:P43135 ?energy_sources.
+?energy_sources rdfs:label ?energy_sources_labels;
+orkgp:P43133 ?installed_capacity.
+?installed_capacity orkgp:HAS_VALUE ?value.
+BIND(xsd:float(?value) AS ?installed_cap_value)
+}"
+http://orkg.org/orkg/resource/R27380,Summary on cyclic relaxation of peening residual stress in steels,HQ0011,Which system has the worst recall?,"SELECT ?evaluation ?system_name
+WHERE {
+orkgr:R6946 orkgp:compareContribution ?cont.
+?cont orkgp:P34 ?evaluation.
+?evaluation orkgp:P5015 ?recall;
+rdfs:label ?system_name.
+BIND(xsd:float(?recall) AS ?r)
+}
+ORDER BY ?r
+LIMIT 1"
+http://orkg.org/orkg/resource/R27388,A short summary of time domain performance.,HQ0080,Which energy system modeling papers indicate where to find their simulation software?,"SELECT ?repo
+WHERE {
+?paper a orkgc:Paper.
+?paper orkgp:P31 ?contrib.
+?contrib orkgp:P37586 ?model.
+?model orkgp:P39010 ?code.
+?code orkgp:P4077 ?repo.
+}"
+http://orkg.org/orkg/resource/R27393,A short summary of time domain performance.,HQ0100,What is the maximum reaction yield for the studies?,"SELECT ?reactions_yield WHERE {
+orkgr:R137086 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37560 ?reactions_yield.
+}
+ORDER BY DESC(?reactions_yield)
+LIMIT 1"
+http://orkg.org/orkg/resource/R27400,A short summary of time domain performance.,HQ0070,For which region of data collection the number of sampling stations is the largest?,"SELECT ?region
+WHERE {
+orkgr:R155584 orkgp:compareContribution ?contrib.
+?contrib orkgp:P41068 ?number_of_stations;
+orkgp:P27029 ?region.
+}
+ORDER BY DESC(?number_of_stations)
+LIMIT 1"
+http://orkg.org/orkg/resource/R27461,Heat transfer and pressure drop correlations,HQ0095,When MedPost model was published?,"SELECT ?year
+WHERE {
+?papers rdf:type orkgc:Paper.
+?papers rdfs:label ?papers_labels.
+FILTER(REGEX(?papers_labels, ""MedPost""))
+?papers orkgp:P29 ?year.
+}"
+http://orkg.org/orkg/resource/R27482,How existing firm-level studies cope with methodological challenges,HQ0069,Which sector is the most commonly modeled energy sector?,"SELECT ?label (COUNT(?label) AS ?number)
+WHERE {
+?sector rdfs:label ?label;
+a ?class.
+?class owl:equivalentClass <http://openenergy-platform.org/ontology/oeo/OEO_00000367>.
+orkgr:R150337 orkgp:compareContribution ?contrib.
+?contrib orkgp:P37586 ?scenario.
+?scenario orkgp:P37675 ?study.
+?study orkgp:P37668 ?sector.
+
+}
+ORDER BY DESC(?number)
+LIMIT 1"
+http://orkg.org/orkg/resource/R27620,Summary of empirical studies on energy consumption-growth nexus.,HQ0063,Is Cobb-Douglas functional applied in the studies?,"ASK {
+orkgr:R34493 orkgp:compareContribution ?contrib.
+?contrib orkgp:P15661 ?funcionals.
+?funcionals rdfs:label ?funtionals_labels.
+FILTER(REGEX(?funtionals_labels, ""Cobb-Douglas""))
+}"
+http://orkg.org/orkg/resource/R27705,Summary of empirical studies on electricity-growth nexus.,HQ0008,What is the least common metric used?,"SELECT DISTINCT ?name
+WHERE {
+?paper a orkgc:Paper;
+orkgp:P31 [
+orkgp:P5003 [
+rdfs:label ?name
+]
+].
+{
+SELECT DISTINCT (COUNT(?paper_) AS ?min_papers)
+WHERE {
+?paper_ a orkgc:Paper;
+orkgp:P31 [
+orkgp:P5003 [
+rdfs:label ?name_
+]
+].
+}
+GROUP BY ?name_
+ORDER BY ?min_papers
+LIMIT 1
+}
+}
+GROUP BY ?name ?min_papers
+HAVING(COUNT(?paper) = ?min_papers)
+ORDER BY ?name"
+http://orkg.org/orkg/resource/R27714,Summary of empirical studies on nuclear-growth nexus.,HQ0001,"What type of data does the system proposed in paper titled ""Open Research Knowledge Graph"" support?","SELECT ?datatype 
+WHERE {
+orkgr:R8364 orkgp:compareContribution ?cont.
+?paper orkgp:P31 ?cont;
+rdfs:label ?title.
+?cont orkgp:P7046 ?sys.
+?sys orkgp:P7055 ?datatype.
+FILTER(REGEX(STR(?title), ""Open Research Knowledge Graph""))
+}"
+http://orkg.org/orkg/resource/R27723,Summary of empirical studies on renewable-growth nexus.,,,
+http://orkg.org/orkg/resource/R27835,Overview of papers accessing the result of educational games,,,
+http://orkg.org/orkg/resource/R28099,Summary of stereo vision disparity map algorithms implemented on different computational platforms,,,
+http://orkg.org/orkg/resource/R28140,Duodenal gangliocytic paraganglioma with lymph node metastasis,,,
+http://orkg.org/orkg/resource/R28191,Summary of literature on container routing in a single period,,,
+http://orkg.org/orkg/resource/R28235,Summary of literature on container routing in multiple periods,,,
+http://orkg.org/orkg/resource/R28333,Summary of literature on fleet management,,,
+http://orkg.org/orkg/resource/R28369,Summary of literature on optimal single route,,,
+http://orkg.org/orkg/resource/R28407,A summary of literature on optimal multiple routes,,,
+http://orkg.org/orkg/resource/R28446,Summary of literature on hub and spoke economics and hub port selection,,,
+http://orkg.org/orkg/resource/R28487,Summary of literature on hub and spoke network,,,
+http://orkg.org/orkg/resource/R28519,"Comparison of power cycling tests based on operating conditions, time to failure, and circuit",,,
+http://orkg.org/orkg/resource/R28614,Clinical features of undifferentiated embryonal liver sarcoma and treatment results,,,
+http://orkg.org/orkg/resource/R28889,Overview of Pareto-Optimal Search-Based Software Engineering approaches,,,
+http://orkg.org/orkg/resource/R28897,Summary of research comparing overhead hoist transport versus continuous flow transport systems,,,
+http://orkg.org/orkg/resource/R28903,Summary of research comparing segregated through stocker systems versus unified transport systems.,,,
+http://orkg.org/orkg/resource/R28940,Summary of automated material handling systems  control strategies,,,
+http://orkg.org/orkg/resource/R28967,Factors affecting software project risks,,,
+http://orkg.org/orkg/resource/R28981,CNN model structures of the leading methods,,,
+http://orkg.org/orkg/resource/R29012,Summary of the databases for facial detection,,,
+http://orkg.org/orkg/resource/R29034,Accuracy comparison of leading algorithms for facial detection,,,
+http://orkg.org/orkg/resource/R29080,Efficiency comparison of leading algorithms for facial detection,,,
+http://orkg.org/orkg/resource/R29108,Summary of the academic software for facial detection,,,
+http://orkg.org/orkg/resource/R29153,Aggregate summary of overall literature review ,,,
+http://orkg.org/orkg/resource/R29184,Aggregate summary of assorted literature reviews,,,
+http://orkg.org/orkg/resource/R29240,Aggregate summary of prior literature reviews on CSFs of ERP,,,
+http://orkg.org/orkg/resource/R29275,Aggregate summary of prior literature reviews on ERP in SMEs,,,
+http://orkg.org/orkg/resource/R29287,Aggregate summary of literature reviews on ERP in fields approach,,,
+http://orkg.org/orkg/resource/R29351,Aggregate summary of prior literature reviews on operating themes of ERP,,,
+http://orkg.org/orkg/resource/R29361,Aggregate summary of literature reviews on type of ERP,,,
+http://orkg.org/orkg/resource/R30476,Evidence of EKC estimation studies for CO2 emissions,,,
+http://orkg.org/orkg/resource/R30512,"Overview of system for tailoring real-time physical activity coaching systems 
+",,,
+http://orkg.org/orkg/resource/R30536,Methodologies and key findings of work in energy audits in buildings.,,,
+http://orkg.org/orkg/resource/R30547,Analysis of social engineering attack detection techniques,,,
+http://orkg.org/orkg/resource/R30579,Analysis of Security Challenges in Vehicle Ad-hoc Networks ,,,
+http://orkg.org/orkg/resource/R30646,Lists of eye localization performance evaluated on various face databases.,,,
+http://orkg.org/orkg/resource/R30698,Used dental erosion indexes in human cross-sectional studies for children found in Medline from the years 2000–2006,,,
+http://orkg.org/orkg/resource/R30739,Used dental erosion indexes in human cross-sectional studies for adults found in Medline from the years 2000–2006,,,
+http://orkg.org/orkg/resource/R30817,Publications classified according to disaster phase and type.,,,
+http://orkg.org/orkg/resource/R30914,Objective functions and decisions for first- and second-stage in the pre-disaster phase.,,,
+http://orkg.org/orkg/resource/R30950,Objective functions and decisions for first- and second-stage in the pre-disaster phase.,,,
+http://orkg.org/orkg/resource/R31077,"Uncertainties, problematic assumptions and special features of pre-disaster models.",,,
+http://orkg.org/orkg/resource/R31090,Objective functions and decision variables for first-and second-stage of post-disaster phase.,,,
+http://orkg.org/orkg/resource/R31099,"Uncertainties, problematic assumptions and special features of post-disaster models.",,,
+http://orkg.org/orkg/resource/R31160,Solution methods for disaster management,,,
+http://orkg.org/orkg/resource/R31174,Heuristics of disaster management,,,
+http://orkg.org/orkg/resource/R31214,Overview of the various structured population Genetic Algorithms ,,,
+http://orkg.org/orkg/resource/R31233,Absolute definition approaches for Middle-Income Trap,,,
+http://orkg.org/orkg/resource/R31249,Relative definition approaches for Middle-Income Trap,,,
+http://orkg.org/orkg/resource/R31281,Overview of countries with a middle income trap,,,
+http://orkg.org/orkg/resource/R31299,"Overview of different methods of face expression recognition 
+",,,
+http://orkg.org/orkg/resource/R31669,Various applications of AI-based estimators in chemical process systems.,,,
+http://orkg.org/orkg/resource/R31689,Summary of characteristics of the active learning algorithms,,,
+http://orkg.org/orkg/resource/R31725,Overview of design pattern coverage by state of the art works,,,
+http://orkg.org/orkg/resource/R31768,Frequency of Campylobacter spp. distribution among the isolates from retail poultry in Japan,,,
+http://orkg.org/orkg/resource/R31809,Literature survey results for comparison of chemical and enzymatic methods suitable to discriminate between C and mC,,,
+http://orkg.org/orkg/resource/R31878,Literature overview gasifiers with economic data.,,,
+http://orkg.org/orkg/resource/R31903,Literature overview FT fuel synthesis and upgrading.,,,
+http://orkg.org/orkg/resource/R31928,Relation between plant and ISBL investment costs.,,,
+http://orkg.org/orkg/resource/R31954,Biomass costs in different studies.,,,
+http://orkg.org/orkg/resource/R31991,Coal costs in different studies.,,,
+http://orkg.org/orkg/resource/R32025,Investment and production costs of synthetic fuels,,,
+http://orkg.org/orkg/resource/R32061,"Summary of Domain Adaptation Algorithms for Natural 
+Language Processing 
+",,,
+http://orkg.org/orkg/resource/R32189,Using Genetic Algorithms to solve scheduling problems on flexible manufacturing systems (FMS) ,,,
+http://orkg.org/orkg/resource/R32424,Studies on the essential oils of Artemisia herba-alba ,,,
+http://orkg.org/orkg/resource/R32541,Literature overview of over-education,,,
+http://orkg.org/orkg/resource/R32871,Review of literature on vessel detection from optical satellite imagery (period 1978 – March 2017).,,,
+http://orkg.org/orkg/resource/R32914,Incentives for Disclosure of Accounting Information in Public Sector,,,
+http://orkg.org/orkg/resource/R32940,"Patient characteristics, steroid treatment and anastomotic leakage and types of surgery and anastomosis 
+",,,
+http://orkg.org/orkg/resource/R32959,Use of Zinc salts and compounds approved by the FDA for over- the-counter human use,,,
+http://orkg.org/orkg/resource/R33008,Prevalence of chromosome 1 abnor- malities in hematologic malignancies,,,
+http://orkg.org/orkg/resource/R33091,Specific types of chromosome 1 abnormalities in myeloproliferative neoplasms,,,
+http://orkg.org/orkg/resource/R33581,Critical success factors of supply chain management,,,
+http://orkg.org/orkg/resource/R33593,The survey of longitudinal studies measuring IQ values in children with autism – design of the study of treatment comparison,,,
+http://orkg.org/orkg/resource/R33610,"The survey of longitudinal studies measuring IQ values in children with autism – design of the study of intervention application 
+",,,
+http://orkg.org/orkg/resource/R33633,The survey of longitudinal studies measuring IQ values in children with autism – design of the study of group comparison,,,
+http://orkg.org/orkg/resource/R33783,Neural Network Techniques for shunt active power filter ,,,
+http://orkg.org/orkg/resource/R33851,Survey of recent comparison studies of copy number variation (Copy number variations) detection.,,,
+http://orkg.org/orkg/resource/R33953,Literature Survey of Ant Colony Optimization in Software Testing,,,
+http://orkg.org/orkg/resource/R33971,Comparison of image Steganographic Techniques,,,
+http://orkg.org/orkg/resource/R34099,Habitat salinity markers of the Sr:Ca ratio in the otolith of wild diadromous fishes,,,
+http://orkg.org/orkg/resource/R34126,Oligoclonal bands predict multiple sclerosis after optic neuritis: Baseline characteristics and results,,,
+http://orkg.org/orkg/resource/R34183,Summary of annual social welfare impacts in million U.S. dollars,,,
+http://orkg.org/orkg/resource/R34251,Summary of Empirical Studies on the Proposed West African Monetary Zone,,,
+http://orkg.org/orkg/resource/R34282,Summary of Empirical Studies on the Proposed East African Monetary Union,,,
+http://orkg.org/orkg/resource/R34316,Summary of Empirical Studies on the Proposed Southern African Monetary Union,,,
+http://orkg.org/orkg/resource/R34411,Published cases of C. difficile enteritis as well as those reported here (1980–11/2009),,,
+http://orkg.org/orkg/resource/R34430,Comparison of noise for Matrix/Prius (regular passenger car) ,,,
+http://orkg.org/orkg/resource/R34454,A literature survey on Facial Expression Recognition using Global Features,,,
+http://orkg.org/orkg/resource/R34475,Production function estimation for port sector,,,
+http://orkg.org/orkg/resource/R34493,Cost functions estimation for port sector,,,
+http://orkg.org/orkg/resource/R34605,Overview of approaches for Anonymisation in social network,,,
+http://orkg.org/orkg/resource/R34621,Definition and measure of completeness for data completeness in healthcare,,,
+http://orkg.org/orkg/resource/R34663,Study themes related to data completeness in healthcare,,,
+http://orkg.org/orkg/resource/R34706,Analysis of existing approaches for Load Balancing Schemes in Cloud Computing,,,
+http://orkg.org/orkg/resource/R34757,Overview of the key features on accuracy of diagnosic tests ,,,
+http://orkg.org/orkg/resource/R34845,Results of studies on embryonic eggshell thickness erosion in three groups of birds representing different developmental modes,,,
+http://orkg.org/orkg/resource/R36099,Comparison of different approaches and tasks for table extraction,,,
+http://orkg.org/orkg/resource/R36153,Reproductive number estimates 2019-nCoV,,,
+http://orkg.org/orkg/resource/R38012,NLP Datasets with Scientific Relation Annotations,,,
+http://orkg.org/orkg/resource/R44930,COVID-19 Reproductive Number Estimates,,,
+http://orkg.org/orkg/resource/R38481,COVID Bioassays,,,
+http://orkg.org/orkg/resource/R38484,Earth system models,,,
+http://orkg.org/orkg/resource/R38693,Solubility parameters in austenite of carbides and nitrides found in MA steels,,,
+http://orkg.org/orkg/resource/R48404,Global Mean Sea Level (GMSL) rise projections (m) for the year 2050 compared to 2000 and RCP4.5,,,
+http://orkg.org/orkg/resource/R39082,SEIR model estimates of the total number of COVID-19 cases in Chinese provinces,,,
+http://orkg.org/orkg/resource/R58002,Invasion Biology- Enemy release hypothesis,,,
+http://orkg.org/orkg/resource/R70523,95% confidence interval of Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000 and the 2° C scenario,,,
+http://orkg.org/orkg/resource/R41466,Covid-19 Case Fatality Rate Estimates,,,
+http://orkg.org/orkg/resource/R70640,Survey of most suitable computational intelligence technique for prediction of SSI (Surgical Site Infection) using physiological data as features,,,
+http://orkg.org/orkg/resource/R70642,Survey of most suitable computational intelligence technique for prediction of Sepsis using physiological data as features,,,
+http://orkg.org/orkg/resource/R50014,Comparison of scholarly knowledge graphs,,,
+http://orkg.org/orkg/resource/R50005,Comparison of related scholarly knowledge graphs,,,
+http://orkg.org/orkg/resource/R41148,Experimental Conditions of Si Electrochemical Reduction,,,
+http://orkg.org/orkg/resource/R57101,Invasion Biology- Tens rule hypothesis,,,
+http://orkg.org/orkg/resource/R43037,Indoor environmental perception and behaviour comparison,,,
+http://orkg.org/orkg/resource/R46464,"Toward more complex information ingestion: Comparison of NER, Sentence Similarity, and Machine Reading Results",,,
+http://orkg.org/orkg/resource/R46296,Doping Modiﬁed TiO2 Photocatalysts Prepared by Diﬀerent Chemical Methods,,,
+http://orkg.org/orkg/resource/R55219,Invasion Biology- Propagule pressure Hypothesis,,,
+http://orkg.org/orkg/resource/R51220,comparation 1,,,
+http://orkg.org/orkg/resource/R44668,Survey of sequencing techniques,,,
+http://orkg.org/orkg/resource/R44675,SARS-CoV-2 sequencing studies,,,
+http://orkg.org/orkg/resource/R44978,Brief psychotherapy for depression studies,,,
+http://orkg.org/orkg/resource/R44979,Comparison of studies related to psychotherapeutic interventions in cancer ,,,
+http://orkg.org/orkg/resource/R44980,Trends and methodological implications of psychodrama psychotherapy research,,,
+http://orkg.org/orkg/resource/R46295,Trapping Dynamics of Electrons and Holes Photogenerated in TiO2 Photocatalysts,,,
+http://orkg.org/orkg/resource/R46297,Summary of the photocatalytic activity of niobates combined with distinct materials towards H2 eVolution from aqueous solution,,,
+http://orkg.org/orkg/resource/R46298,Summary of Nb-doped photocatalysts employed for H2 eVolution from aqueous solution,,,
+http://orkg.org/orkg/resource/R46299,Summary of the photocatalytic activity of Nb-based compounds combined with distinct materials towards CO2 reduction,,,
+http://orkg.org/orkg/resource/R48103,Hybrid Named Entity Recognition and Classification systems,,,
+http://orkg.org/orkg/resource/R48392,Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000  and RCP8.5,,,
+http://orkg.org/orkg/resource/R48402,Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000 and RCP2.6,,,
+http://orkg.org/orkg/resource/R48403,Global Mean Sea Level (GMSL) rise projections (m) for the year 2050 compared to 2000 and RCP8.5,,,
+http://orkg.org/orkg/resource/R48401,Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000 and RCP4.5,,,
+http://orkg.org/orkg/resource/R48405,Global Mean Sea Level (GMSL) rise projections (m) for the year 2050 compared to 2000 and RCP2.6,,,
+http://orkg.org/orkg/resource/R68871,Comparison of prognostic atmospheric variables of CMIP5 GCMs,,,
+http://orkg.org/orkg/resource/R49137,Projected Global Mean Sea Level Rise for 2100 compared to 2000 and the 2° C scenario,,,
+http://orkg.org/orkg/resource/R49138,Global Mean Sea Level (GMSL) rise projections (m) for the year 2100 compared to 2000 and  the 1.5° C scenario,,,
+http://orkg.org/orkg/resource/R68125, Comparison of different platforms for big data analytics,,,
+http://orkg.org/orkg/resource/R68121,Comparison of transient climate response (TCR) and equilibrium climate sensitivity (ECS) from historical warming in CMIP6 models,,,
+http://orkg.org/orkg/resource/R68535,Extended comparison of transient climate response (TCR) and equilibrium climate sensitivity (ECS) from historical warming in CMIP6 models,,,
+http://orkg.org/orkg/resource/R68538,Weevil host association phenotype data,,,
+http://orkg.org/orkg/resource/R69027,Toxins produced by phytopathogenic Pseudomonas species and pathovars,,,
+http://orkg.org/orkg/resource/R68996,Distribution of lysine catabolic pathways in some fluorescent Pseudomonas species and Burkholderia cepacia,,,
+http://orkg.org/orkg/resource/R69680,Knowledge-Based eXplainable systems,,,
+http://orkg.org/orkg/resource/R70880,Overview of several scholarly databases and their properties,,,
+http://orkg.org/orkg/resource/R73195,Comparison of scholarly infrastructures,,,
+http://orkg.org/orkg/resource/R73180,Comparison of Scholarly Identifier Systems,,,
+http://orkg.org/orkg/resource/R73210,Comparison of Scholarly Identifier Systems,,,
+http://orkg.org/orkg/resource/R74193,Smart city's dashboard creation,,,
+http://orkg.org/orkg/resource/R74155,Smart city's dashboard creation,,,
+http://orkg.org/orkg/resource/R74112,Case fatality risk of SARS-CoV-2 B.1.1.7,,,
+http://orkg.org/orkg/resource/R74752,Knowledge graph based item recommendations,,,
+http://orkg.org/orkg/resource/R74270,Smart city's dashboard creation,,,
+http://orkg.org/orkg/resource/R74231,Smart city's dashboard creation,,,
+http://orkg.org/orkg/resource/R74278,Comparison between cities-board dashboards and existing dashboards,,,
+http://orkg.org/orkg/resource/R74314,Summary of indicator standards on Smart sustainable cities,,,
+http://orkg.org/orkg/resource/R74529,Human values and emotions in Software Engineering,,,
+http://orkg.org/orkg/resource/R74541,Entity Linking in Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R74650,Nile Water,,,
+http://orkg.org/orkg/resource/R74774,Comparison of Teams at SemEval-2021 NLPContributionGraph (NCG) Shared Task,,,
+http://orkg.org/orkg/resource/R75681,Knowledge Graph Survey Approaches,,,
+http://orkg.org/orkg/resource/R74941,Implementations of the video as a by-product approach,,,
+http://orkg.org/orkg/resource/R75701,Dietary Pattern and Obesity Associations,,,
+http://orkg.org/orkg/resource/R74989,Comparison of available software for protein cavities,,,
+http://orkg.org/orkg/resource/R75004,Comparison of poverty studies in Nigeria and Global,,,
+http://orkg.org/orkg/resource/R75439,"Information Security, Biometrics and AI",,,
+http://orkg.org/orkg/resource/R75093,Knowledge Graph Survey Comparison,,,
+http://orkg.org/orkg/resource/R75140,Performance of absorption heat transformers using novel binary systems consist of {water + ionic liquids},,,
+http://orkg.org/orkg/resource/R75363,Pulsed electric field (PEF) treatment for bioactive compounds extraction,,,
+http://orkg.org/orkg/resource/R75673,Prevalence of epilepsy in Europe,,,
+http://orkg.org/orkg/resource/R75729,Prevalence of epilepsy in Europe,,,
+http://orkg.org/orkg/resource/R75840,Factors influencing evidence-based decision-making in humanitarian response,,,
+http://orkg.org/orkg/resource/R75638,Anuran antimicrobial peptides activity and mechanism against different biological membranes,,,
+http://orkg.org/orkg/resource/R75783,Comparison of Conducting Polymer-Based Composites,,,
+http://orkg.org/orkg/resource/R75856,Okadabooks as an e-book publishing company vs the kinds of poetry published on Okadabooks,,,
+http://orkg.org/orkg/resource/R76284,SemEval-2020 Task 3: Graded Word Similarity in Context Subtask 1,,,
+http://orkg.org/orkg/resource/R75713,Comparison of Green pH indicators,,,
+http://orkg.org/orkg/resource/R76052,SemEval-2020 Task 5: Counterfactual Recognition Subtask 1,,,
+http://orkg.org/orkg/resource/R76054,SemEval-2020 Task 5: Counterfactual Recognition Subtask 2,,,
+http://orkg.org/orkg/resource/R75839,Factors influencing evidence-based decision-making in humanitarian response,,,
+http://orkg.org/orkg/resource/R76190,The role of alkali metal cations in the stabilization of guanine quadruplexes,,,
+http://orkg.org/orkg/resource/R76196,comparison of bullying victimization in Ghana,,,
+http://orkg.org/orkg/resource/R76129,SemEval-2020 Task 4: Commonsense Validation and Explanation,,,
+http://orkg.org/orkg/resource/R76163,The role of alkali metal cations in the stabilization of guanine quadruplexes,,,
+http://orkg.org/orkg/resource/R76297,Survey Comparison of eHealth Semantic Models,,,
+http://orkg.org/orkg/resource/R76324,SemEval-2020 Task 3: Graded Word Similarity in Context Subtask 2,,,
+http://orkg.org/orkg/resource/R77176,Overview of Crowd Intelligence in Requirements Engineering,,,
+http://orkg.org/orkg/resource/R78108,Comparison of Domain-specific Scholarly Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R77162,The effect of the COVID-19 pandemic on well-being,,,
+http://orkg.org/orkg/resource/R77161,Simple comparison between three different methods of buildings damage classification,,,
+http://orkg.org/orkg/resource/R76692,New types of disassembly lines,,,
+http://orkg.org/orkg/resource/R76783,Comparison of Knowledge Graph Survey Papers,,,
+http://orkg.org/orkg/resource/R76906,Attitudes towards ICT in PISA 2015 and 2018,,,
+http://orkg.org/orkg/resource/R76785,Comparison of Knowledge Graph Survey Existing Papers,,,
+http://orkg.org/orkg/resource/R78049,Comparison of Domain-specific Scholarly Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R77220,The effect of the COVID-19 pandemic on well-being,,,
+http://orkg.org/orkg/resource/R78023,Comparison of scholarly knowledge graphs,,,
+http://orkg.org/orkg/resource/R78464,Overview of user feedback classification approaches,,,
+http://orkg.org/orkg/resource/R78163,Survey Comparison on Covid-19 Infectious Disease,,,
+http://orkg.org/orkg/resource/R78454,Economic sustianability sub index in a regional context,,,
+http://orkg.org/orkg/resource/R78352,Comparison of cucurbit[n]uril immobilization approaches,,,
+http://orkg.org/orkg/resource/R78486,Overview of user feedback classification approaches,,,
+http://orkg.org/orkg/resource/R78492,The effect of the COVID-19 pandemic on well-being,,,
+http://orkg.org/orkg/resource/R78489,Summary of indicator standards on Smart sustainable cities,,,
+http://orkg.org/orkg/resource/R78499,Overview of user feedback classification approaches,,,
+http://orkg.org/orkg/resource/R213443,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R178164,IoT dependencies extraction and modeling,,,
+http://orkg.org/orkg/resource/R166315,Named Entity Recognition in the CoNLL Series and the OntoNotes corpus as a related resource,,,
+http://orkg.org/orkg/resource/R166560,A comparison of the annotated resources of software mentions in scholarly articles,,,
+http://orkg.org/orkg/resource/R165916,Surveying BioNLP Shared Tasks Corpora for Relation Extraction,,,
+http://orkg.org/orkg/resource/R166240,Named Entity Recognition Based on Wikipedia,,,
+http://orkg.org/orkg/resource/R165700,BioNLP Shared Task Corpora,,,
+http://orkg.org/orkg/resource/R165702,Surveying BioNLP Shared Tasks Corpora for Named Entity Recognition,,,
+http://orkg.org/orkg/resource/R172690,KBQA Relation Linking Datasets,,,
+http://orkg.org/orkg/resource/R172155,Surveying BioCreAtIvE Shared Tasks Corpora for Named Entity Recognition,,,
+http://orkg.org/orkg/resource/R172158,Surveying BioCreAtIvE Shared Tasks Corpora for Text Retrieval,,,
+http://orkg.org/orkg/resource/R164670,BioNLP Shared Task Corpora,,,
+http://orkg.org/orkg/resource/R165794,Comparison of different scholarly communication infrastructures,,,
+http://orkg.org/orkg/resource/R165866,Surveying BioNLP Shared Tasks Corpora for Event Extraction,,,
+http://orkg.org/orkg/resource/R164231,The GENIA corpus,,,
+http://orkg.org/orkg/resource/R164335,Learning approaches on the T4SS domain entity extraction,,,
+http://orkg.org/orkg/resource/R165889,Surveying BioNLP Shared Tasks Corpora for Normalization,,,
+http://orkg.org/orkg/resource/R164312,Other GENIA Project corpora,,,
+http://orkg.org/orkg/resource/R163742,BioNLP Shared Tasks,,,
+http://orkg.org/orkg/resource/R163843,Comparisons and Visualizations of the CrossNER Benchmark Corpus for its Source and Target Domains,,,
+http://orkg.org/orkg/resource/R163049,Workshop on Noisy User-generated Text (W-NUT) Series of Shared Tasks Focused on Twitter NER,,,
+http://orkg.org/orkg/resource/R163259,Chemical Enties and Clinical Drug Reactions NER and Relation Extraction,,,
+http://orkg.org/orkg/resource/R165793,Comparison of different scholarly communication infrastructures,,,
+http://orkg.org/orkg/resource/R162730,CoNLL Shared Tasks on Named Entity Recognition,,,
+http://orkg.org/orkg/resource/R163145,Wikipedia-resource-based NER,,,
+http://orkg.org/orkg/resource/R162795,Named Entity Recognition Tasks in the MUC series,,,
+http://orkg.org/orkg/resource/R162851,NER in the Automatic Content Extraction (ACE) Series,,,
+http://orkg.org/orkg/resource/R163265,NLP Datasets for Named Entity Recognition and Relation Extraction from Biomedicine Scholarly Articles,,,
+http://orkg.org/orkg/resource/R163201,Wikipedia-based Named Entity Recognition,,,
+http://orkg.org/orkg/resource/R162575,BioCreative Series,,,
+http://orkg.org/orkg/resource/R162574,BioCreative Series,,,
+http://orkg.org/orkg/resource/R162329,"Soft X-ray lasers, advances and applications",,,
+http://orkg.org/orkg/resource/R161612,Polymer degradation methods,,,
+http://orkg.org/orkg/resource/R161642,Performance of piezoresistive wearable strain/pressure sensors based on different nanomaterials,,,
+http://orkg.org/orkg/resource/R161729,Thematic Identification of the City Digital Twin Potentials,,,
+http://orkg.org/orkg/resource/R161414,Enzymatic degradation of polymers,,,
+http://orkg.org/orkg/resource/R161728,Application areas of Digital Twin solutions in the smart city domain,,,
+http://orkg.org/orkg/resource/R160847,In vitro dissolution conditions of some poorly soluble drugs before and after hot melt extrusion (HME).,,,
+http://orkg.org/orkg/resource/R161079,Microneedle Technology as Insulin Delivery Systems,,,
+http://orkg.org/orkg/resource/R161078,Microneedle Technology as Insulin Delivery Systems,,,
+http://orkg.org/orkg/resource/R160597,Application of Spectral Angle Mapper (SAM) method in classifying different physical features from remotely sensed imageries,,,
+http://orkg.org/orkg/resource/R161616,An Overview of Gas Sensors Based on SnO2 Nanomaterials,,,
+http://orkg.org/orkg/resource/R160694,Wet Etching of Silicon,,,
+http://orkg.org/orkg/resource/R160742,CO2 gas flux assessment of the various oceanic regimes,,,
+http://orkg.org/orkg/resource/R160768,"Dark (CO2, carbon) fixation assessment of the different oceanic regimes",,,
+http://orkg.org/orkg/resource/R160527,A review of lunar mineralogy using spectroscopic data from Visible and Near-Infrared Imaging Spectrometer (VNIS) of Chang'e 3 and Chang'e 4 missions,,,
+http://orkg.org/orkg/resource/R160168,"N2O gas emission assessment of the Arabian Sea, the northwestern Indian Ocean",,,
+http://orkg.org/orkg/resource/R160189,N2O gas emission assessment of the ocean basins,,,
+http://orkg.org/orkg/resource/R160205,N2O gas emission assessment of the various oceanic regimes,,,
+http://orkg.org/orkg/resource/R160174,N2O gas emission assessment of the northern Indian Ocean,,,
+http://orkg.org/orkg/resource/R160596,Application of Spectral Angle Mapper method in classifiying different physical fetaures from remotely sensed imageries,,,
+http://orkg.org/orkg/resource/R160149,N2O gas emission assessment of the Indian Ocean for 1990 to 1998,,,
+http://orkg.org/orkg/resource/R161787,Question Answering over linked data benchmark comparison,,,
+http://orkg.org/orkg/resource/R161297,Polymer properties,,,
+http://orkg.org/orkg/resource/R159398,Digital twins’ parameters and papers’ examples,,,
+http://orkg.org/orkg/resource/R159158,Stability of ozone in solution,,,
+http://orkg.org/orkg/resource/R159397,Different Perspectives on the Digital Twin,,,
+http://orkg.org/orkg/resource/R157408,Different Perspectives on the Digital Twin,,,
+http://orkg.org/orkg/resource/R157384,Ontologies for smart city: levels and key classes ver. 2,,,
+http://orkg.org/orkg/resource/R157531,Ontologies for smart city: levels and key classes ver. 2,,,
+http://orkg.org/orkg/resource/R157326,The development of a laboratory X-ray laser,,,
+http://orkg.org/orkg/resource/R159000,Ontologies for smart city: levels and key classes ver. 2,,,
+http://orkg.org/orkg/resource/R161302,Six Sars-virus related Bioassays,,,
+http://orkg.org/orkg/resource/R156112,Number of papers by year,,,
+http://orkg.org/orkg/resource/R156301,Comparison of copper-based photoredox catalysts,,,
+http://orkg.org/orkg/resource/R157074,Variation of COI barcoding region in Lepidoptera,,,
+http://orkg.org/orkg/resource/R157076,Studies with COI barcoding region from North America in Lepidoptera and Diptera,,,
+http://orkg.org/orkg/resource/R155671,Comparison of strain sensors based on CVD 2D materials,,,
+http://orkg.org/orkg/resource/R155798,Genetic variation (COI) of mosquitoes species,,,
+http://orkg.org/orkg/resource/R155800,Variation of COI barcoding region in Diptera,,,
+http://orkg.org/orkg/resource/R155804,Ontology learning from images,,,
+http://orkg.org/orkg/resource/R155526,Nitrogen fixation rates estimation in the Pacific Ocean,,,
+http://orkg.org/orkg/resource/R155561,Assessment of picophytoplankton abundance in the Ocean,,,
+http://orkg.org/orkg/resource/R155543,Nitrogen fixation rates estimation in the euphotic zone of the Pacific Ocean,,,
+http://orkg.org/orkg/resource/R155584,Assessment of picophytoplankton abundance in the Indian Ocean,,,
+http://orkg.org/orkg/resource/R155272,"Transforming lignin-derived monomers to catechol, phenol, and benzene by heterogeneous catalysts",,,
+http://orkg.org/orkg/resource/R155266,Fullerene-based photocatalysts in organic pollutants degradation,,,
+http://orkg.org/orkg/resource/R155341,Comparison of fiber-optic strain sensors based on Vernier effect,,,
+http://orkg.org/orkg/resource/R155445,Mineralogical analysis of Mars in Visible-infrared wavelength range of electromagnetic spectrum using MRO's CRISM-3,,,
+http://orkg.org/orkg/resource/R155191,A generalized and global review of Hyperion hyperspectral imagery for geological applications,,,
+http://orkg.org/orkg/resource/R155154,A review of Airborne visible/infrared imaging spectrometer- Next Generation (AVIRIS-NG) hyperspectral images for the identification and characterization of minerals,,,
+http://orkg.org/orkg/resource/R155101,"The development of a high pulse frequency, laser pump,  table-top X-ray laser ",,,
+http://orkg.org/orkg/resource/R155504,Characteristics of  indium-gallium-zinc-oxide (IGZO) thin-film transistors (TFTs) ,,,
+http://orkg.org/orkg/resource/R155621,"Examples of cyclodextrin-containing formulations for drug delivery via ocular, nasal and pulmonary routes",,,
+http://orkg.org/orkg/resource/R156303,Comparison of iridium-based photoredox catalysts,,,
+http://orkg.org/orkg/resource/R153724,Mobile Messages variables,,,
+http://orkg.org/orkg/resource/R153725,Mobile Messages variables,,,
+http://orkg.org/orkg/resource/R155836,Ontology learning from images,,,
+http://orkg.org/orkg/resource/R153799,Greenhouse Gas Reduction Scenarios for Germany,,,
+http://orkg.org/orkg/resource/R155248,Mineralogical analysis of Mars in Visible-infrared wavelength range of electromagnetic spectrum using MRO's CRISM-2,,,
+http://orkg.org/orkg/resource/R153801,Comparison of Studies on Germany's Energy Supply in 2050,,,
+http://orkg.org/orkg/resource/R159490,Digital twins’ parameters and papers’ examples,,,
+http://orkg.org/orkg/resource/R154287,The development of a low pulse frequency laser pump  table-top X-ray laser ,,,
+http://orkg.org/orkg/resource/R152727,Analysis of natural environment indicators in Smart Cities' standards.,,,
+http://orkg.org/orkg/resource/R153815,Emergency,,,
+http://orkg.org/orkg/resource/R154289,Question Answering benchmarks,,,
+http://orkg.org/orkg/resource/R152282,eGovernment Competences and personality traits,,,
+http://orkg.org/orkg/resource/R152186,The development of a table-top x-ray laser  using various plasma discharges.,,,
+http://orkg.org/orkg/resource/R151435,Characteristics of Biosensors Based on ZnO One-Dimensional Nanostructures,,,
+http://orkg.org/orkg/resource/R151005,Ontology learning from images,,,
+http://orkg.org/orkg/resource/R151826,"Comparison of the development of a Table-top X-ray laser in argon, using capillary discharges.",,,
+http://orkg.org/orkg/resource/R149998,Diagnosis of heart sounds,,,
+http://orkg.org/orkg/resource/R150058,NLP Datasets for Scientific Concept and Relation Extraction,,,
+http://orkg.org/orkg/resource/R150337,Comparison of Scenario Factsheets from the Open Energy Platform,,,
+http://orkg.org/orkg/resource/R149849,Genetic variability (COI variation) in studies large sampled (>1000 sequences),,,
+http://orkg.org/orkg/resource/R149847,Insect (Diptera and Lepidoptera) inventories with DNA barcoding in the Neotropical region,,,
+http://orkg.org/orkg/resource/R149206,"Key studies applying Superparamagnetic Iron Oxide Nanoparticles (SPION) in diagnosis, therapy and theranostics.",,,
+http://orkg.org/orkg/resource/R148383,Overview of Gas Sensors Based on Tungsten Oxide Nanomaterials,,,
+http://orkg.org/orkg/resource/R148381, Lipid nanoparticles with possible surface functionalization to enhance drug delivery across the Blood brain barrier,,,
+http://orkg.org/orkg/resource/R148382,Polymeric nanoparticles with possible surface functionalization to enhance drug delivery across the Blood brain barrier,,,
+http://orkg.org/orkg/resource/R150570,NLP Datasets for Scientific Concept and Relation Extraction from Biomedicine Scholarly Articles,,,
+http://orkg.org/orkg/resource/R147637,Datasets for the Natural Language Processing Task of Scientific Concept and Relation Extraction,,,
+http://orkg.org/orkg/resource/R147636,Datasets for the Natural Language Processing Task of Scientific Concept and Relation Extraction,,,
+http://orkg.org/orkg/resource/R148316,Comparison of Fiber Optic Temperature Sensors Based on Vernier Effect,,,
+http://orkg.org/orkg/resource/R148678,Eptacyclic small molecule acceptors for organic solar cells,,,
+http://orkg.org/orkg/resource/R148574,Bioactive substances used in the psoriasis therapy based on lipid-vesicle approach.,,,
+http://orkg.org/orkg/resource/R148260,Heptacyclic small molecule acceptors for organic solar cells,,,
+http://orkg.org/orkg/resource/R147891,Photophysical and photovoltaic properties of fused pentacyclic small molecule acceptors v2,,,
+http://orkg.org/orkg/resource/R147507,A review of Landsat-8 Operational Land Imager (OLI) multispectral images for the identification and characterization of minerals (Part-2),,,
+http://orkg.org/orkg/resource/R147449,A review of Landsat-8 Operational Land Imager (OLI) multispectral images for the identification and characterization of minerals (Part-1),,,
+http://orkg.org/orkg/resource/R147167,Biological nitrogen fixation assessment of the Atlantic Ocean for 2009 to 2017,,,
+http://orkg.org/orkg/resource/R147196,Primary production assessment of the Atlantic Ocean for 1991 to 2018,,,
+http://orkg.org/orkg/resource/R146991,Data-driven predictive control,,,
+http://orkg.org/orkg/resource/R147001,Photophysical and photovoltaic properties of fused pentacyclic small molecule acceptors,,,
+http://orkg.org/orkg/resource/R147183,Picophytoplankton abundance estimation of the Ocean,,,
+http://orkg.org/orkg/resource/R147365,A review of lunar mineralogy using Hyperspectral imaging data from Moon Mineralogy Mapper (M3) of Chandrayaan-1 (2),,,
+http://orkg.org/orkg/resource/R147152,Biological nitrogen fixation assessment of the Pacific Ocean for 2002 to 2011,,,
+http://orkg.org/orkg/resource/R147317,A review of lunar mineralogy using Hyperspectral imaging data from Moon Mineralogy Mapper (M3) of Chandrayaan-1 (1),,,
+http://orkg.org/orkg/resource/R147040,Genetic variability (COI variation) in Diptera from different biogeographical regions,,,
+http://orkg.org/orkg/resource/R146851,Design and implementation of epidemiological surveillance systems,,,
+http://orkg.org/orkg/resource/R146870,Photophysical and photovoltaic properties of fused tricyclic small molecule acceptors.,,,
+http://orkg.org/orkg/resource/R146458,Enterprise architecture applications for managing digital transformation of smart cities,,,
+http://orkg.org/orkg/resource/R145950,Ontology reuse in smart city ontologies,,,
+http://orkg.org/orkg/resource/R145951,Domain coverage in smart city ontologies,,,
+http://orkg.org/orkg/resource/R147042,Genetic variability (COI variation) of black flies (Diptera: Simuliidae),,,
+http://orkg.org/orkg/resource/R145717,Intraspecific genetic variation (COI) in mosquitoes assemblages in different parts of the world.,,,
+http://orkg.org/orkg/resource/R145737,Genetic variability (COI variations) of sandflies in different Neotropical regions.,,,
+http://orkg.org/orkg/resource/R145685,Historical evolution of theoretical models applied to the Stark broadening calculation of spectral lines in plasmas.,,,
+http://orkg.org/orkg/resource/R145031,Comparison of  experimental measurements of  the Stark broadening of lines from Be - like ions ,,,
+http://orkg.org/orkg/resource/R146460,"Recommender systems for smart cities, Smart people dimension",,,
+http://orkg.org/orkg/resource/R144706,Comparison of experimental measurements of the Stark broadening of lines from He - like and B-like ions. ,,,
+http://orkg.org/orkg/resource/R144364,Different nanocarriers used as drug delivery vehicles for the CNS,,,
+http://orkg.org/orkg/resource/R144512,Surface functionalized PLGA nanoparticles with different moieties to enhance drug delivery across the Blood brain barrier,,,
+http://orkg.org/orkg/resource/R145556,Comparison of the Characteristics of Thin-Film Transistors (TFTs) ,,,
+http://orkg.org/orkg/resource/R144156,Ontology learning from Taxonomies,,,
+http://orkg.org/orkg/resource/R144121,Ontology learning from Folkosonomies,,,
+http://orkg.org/orkg/resource/R144095,Organic dyes as nanothermometers,,,
+http://orkg.org/orkg/resource/R144134,Ontology learning from Taxonomies,,,
+http://orkg.org/orkg/resource/R144148,Raman spectral analysis for silicate minerals,,,
+http://orkg.org/orkg/resource/R144251,Importance of Machine learning methods in Remote sensing for different applications,,,
+http://orkg.org/orkg/resource/R145686,Comparison of experimental measurements of the Stark broadening of lines from Li - like ions,,,
+http://orkg.org/orkg/resource/R144044,Lanthanides based nanothermometers v2,,,
+http://orkg.org/orkg/resource/R144936,Characteristics of Gallium Oxide Film-Based Photodetectors,,,
+http://orkg.org/orkg/resource/R143716,A Comparison of Flexible Strain Sensors Based on Carbon Nanomaterials Mixture,,,
+http://orkg.org/orkg/resource/R143853, Comparison among glucose sensors based on different nanomaterials,,,
+http://orkg.org/orkg/resource/R143746,A generalized review of Remote Sensing sensors and methods to various applications,,,
+http://orkg.org/orkg/resource/R143856,A review for geological applications of Hyperspectral remote sensing,,,
+http://orkg.org/orkg/resource/R142822,"Genetic distance between nearest neighbor species from Diptera and Lepidoptera studies, using COI gene.",,,
+http://orkg.org/orkg/resource/R142836,Ontology learning from thesauri,,,
+http://orkg.org/orkg/resource/R142850,A comparison between studies have prepared Drug nanocrystals to enhance the delivery of anticancer drugs into cancer cells,,,
+http://orkg.org/orkg/resource/R142202,Types of nanothermometers depending on the read-out signal ver.2,,,
+http://orkg.org/orkg/resource/R142206,Use of artificial intelligence based algorithm for radiological diagnosis of breast cancer ,,,
+http://orkg.org/orkg/resource/R142379,Ontology Learning from Entity Relation Model,,,
+http://orkg.org/orkg/resource/R142299,List of mRNA vaccines against COVID-19 in clinical trials (till December 2020),,,
+http://orkg.org/orkg/resource/R141844,Composite indicators of society’s progress by theme,,,
+http://orkg.org/orkg/resource/R142178,Types of nanothermomethers depending on the read-out signal,,,
+http://orkg.org/orkg/resource/R141845,"Standardized indicators systems for smart sustainable cities, by categories (People, Planet and Prosperity)",,,
+http://orkg.org/orkg/resource/R142507,Ontology learning from Glossaries,,,
+http://orkg.org/orkg/resource/R142442,Ontology learning from UML models,,,
+http://orkg.org/orkg/resource/R141906,Aluminum nitride films and their applications in piezoelectric devices,,,
+http://orkg.org/orkg/resource/R141699,Performance Comparison of  Gas Sensors Based on ZnO Nanostructures,,,
+http://orkg.org/orkg/resource/R141723,Composite indicators of society’s progress in Netherlands by theme,,,
+http://orkg.org/orkg/resource/R141747,Composite indicators of society’s progress in Netherlands by theme,,,
+http://orkg.org/orkg/resource/R141780,Temperature-dependent fluorescent carbon dots,,,
+http://orkg.org/orkg/resource/R141781,Smart city governance research categories analysis by references articles (Version 2),,,
+http://orkg.org/orkg/resource/R142085,Smart city governance research categories analysis by references articles ver.2,,,
+http://orkg.org/orkg/resource/R141810,Genetic intraspecific variation in regional and local scale Lepidoptera species inventories using DNA barcoding,,,
+http://orkg.org/orkg/resource/R142177, Use of a computer-aided diagnosis System (S-Detect) for the diagnosis of thyroid nodules on ultrasound,,,
+http://orkg.org/orkg/resource/R141593,Comparison of Vacuum Ultraviolet (VUV) emission among various low pressure non-equilibrium  plasmas,,,
+http://orkg.org/orkg/resource/R141627,Smart City Frameworks and Enterprise Architecture Core Requirements,,,
+http://orkg.org/orkg/resource/R141628,"Standardized indicators systems for smart sustainable cities, by categories (People, Planet and Prosperity)",,,
+http://orkg.org/orkg/resource/R141651,"Standardized indicators systems for smart sustainable cities, by balance between urban sustainability and  smartness",,,
+http://orkg.org/orkg/resource/R141385,Biological nitrogen fixation assessment of the Atlantic Ocean,,,
+http://orkg.org/orkg/resource/R141425,Review of the nano-based approaches for viral diagnosis and treatment,,,
+http://orkg.org/orkg/resource/R141752,Smart city governance research categories analysis by references articles,,,
+http://orkg.org/orkg/resource/R141317,"A comparison of studies in which nanoparticles were prepared to target inflammatory cells or mediators, with the aim of enhancing nanoparticle accumulation in inflamed intestinal tissue to improve the treatment of inflammatory bowel disease (IBD)",,,
+http://orkg.org/orkg/resource/R141336,"Nitrogen uptake rates in the Arabian Sea and the Bay of Bengal, the Indian Ocean",,,
+http://orkg.org/orkg/resource/R141783,"Comparison of Vacuum Ultraviolet (VUV) emission from atomic, ionic and molecular species from  low pressure non-equilibrium  plasmas.",,,
+http://orkg.org/orkg/resource/R141156, Characteristics of Capacitive RF MEMS switches,,,
+http://orkg.org/orkg/resource/R142230,Lanthanides based nanothermometers,,,
+http://orkg.org/orkg/resource/R141349,Nitrogen uptake rates in the northern and the southern Indian Ocean,,,
+http://orkg.org/orkg/resource/R141123,A review of mineralogical analysis from Hyperion hyperspetral satellite data for Indian region,,,
+http://orkg.org/orkg/resource/R141782,Smart city governance research categories analysis by references articles,,,
+http://orkg.org/orkg/resource/R141811,Genetic variation in regional and local scale of Lepidoptera inventories using DNA barcoding,,,
+http://orkg.org/orkg/resource/R140714,A comparison between studies were conducted to determine the effect of different surface properties of nanoparticles on their ability to improve accumulation in and treatment of inflammatory bowel disease (IBD),,,
+http://orkg.org/orkg/resource/R140726,Application of ASTER multispectral imageries for identification and characterization of minerals in India,,,
+http://orkg.org/orkg/resource/R140348,Relational Representation Learning for Biomedical Data using OWL Axioms,,,
+http://orkg.org/orkg/resource/R140347,Lepidoptera inventories with DNA based-tools (DNA barcoding),,,
+http://orkg.org/orkg/resource/R140768,Chemical Sensors for Hydrogen Detection,,,
+http://orkg.org/orkg/resource/R140414,Ontology Learning from Relational Database,,,
+http://orkg.org/orkg/resource/R140421,XSD-based approaches for ontology learning from XML documents,,,
+http://orkg.org/orkg/resource/R140449,A comparison between studies were conducted to determine the effect of different particle sizes of nanoparticles on their ability to improve accumulation in and treatment of inflammatory bowel disease (IBD),,,
+http://orkg.org/orkg/resource/R141369,Biological nitrogen fixation assessment of the north and tropical Atlantic Ocean,,,
+http://orkg.org/orkg/resource/R140457,"Standardized indicators systems for smart sustainable cities, city sectors coverage",,,
+http://orkg.org/orkg/resource/R140463,Moths species inventories with DNA based-tools,,,
+http://orkg.org/orkg/resource/R140465,Genetic intraspecific variation in large-scale Lepidoptera species inventories using DNA barcoding,,,
+http://orkg.org/orkg/resource/R140543,Chemical Sensors for Nitrogen Dioxide Detection,,,
+http://orkg.org/orkg/resource/R139972,Characteristics and Performance of MEMS Thermal Convective Accelerometers,,,
+http://orkg.org/orkg/resource/R140130,Hackathons: best practice,,,
+http://orkg.org/orkg/resource/R140131,Smart cities and cultural heritage ,,,
+http://orkg.org/orkg/resource/R140589,Calculated Average Global Mean Air Temperatures  from GCMs.,,,
+http://orkg.org/orkg/resource/R140805,"A comprehensive review of mineralogy at Cuprite hills in Nevada, United States from various multispectral and hyperspectral sensors",,,
+http://orkg.org/orkg/resource/R139713,Smart replicas (exhibits) in interactive museum exhibitions,,,
+http://orkg.org/orkg/resource/R139843,Contested Heritage in Digital Form,,,
+http://orkg.org/orkg/resource/R139456,Ontology learning from XML documents,,,
+http://orkg.org/orkg/resource/R139551,Butterflies inventories with DNA based-tools,,,
+http://orkg.org/orkg/resource/R139585,The impact of the COVID-19 pandemic on well-being,,,
+http://orkg.org/orkg/resource/R139526,"Review of energy consumption by textile processes, production improvement and optimization methods",,,
+http://orkg.org/orkg/resource/R139845,Mineralogical analysis of Mars in Visible-infrared wavelength range of electromagnetic spectrum,,,
+http://orkg.org/orkg/resource/R139191,A comparison between studies have prepared inorganic Nanoparticles to enhance the delivery of Paclitaxel into cancer cells,,,
+http://orkg.org/orkg/resource/R139567,"Recommender systems for smart cities, Smart governance dimension",,,
+http://orkg.org/orkg/resource/R139295, Sensing Parameters Comparison of Glucose Biosensors  ,,,
+http://orkg.org/orkg/resource/R139357,Chemical Sensors for Ammonia,,,
+http://orkg.org/orkg/resource/R139568,"Standardized indicators for Smart sustainable cities, by type of indicators",,,
+http://orkg.org/orkg/resource/R139400,Chemical Sensors for Hydrogen Sulfide,,,
+http://orkg.org/orkg/resource/R139425,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R139434,Ontology learning from XML documents,,,
+http://orkg.org/orkg/resource/R139050,Review of the existing research applying DL related to mental health conditions.,,,
+http://orkg.org/orkg/resource/R139190,Diagnostics techniques applied to  high pressure low temperature plasmas.,,,
+http://orkg.org/orkg/resource/R138536,Application of Regularization in sensitivity analysis,,,
+http://orkg.org/orkg/resource/R138542,A comprehensive Raman Spectroscopic analysis of Apollo returned rock samples,,,
+http://orkg.org/orkg/resource/R138594,Catalytic activation of the C-C bond,,,
+http://orkg.org/orkg/resource/R138393,A recent Reflectance analysis of Moon mineralogy using all the Imaging and non-imaging orbital spectrometers,,,
+http://orkg.org/orkg/resource/R138418,"Primary Production in the Bay of Bengal, the north-eastern Indian Ocean for 2014 to 2019",,,
+http://orkg.org/orkg/resource/R138458,Lignin decomposition,,,
+http://orkg.org/orkg/resource/R138483,"Primary Production in the Arabian Sea, the north-western Indian Ocean for 1994 to 2000",,,
+http://orkg.org/orkg/resource/R138501,"Primary Production in the Arabian Sea, the north-western Indian Ocean for 2001 to 2015",,,
+http://orkg.org/orkg/resource/R139642,Characteristics of Perovskite Solar Cells,,,
+http://orkg.org/orkg/resource/R138633,Biodiversity inventories of Lepidoptera with DNA based-tools,,,
+http://orkg.org/orkg/resource/R138373,"Primary Production in the Bay of Bengal, the north-eastern Indian Ocean for 2001 to 2007",,,
+http://orkg.org/orkg/resource/R138374,Comparison of flexible piezoresistive pressure sensors based on different materials,,,
+http://orkg.org/orkg/resource/R138631,A comparison between studies have prepared Chitosan Nanoparticles to enhance the delivery of Paclitaxel into cancer cells,,,
+http://orkg.org/orkg/resource/R138054,Ontology Learning from source code,,,
+http://orkg.org/orkg/resource/R138057,Ontology Learning from source code,,,
+http://orkg.org/orkg/resource/R107676,Services for Large Numbers of RDF datasets,,,
+http://orkg.org/orkg/resource/R138535,Application of Regularization in sensitivity analysis,,,
+http://orkg.org/orkg/resource/R138127,A comparison between studies have prepared PLGA Nanoparticles to enhance the delivery of Paclitaxel into cancer cells,,,
+http://orkg.org/orkg/resource/R137469,Comparison of application relevant atmospheric pressure plasma jets,,,
+http://orkg.org/orkg/resource/R137472,An overview on doped ZnO-based heterojunction diodes ,,,
+http://orkg.org/orkg/resource/R139268,Ontologies for smart city: levels and key classes,,,
+http://orkg.org/orkg/resource/R138179,Sub-surface Geology of the Lunar surface using Ground penetrating radar,,,
+http://orkg.org/orkg/resource/R137164,Integrated spectroscopic studies of Earth rocks: Implications for Planetary analogs,,,
+http://orkg.org/orkg/resource/R137151,Integrated spectroscopic studies on Earth rocks: Implications for Planetary analogs,,,
+http://orkg.org/orkg/resource/R137036,Ontological knowledge learned from source code,,,
+http://orkg.org/orkg/resource/R136242,A comparison between studies have prepared lipid-based nanoparticles for the delivery of Paclitaxel into breast cancer cells,,,
+http://orkg.org/orkg/resource/R137086,Catalytic activation of C-O bond,,,
+http://orkg.org/orkg/resource/R137510,"Standardized indicators for Smart sustainable cities, by type of indicators",,,
+http://orkg.org/orkg/resource/R135920,Summary of indicator standards on Smart sustainable cities,,,
+http://orkg.org/orkg/resource/R135668,Summary of indicator standards on Smart sustainable cities,,,
+http://orkg.org/orkg/resource/R135715,Ion-pair association in heptamethine cyanine dyes,,,
+http://orkg.org/orkg/resource/R135992,Different approaches for improving the efficiency of CdTe thin film solar cells,,,
+http://orkg.org/orkg/resource/R135371,Comparison of Impact of Covid-19 on mobility behaviour,,,
+http://orkg.org/orkg/resource/R135606,Performance and Characteristics of Flexible Capacitive Pressure Sensors,,,
+http://orkg.org/orkg/resource/R135457,Zinc oxide nanomaterials and their applications in piezoelectric devices,,,
+http://orkg.org/orkg/resource/R135517,Educational Ontologies comparisson,,,
+http://orkg.org/orkg/resource/R135275,Theoretical Studies of Nanocantilevers as Biosensors,,,
+http://orkg.org/orkg/resource/R107661,Services for Large Numbers of RDF datasets,,,
+http://orkg.org/orkg/resource/R107677,Overview of user feedback classification approaches,,,
+http://orkg.org/orkg/resource/R110651,"Housing and mental health of people in informal area of Ibadan North Local Government, Nigeria",,,
+http://orkg.org/orkg/resource/R111117,Optimal composition of non wheat flours in composite bread,,,
+http://orkg.org/orkg/resource/R108358,Hyperspectral Remote Sensing for Mineral Mapping,,,
+http://orkg.org/orkg/resource/R107854,Evolution of the instructional interaction model in texts with interactional models in technology-mediated education.,,,
+http://orkg.org/orkg/resource/R111045,Rare-earth complexes and their applications,,,
+http://orkg.org/orkg/resource/R108908,Production - Maintenance in industries,,,
+http://orkg.org/orkg/resource/R108004,Overview of User Feedback Classification Approaches Using Naive Bayes and Support Vector Machines,,,
+http://orkg.org/orkg/resource/R108053,Comparison between cities-board dashboards and existing dashboards,,,
+http://orkg.org/orkg/resource/R108332,Analysis of approaches based on required elements in way of modeling,,,
+http://orkg.org/orkg/resource/R108232,Comparison of the currently available Business Architecture frameworks,,,
+http://orkg.org/orkg/resource/R108233,Comparison of the currently available Business Architecture frameworks,,,
+http://orkg.org/orkg/resource/R109494,"Anuran antimicrobial peptides aurein, maculatin and citropin activity and mechanism against different biological membranes",,,
+http://orkg.org/orkg/resource/R108528,Overview of Crowd Intelligence in Requirements Engineering,,,
+http://orkg.org/orkg/resource/R108331,Analysis of approaches based on required elements in way of modeling,,,
+http://orkg.org/orkg/resource/R109041,Comparison of methods for the quantification  of VUV emission among various low pressure plasmas.,,,
+http://orkg.org/orkg/resource/R108601,Student engagement and persistence in massive open online courses (MOOCs),,,
+http://orkg.org/orkg/resource/R108888,Comparison of the contribution of peri-urban agriculture to food security,,,
+http://orkg.org/orkg/resource/R109637,Comparison of hepatitis C policy reviews,,,
+http://orkg.org/orkg/resource/R108719,Rhizoctonia solani comparison,,,
+http://orkg.org/orkg/resource/R108929,A comparison between metadata import workflows implemented in journal publishing systems,,,
+http://orkg.org/orkg/resource/R108907,Geography Tourism Spatial Analysis,,,
+http://orkg.org/orkg/resource/R109955,Comparison of prevalence of STEC in different countries,,,
+http://orkg.org/orkg/resource/R109140,Overview of user feedback classification approaches,,,
+http://orkg.org/orkg/resource/R109236,Application of Data Dimensionality Reduction Techniques in Image Processing,,,
+http://orkg.org/orkg/resource/R110361,Pilot mini collection of studies on libraries as third places.,,,
+http://orkg.org/orkg/resource/R109324,Comparison of Heavy Metal Contamination in Indus Basin ,,,
+http://orkg.org/orkg/resource/R109399,Potential inhibitors of SARS-CoV-2 3CLPro,,,
+http://orkg.org/orkg/resource/R111133,Variation in the Hill coefficient (bacterial pharmacodynamic parameter),,,
+http://orkg.org/orkg/resource/R109456,Comparison of nanocarriers for vitamin D,,,
+http://orkg.org/orkg/resource/R109525,Services for Large Numbers of RDF datasets,,,
+http://orkg.org/orkg/resource/R109546,Comparison of Impact of Humans (Factors) in Organizational Cyber Resilience ,,,
+http://orkg.org/orkg/resource/R111129,Comparison of cobinamid synthesis methods,,,
+http://orkg.org/orkg/resource/R109612,Biological Nitrogen Fixation Assessment of the Indian Ocean,,,
+http://orkg.org/orkg/resource/R109696,Advances methods for diagnosis and treatment of brain disorders ,,,
+http://orkg.org/orkg/resource/R109904,Review of studies applying social network analysis on scientific networks.,,,
+http://orkg.org/orkg/resource/R111130,A comparison between studies have used polymeric nanoparticles for the treatment of breast cancer,,,
+http://orkg.org/orkg/resource/R110025,Thermal Resistance of Borehole Heat Exchanger,,,
+http://orkg.org/orkg/resource/R110777,Transboundary Cooperation in context of Water Food Energy Nexus,,,
+http://orkg.org/orkg/resource/R109998,Impact of soil management interventions and anthropogenic properties on soil physico-chemical properties,,,
+http://orkg.org/orkg/resource/R110032,"Comparison which presents the effectiveness of machine learning algorithms in estimating Total Organic Carbon Content, a key source quality parameter.",,,
+http://orkg.org/orkg/resource/R110042,Comparing the effects of warming on rangeland vegetation across asian highlands,,,
+http://orkg.org/orkg/resource/R110698,Various approaches to calculating heat and mass transfer of coolant in nuclear reactors for modeling severe accidents ,,,
+http://orkg.org/orkg/resource/R110071,Functional MRI data analysis,,,
+http://orkg.org/orkg/resource/R110124,Soft Robotics gloves for rehabilitation for stroke impaired hand,,,
+http://orkg.org/orkg/resource/R110138,Techno-economic analyses of microgrid and hybrid energy systems,,,
+http://orkg.org/orkg/resource/R110188,Constitution-Making Process,,,
+http://orkg.org/orkg/resource/R110245,Constitution-Making Process,,,
+http://orkg.org/orkg/resource/R110262,Mixed languages in Belarus,,,
+http://orkg.org/orkg/resource/R110668,Mining and Validating Cardinality Constraints on RDF data,,,
+http://orkg.org/orkg/resource/R110351,Types of substrate in Titanium dioxide thin films deposited by Atomic Layer Deposition,,,
+http://orkg.org/orkg/resource/R110393,The Use of Silicon Carbide Thin Films in Different Device Types,,,
+http://orkg.org/orkg/resource/R110462,Social Distance Effects on COVID-19,,,
+http://orkg.org/orkg/resource/R110479,Business Architecture frameworks,,,
+http://orkg.org/orkg/resource/R110640,Maternal hypercholesterolemia and atherosclerosis in off spring,,,
+http://orkg.org/orkg/resource/R110625,Business Architecture frameworks,,,
+http://orkg.org/orkg/resource/R110597,Sources of major ion evolution in groundwater chemistry of developing urban areas   ,,,
+http://orkg.org/orkg/resource/R110652,Interpretation of Ezek 1-3,,,
+http://orkg.org/orkg/resource/R110655,Expression of monocytic human leukocyte antigen receptor in the critically ill,,,
+http://orkg.org/orkg/resource/R110673,"Business Architecture frameworks, v.2",,,
+http://orkg.org/orkg/resource/R110779,Comparison of Meeting Summarization Research,,,
+http://orkg.org/orkg/resource/R110932,Comparison of the frequency of obstructive sleep apnea (OSA) in patients with mucopolysaccharidosis (MPS),,,
+http://orkg.org/orkg/resource/R110991,Comparison of Antiviral compounds from Natural Sources,,,
+http://orkg.org/orkg/resource/R111060,Comparison of different methods for group betweenness centrality (GBC) computations,,,
+http://orkg.org/orkg/resource/R111092,Value of forest ecosystem services in China,,,
+http://orkg.org/orkg/resource/R111110,Determining land use based on mobile phone call records,,,
+http://orkg.org/orkg/resource/R111124, The relationship between alcohol and Alzheimer's disease on molecular and cellular level. ,,,
+http://orkg.org/orkg/resource/R111416,Characterization of the figure of Ezekiel,,,
+http://orkg.org/orkg/resource/R111151,Gender structure of the parliamentary elites in three countries,,,
+http://orkg.org/orkg/resource/R111154,Linked Data Publishing using Scholarly Ontologies,,,
+http://orkg.org/orkg/resource/R111755,Comparison ISC papers,,,
+http://orkg.org/orkg/resource/R113171,Comparison of Scenario Factsheets from the Open Energy Platform,,,
+http://orkg.org/orkg/resource/R112387,Overview of Approaches that Classify User Feedback as Feature Request,,,
+http://orkg.org/orkg/resource/R113089,"Related Work for the paper ""A Visual SHACL Shapes Editor Based On OntoPad""",,,
+http://orkg.org/orkg/resource/R113168,Comparison of Scenario Factsheets from the Open Energy Platform,,,
+http://orkg.org/orkg/resource/R113170,Comparison of Scenario Factsheets from the Open Energy Platform,,,
+http://orkg.org/orkg/resource/R113242,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R114155,Overview of Crowd Intelligence in Requirements Engineering,,,
+http://orkg.org/orkg/resource/R175477,Open access download advantage,,,
+http://orkg.org/orkg/resource/R172154,Surveying BioCreAtIvE Shared Tasks Corpora for Relation Extraction,,,
+http://orkg.org/orkg/resource/R172157,Surveying BioCreAtIvE Shared Tasks Corpora for Text Snippet Extraction,,,
+http://orkg.org/orkg/resource/R172156,Surveying BioCreAtIvE Shared Tasks Corpora for Entity Normalization,,,
+http://orkg.org/orkg/resource/R172689,Tailored Forming Processes for the Manufacture of Bearing Components from Material Combinations,,,
+http://orkg.org/orkg/resource/R172932,Ontology Learning Review Comparison,,,
+http://orkg.org/orkg/resource/R172927,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R175019,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R172886,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R288015,Summary of SemTab 2020 results per round,,,
+http://orkg.org/orkg/resource/R288016,Summary of SemTab 2020 results per round,,,
+http://orkg.org/orkg/resource/R288017,Summary of SemTab 2019 results per round,,,
+http://orkg.org/orkg/resource/R172704,Relation Extraction Dataset Comparison,,,
+http://orkg.org/orkg/resource/R288018,Overview of the four editions of SemTab challenge,,,
+http://orkg.org/orkg/resource/R288019,Purposes and future works of the SemTab challenges,,,
+http://orkg.org/orkg/resource/R288020,Tabular Data to Knowledge Graph Matching problems,,,
+http://orkg.org/orkg/resource/R172826,Ontology Learning Sources,,,
+http://orkg.org/orkg/resource/R175304,Ontology Learning Review Comparison,,,
+http://orkg.org/orkg/resource/R288021,Evaluation during the four editions of SemTab challenges,,,
+http://orkg.org/orkg/resource/R175013,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R176017,IoT dependencies extraction and modeling,,,
+http://orkg.org/orkg/resource/R175108,Comparison of video streaming solutions for mobile cloud gaming,,,
+http://orkg.org/orkg/resource/R175109,Global Mean Sea Level (GMSL) rise projections,,,
+http://orkg.org/orkg/resource/R288022,Tabular Datasets used during the SemTab 2020,,,
+http://orkg.org/orkg/resource/R288023,Summary of SemTab 2020 results per round,,,
+http://orkg.org/orkg/resource/R288024,Comparison of the Tabular Data to Knowledge Graph Matching sub-task,,,
+http://orkg.org/orkg/resource/R288025,Summary of SemTab 2021 results per round,,,
+http://orkg.org/orkg/resource/R175409,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R288027,Comparison of the tabular datasets used during the SemTab 2021,,,
+http://orkg.org/orkg/resource/R288028,Comparison of the two tracks of the SemTab 2021,,,
+http://orkg.org/orkg/resource/R288029,Comparison of the two tracks of the SemTab 2022,,,
+http://orkg.org/orkg/resource/R288044,Comparison of the two tracks of the SemTab 2022,,,
+http://orkg.org/orkg/resource/R288045,Comparison of the SemTab challenges Tracks,,,
+http://orkg.org/orkg/resource/R288046,Comparison of the tabular datasets used during the SemTab 2022,,,
+http://orkg.org/orkg/resource/R288047,Comparison of the SemTab 2022 per round,,,
+http://orkg.org/orkg/resource/R288049,Comparison of SemTab 2022 datasets,,,
+http://orkg.org/orkg/resource/R176038,Human Motion Synthesis and Editing Techniques,,,
+http://orkg.org/orkg/resource/R175464,Human Motion Synthesize and Editing ,,,
+http://orkg.org/orkg/resource/R178462,Comparison of team formation problems in social networks,,,
+http://orkg.org/orkg/resource/R288078,Overview of the tabular datasets published during SemTab challenges,,,
+http://orkg.org/orkg/resource/R288079,SOTAB dataset split,,,
+http://orkg.org/orkg/resource/R178450,CAN Bus IDS Comparison,,,
+http://orkg.org/orkg/resource/R178163,Comparison of Link Prediction Algorithms for Recommendation Systems,,,
+http://orkg.org/orkg/resource/R178176,comparison of different software,,,
+http://orkg.org/orkg/resource/R178185,Collaboration and federation in IoT device management,,,
+http://orkg.org/orkg/resource/R178188,Collaboration and federation in IoT device management,,,
+http://orkg.org/orkg/resource/R178186,IoT dependencies extraction and modeling,,,
+http://orkg.org/orkg/resource/R178187,Collaboration and federation in IoT device management,,,
+http://orkg.org/orkg/resource/R178201,Ontologies in internet of Things,,,
+http://orkg.org/orkg/resource/R178479,Comparison of the method of the hepatic vascular study  ,,,
+http://orkg.org/orkg/resource/R182415,Comparison of machine learning models used to estimate calorie from food image,,,
+http://orkg.org/orkg/resource/R182434,Scientific Literature Language Model Comparison,,,
+http://orkg.org/orkg/resource/R182159,Scalable Semantic Similarity Estimation Frameworks for RDF Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R182358,List of Food Image Dataset,,,
+http://orkg.org/orkg/resource/R184018,Comparison of the relationship between crop diversity and human dietary diversity,,,
+http://orkg.org/orkg/resource/R185267,Comparison of experimental and calculated values of the x-ray in transitions in heliumlike ions ,,,
+http://orkg.org/orkg/resource/R191661,Open access page view advantage,,,
+http://orkg.org/orkg/resource/R185367,Sustainability inventory management,,,
+http://orkg.org/orkg/resource/R185262,Comparison of experimental and calculated values of the x-ray in transitions in heliumlike ions ,,,
+http://orkg.org/orkg/resource/R185268,Closed-loop supply chain network management,,,
+http://orkg.org/orkg/resource/R186047,Ontology learning from text,,,
+http://orkg.org/orkg/resource/R187049,Tailored Forming Process Chain for the Manufacturing of Hybrid Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R185456,Comparison of the classification of massive stars,,,
+http://orkg.org/orkg/resource/R186048,Ontology learning from videos,,,
+http://orkg.org/orkg/resource/R186024,Contempoary film studies,,,
+http://orkg.org/orkg/resource/R186184,Tailored Forming Processes for Manufacturing of Components with Bearing Raceways Using Different Material Combinations,,,
+http://orkg.org/orkg/resource/R186111,A comparison of different maturity models,,,
+http://orkg.org/orkg/resource/R186157,On A Generalized Framework for Time-Aware Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R186126,Ontology-Based Anomaly Detection for Air Traffic Control Systems,,,
+http://orkg.org/orkg/resource/R186154,On Time-Aware Knowledge Graph Extensions,,,
+http://orkg.org/orkg/resource/R187060,Exploring the status of existing Covid-19 Ontologies,,,
+http://orkg.org/orkg/resource/R186651,Classification of Land Use and Land Cover (LULC),,,
+http://orkg.org/orkg/resource/R186723,Use of spectral characteristics for predict of soil organic matter content (SOMC),,,
+http://orkg.org/orkg/resource/R192341,Land use / cover change (LUCC) based on satellite images and machine learning,,,
+http://orkg.org/orkg/resource/R188164,Exploring Covid-19 Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R191984,Encryption for Controller Area Network ,,,
+http://orkg.org/orkg/resource/R187223,Ontology for Smart Contracts,,,
+http://orkg.org/orkg/resource/R187477,Explainable Cyber-Physical System approaches,,,
+http://orkg.org/orkg/resource/R191658,Comparison of experimental and calculated values of the energy of x-ray in transitions in heliumlike ions*   ,,,
+http://orkg.org/orkg/resource/R192320,Comparaison of COVID-19 detection or diagnosis approaches,,,
+http://orkg.org/orkg/resource/R191657,Effect of weather conditions on bike sharing,,,
+http://orkg.org/orkg/resource/R188971,CAN Bus Attacks,,,
+http://orkg.org/orkg/resource/R191655,Deep Analysis of Covid-19 Ontologies,,,
+http://orkg.org/orkg/resource/R188976,Difference in evidence quality between open access and non-open access publications,,,
+http://orkg.org/orkg/resource/R191656,Deep Analysis of Covid-19 Ontologies,,,
+http://orkg.org/orkg/resource/R189183,Land use and land cover classification based on combining different types of methods,,,
+http://orkg.org/orkg/resource/R191880,The impact of data normalization (data scaling) on the performance of supervised machine learning algorithms,,,
+http://orkg.org/orkg/resource/R191448,Inverse Kinematics in Animation,,,
+http://orkg.org/orkg/resource/R192251,EUR evaluation methods comparison ,,,
+http://orkg.org/orkg/resource/R193565,Comparison of different approaches of Closed-loop Supply Chain configuration models,,,
+http://orkg.org/orkg/resource/R189409,Comparison of Open Information Extraction components,,,
+http://orkg.org/orkg/resource/R191054,Are gastrointestinal symptoms in COVID-19 patients associated with more severe disease?,,,
+http://orkg.org/orkg/resource/R191023,Experimental and calculated values of the energy of x-ray in transitions in heliumlike ions ,,,
+http://orkg.org/orkg/resource/R189475,Information Extraction systems and their approaches,,,
+http://orkg.org/orkg/resource/R193144,Human Motion Database,,,
+http://orkg.org/orkg/resource/R191881,The impact of data normalization (data scaling) on the performance of supervised machine learning algorithms,,,
+http://orkg.org/orkg/resource/R189691,Mechanical properties of nacre inspired materials based on nanoclays,,,
+http://orkg.org/orkg/resource/R191886,The impact of data normalization (data scaling) on the performance of supervised machine learning algorithms,,,
+http://orkg.org/orkg/resource/R191407,Countering Fake News and Misinformation,,,
+http://orkg.org/orkg/resource/R189831,Mapping cropland extent ,,,
+http://orkg.org/orkg/resource/R191878,The impact of data normalization (data scaling) on the performance of supervised machine learning algorithms,,,
+http://orkg.org/orkg/resource/R190010,Method and Data Comparison of CAN Bus IDS,,,
+http://orkg.org/orkg/resource/R191978,Comparison of experimental and calculated values of the energy of x-ray in transitions in heliumlike ions** ,,,
+http://orkg.org/orkg/resource/R193218,Evaluation methods of the EUR of shale gas wells,,,
+http://orkg.org/orkg/resource/R191975,Experimental and calculated values of the energy of x-ray in transitions in heliumlike ions**,,,
+http://orkg.org/orkg/resource/R191660,Barrier properties of nanocomposite based on synthethic hectorite,,,
+http://orkg.org/orkg/resource/R191976,Experimental and calculated values of the energy of x-ray in transitions in heliumlike ions ,,,
+http://orkg.org/orkg/resource/R193217,Human Motion Synthesis ,,,
+http://orkg.org/orkg/resource/R193555,Comparison of malaria detection models based on AI and diagnosis approaches,,,
+http://orkg.org/orkg/resource/R193619,Proposed Models for Precision Text Sentiment Analysis ,,,
+http://orkg.org/orkg/resource/R193278,BGP Security Solutions,,,
+http://orkg.org/orkg/resource/R193945,Analyzing Covid-19 Ontologies,,,
+http://orkg.org/orkg/resource/R193369,Accuracy Comparison of Different Classifiers in Sentiment Analysis,,,
+http://orkg.org/orkg/resource/R193618,Models of precision text sentiment analysis,,,
+http://orkg.org/orkg/resource/R193463,Attacks against the Online Advertising System,,,
+http://orkg.org/orkg/resource/R193620,Proposed Models for Precision Text Sentiment Analysis ,,,
+http://orkg.org/orkg/resource/R193561,Fake Account and Spam BOT Detection,,,
+http://orkg.org/orkg/resource/R193505,Is the viral load associated with disease outcome in patients with COVID-19?,,,
+http://orkg.org/orkg/resource/R193544,Motion Capture system,,,
+http://orkg.org/orkg/resource/R193648,Comparison of malaria detection models based on AI and diagnosis approaches ,,,
+http://orkg.org/orkg/resource/R193661,Low Resources Language Translation,,,
+http://orkg.org/orkg/resource/R193700,Some studies on supply chain resilience through Industry 4.0,,,
+http://orkg.org/orkg/resource/R194639,BLURB - Relation Extraction,,,
+http://orkg.org/orkg/resource/R194640,BLURB - NER,,,
+http://orkg.org/orkg/resource/R193924,Review of some mathematical programming approaches utilized in Closed-loop Supply chain modeling.,,,
+http://orkg.org/orkg/resource/R193988,Effect of COVID-19 Lockdowns on Mammal Road Mortalities,,,
+http://orkg.org/orkg/resource/R194021,A review over some in-memory yet scalable outlier detection methodologies,,,
+http://orkg.org/orkg/resource/R194034," Supplier selection techniques, methods and order allocation in supply chain",,,
+http://orkg.org/orkg/resource/R194053,Sentence Compression ,,,
+http://orkg.org/orkg/resource/R194052,Annotated Arabic Corpora,,,
+http://orkg.org/orkg/resource/R194592,Authentication for in-vehicle CAN communication,,,
+http://orkg.org/orkg/resource/R194697,BLURB-PICO,,,
+http://orkg.org/orkg/resource/R194739,Biomedical Named Entity Recognition Datasets,,,
+http://orkg.org/orkg/resource/R195257,Existing Chinese Hierarchical Discourse Datasets,,,
+http://orkg.org/orkg/resource/R195297,Multimodal sentiment analysis,,,
+http://orkg.org/orkg/resource/R195622,LULC classification based on vegetation indexes,,,
+http://orkg.org/orkg/resource/R196200,Comparison of studies regarding dictionary and foreign language teaching,,,
+http://orkg.org/orkg/resource/R196333,SPARQL Query Optimization on Top of DHTs - Comparison of QG and DA,,,
+http://orkg.org/orkg/resource/R196986,A Personal Health Knowledge Graph pipeline comparison,,,
+http://orkg.org/orkg/resource/R196613,Comparison of various methods used for sentiment analysis in social media,,,
+http://orkg.org/orkg/resource/R196385,Critical period effects in Second Language Acquisition,,,
+http://orkg.org/orkg/resource/R196453,Word-learning theories in language acquisition,,,
+http://orkg.org/orkg/resource/R196474,Word-learning theories in language acquisition,,,
+http://orkg.org/orkg/resource/R197375,Effect of COVID-19 Lockdowns on the Frequency of Wildlife-Vehicle Collisions (WVC),,,
+http://orkg.org/orkg/resource/R197060,Temporal Question Answering / Temporal Generalization,,,
+http://orkg.org/orkg/resource/R196752,A Comparison of the Registered Universal Dependencies Treebanks for German,,,
+http://orkg.org/orkg/resource/R196790,Comparison between methods of catchphrase extraction from legal documents,,,
+http://orkg.org/orkg/resource/R196827,COVID-19 Fake News,,,
+http://orkg.org/orkg/resource/R197016,learning loss during COVID-19 school closures,,,
+http://orkg.org/orkg/resource/R196829,Multimodal topic detection in social media posts ,,,
+http://orkg.org/orkg/resource/R196830,Word Sense Disambiguation,,,
+http://orkg.org/orkg/resource/R196835,RNN grammaticality judgments on syntax-sensitive dependencies,,,
+http://orkg.org/orkg/resource/R196965,Second Language Acquisition: Different approaches to analyse how well Native English L2 learners acquire language phenomena that are not present in English,,,
+http://orkg.org/orkg/resource/R196981,State-of-the-Art in Arabic Dialects Identification,,,
+http://orkg.org/orkg/resource/R197056,Language Corpora Annotation and Processing,,,
+http://orkg.org/orkg/resource/R197163,Focus Marking in Indian English,,,
+http://orkg.org/orkg/resource/R197344,Aggressive and Offensive Language in Low-resourced languages- A comparative study.,,,
+http://orkg.org/orkg/resource/R197287,Automatic Speech Recognition for Indian Langauges,,,
+http://orkg.org/orkg/resource/R197200,"Comparison between different types of modalities of texts on second language learners' listening comprehension of English, depending on second language proficiency levels. ",,,
+http://orkg.org/orkg/resource/R197351,Speech Dataset for Low-resource Indian Langauges,,,
+http://orkg.org/orkg/resource/R197346,"Character, Word and Sentence Error Rate with Automatic Speech Recognition (ASR)",,,
+http://orkg.org/orkg/resource/R198562,Effect of COVID-19 Lockdowns on Vehicular Traffic Volume,,,
+http://orkg.org/orkg/resource/R197295,Biomedical Named Entity Recognition,,,
+http://orkg.org/orkg/resource/R197737,A comparison of NLP tasks for Relation Extraction,,,
+http://orkg.org/orkg/resource/R197259,What is the tissue/cellular tropism of human norovirus,,,
+http://orkg.org/orkg/resource/R197318,Semantic similarity computation,,,
+http://orkg.org/orkg/resource/R197279,Pragmatics of complaints,,,
+http://orkg.org/orkg/resource/R197656,Surveying models for Relation Extraction,,,
+http://orkg.org/orkg/resource/R197718,Approaches to contextual morphological analysis,,,
+http://orkg.org/orkg/resource/R198561,Comparison of soil organic carbon (SOC) estimation approaches,,,
+http://orkg.org/orkg/resource/R198343,Second Language Listening Comprehension: Different Modalities to improve comprehension,,,
+http://orkg.org/orkg/resource/R199196,Mechanical properties of Nacre-inspired composites based on clay nanosheets,,,
+http://orkg.org/orkg/resource/R200035,Do animal noroviruses infect humans?,,,
+http://orkg.org/orkg/resource/R199173,Results and Footprints of AutoML-Conf22 Papers,,,
+http://orkg.org/orkg/resource/R199176,Food ontologies construction,,,
+http://orkg.org/orkg/resource/R199177,Food ontologies description,,,
+http://orkg.org/orkg/resource/R199178,Food ontologies integration,,,
+http://orkg.org/orkg/resource/R199179,Food ontologies metric,,,
+http://orkg.org/orkg/resource/R201340,IMU-based human motion tracking (IHMT),,,
+http://orkg.org/orkg/resource/R201251,Barrier properties of nanocomposites based on synthethic hectortie ,,,
+http://orkg.org/orkg/resource/R201255,Mechanical properties of nacre inspired composite based on graphene oxide nanosheets crosslinked with different cations,,,
+http://orkg.org/orkg/resource/R201263,Mechanical properties of nacre-inspired composite based on graphene oxide,,,
+http://orkg.org/orkg/resource/R202117,Gender bias in Natural Language Process,,,
+http://orkg.org/orkg/resource/R201302,Predictions SOM based on RS and MLA,,,
+http://orkg.org/orkg/resource/R201854,Human pose estimation datasets,,,
+http://orkg.org/orkg/resource/R201802,CAN BUS IDS Comparison with Result,,,
+http://orkg.org/orkg/resource/R202361,Wearable Inertial Sensors for Human Motion Analysis - Upper limb,,,
+http://orkg.org/orkg/resource/R201972,Wearable Inertial Sensors for Human Motion Analysis - Upper limb,,,
+http://orkg.org/orkg/resource/R202380,Open access download advantage ,,,
+http://orkg.org/orkg/resource/R202362,Wearable Inertial Sensors for Human Motion Analysis - Lower limb,,,
+http://orkg.org/orkg/resource/R202077,Estimation of SOC using regression kriging and satellite data,,,
+http://orkg.org/orkg/resource/R202360,Comparative analysis of Internet of Medical Things (IoMT) security schemes,,,
+http://orkg.org/orkg/resource/R202363,Open access download advantage,,,
+http://orkg.org/orkg/resource/R203903,Comparison of existing Intrusion Detection Systems (IDS) techniques in Wireless Sensor Networks (WSN) and Internet of Things (IoT),,,
+http://orkg.org/orkg/resource/R203502,Analysis of the disassembly line balancing problem in industry. (real and simulated case),,,
+http://orkg.org/orkg/resource/R204080,Privacy-Preserving Deep Learning on Machine Learning as a Service,,,
+http://orkg.org/orkg/resource/R203756,"Demand forecasting in a supply chain using artificial intelligence: Methods, techniques and tools",,,
+http://orkg.org/orkg/resource/R203814,Some work on supply chain management during COVID-19 pandemic,,,
+http://orkg.org/orkg/resource/R204005,Do human noroviruses infect animal species?,,,
+http://orkg.org/orkg/resource/R204130,Software-defined networking security solutions and requirements,,,
+http://orkg.org/orkg/resource/R204164,Comparison of existing Intrusion Detection Systems (IDS) techniques in Wireless Sensor Networks (WSN) and Internet of Things (IoT) ,,,
+http://orkg.org/orkg/resource/R209243,Personal Knowledge Graphs to deal with User-Centric Data,,,
+http://orkg.org/orkg/resource/R204284,Comparative analysis of Internet of Medical Things (IoMT) security schemes ,,,
+http://orkg.org/orkg/resource/R204209,Blockchain-based Access Management Mechanisms,,,
+http://orkg.org/orkg/resource/R206242,Effect of COVID-19 lockdowns on particulate matter air pollution,,,
+http://orkg.org/orkg/resource/R206161,Food component comparison,,,
+http://orkg.org/orkg/resource/R206166,Food group metric,,,
+http://orkg.org/orkg/resource/R205002,Current Status of Covid-19 Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R206121,Comparison of Food Composition Tables/Databases,,,
+http://orkg.org/orkg/resource/R206258,Effect of COVID-19 lockdowns on air pollution from nitrogen oxides,,,
+http://orkg.org/orkg/resource/R206261,Effect of COVID-19 lockdowns on carbon monoxide air pollution,,,
+http://orkg.org/orkg/resource/R206152,Food groups comparison,,,
+http://orkg.org/orkg/resource/R206309,Human motion analysis using inertial sensor system ,,,
+http://orkg.org/orkg/resource/R206187,Using multi-objective optimisation for cleaner supply chain management,,,
+http://orkg.org/orkg/resource/R207120,Fake News Detection,,,
+http://orkg.org/orkg/resource/R209290,Overview of the motion trajectories datasets,,,
+http://orkg.org/orkg/resource/R209150,Fake News Detection Using Convolutional Neural Networks (CNN),,,
+http://orkg.org/orkg/resource/R209929,Computer vision guided pulse rate estimation techniques ,,,
+http://orkg.org/orkg/resource/R209443,Wearable sensor-based human activity recognition systems,,,
+http://orkg.org/orkg/resource/R209812,Fake News Detection Using Bidirectional Encoder Representations from Transformers (BERT),,,
+http://orkg.org/orkg/resource/R210137,Comparison between the prevention and detection approaches for the high-rate DDoS attacks,,,
+http://orkg.org/orkg/resource/R210410,Comparison between the mitigation approaches for the high-rate DDoS attacks in a cloud computing environment,,,
+http://orkg.org/orkg/resource/R210415,Intrusion Detection Systems for Secure Water Treatment (SWaT),,,
+http://orkg.org/orkg/resource/R210419,Intrusion Detection Systems for Secure Water Treatment (SWaT),,,
+http://orkg.org/orkg/resource/R210420,Intrusion Detection Systems for Secure Water Treatment (SWaT),,,
+http://orkg.org/orkg/resource/R210471,Mechanical properties of nacres based on reduced graphene oxide,,,
+http://orkg.org/orkg/resource/R211015,Personal Knowledge Graphs to deal with User-Centric Data,,,
+http://orkg.org/orkg/resource/R210531,Performance comparison between the state-of-the-art DDoS detection approaches in a cloud computing environment,,,
+http://orkg.org/orkg/resource/R211056,What is the tropism of SARS-CoV-2?,,,
+http://orkg.org/orkg/resource/R211094,Named Entity Recognition in the Message Understanding Conference (MUC) series,,,
+http://orkg.org/orkg/resource/R211514,NER in the OntoNotes Corpus,,,
+http://orkg.org/orkg/resource/R211515,NER Annotations in the OntoNotes Corpus,,,
+http://orkg.org/orkg/resource/R211233,Named Entity Recognition in the Automatic Content Extraction (ACE) Series,,,
+http://orkg.org/orkg/resource/R211260,Named Entity Recognition in the Computational Natural Language Learning (CoNLL) Series,,,
+http://orkg.org/orkg/resource/R211935,Comparison of Research Practices used in RE in 2021,,,
+http://orkg.org/orkg/resource/R211921,Nested Named Entity Recognition Corpus and Extended Named Entity Hierarchies for the Newswire domain,,,
+http://orkg.org/orkg/resource/R211826,A comparison on Personal Knowledge Graphs to deal with User-Centric Data ,,,
+http://orkg.org/orkg/resource/R212405,Industry 4.0 relevant work associated with the semantic web (knowledge graphs).,,,
+http://orkg.org/orkg/resource/R212408,Study of the expansion of urban space using the CART method,,,
+http://orkg.org/orkg/resource/R212457,Comparison of Life Cycle Sustainability Assessments of Vehicles,,,
+http://orkg.org/orkg/resource/R212463,Works on the management of closed loop supply chains subject to disruption with a common pricing model.,,,
+http://orkg.org/orkg/resource/R212544,Design and management of disturbances and uncertainties in a closed loop supply chain,,,
+http://orkg.org/orkg/resource/R212576,Several works on the dynamic redesign of a closed-loop supply chain network using accelerated Benders decomposition and robust optimisation models,,,
+http://orkg.org/orkg/resource/R212916,Detection of fake news in the Spanish language,,,
+http://orkg.org/orkg/resource/R212902,A comparison of existing smart building domain ontologies,,,
+http://orkg.org/orkg/resource/R212903,Leveraging Transformer learning base model for Fake News Detection,,,
+http://orkg.org/orkg/resource/R213085,Effect of COVID-19 lockdowns on ozone air pollution,,,
+http://orkg.org/orkg/resource/R213302,Fake News Detection using Deep Learning frameworks,,,
+http://orkg.org/orkg/resource/R220919,Chinese corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R213136,Intrusion Detection Systems for Water Treatment and Distribution in Smart Cities ,,,
+http://orkg.org/orkg/resource/R215005,German corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215599,Effect of legume intercrops on soil nitrogen content,,,
+http://orkg.org/orkg/resource/R213976,Climate Sensitivity Regional CMIP5,,,
+http://orkg.org/orkg/resource/R215568,"Publication costs relative to purchasing power in ""Scrutinising what Open Access Journals Mean for Global Inequalities""",,,
+http://orkg.org/orkg/resource/R214208,Comparison of software-based authentication mechanisms for the Internet of Drones (IoD),,,
+http://orkg.org/orkg/resource/R214164,Existing smart building domain ontologies comparison,,,
+http://orkg.org/orkg/resource/R214162,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R214198,Comparison of software-based authentication mechanisms for the Internet of Drones (IoD),,,
+http://orkg.org/orkg/resource/R215025,Which animals are naturally infected with SARS-CoV-2?,,,
+http://orkg.org/orkg/resource/R214222,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R214266,Spanish corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215113,a,,,
+http://orkg.org/orkg/resource/R214201,Comparison of software-based authentication mechanisms for the Internet of Drones (IoD),,,
+http://orkg.org/orkg/resource/R214230,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R215110,test,,,
+http://orkg.org/orkg/resource/R214403,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R215211,Japanese corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215008,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R215000,SPARQL Query Optimization,,,
+http://orkg.org/orkg/resource/R215669,Hindi corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215685,Code-switched corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215188,Comparison of software-based authentication mechanisms for the Internet of Drones (IoD),,,
+http://orkg.org/orkg/resource/R215443,Ontologies for smart city: levels and key classes ver. 2,,,
+http://orkg.org/orkg/resource/R215149,Chinese corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R215579,"Factors by which publication costs differed relative to the United States in ""Scrutinising what Open Access Journals Mean for Global Inequalities""",,,
+http://orkg.org/orkg/resource/R215416,Comparison of hardware-based authentication mechanisms for the Internet of Drones (IoD) ,,,
+http://orkg.org/orkg/resource/R215567,Arabic corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R217120,Sports Science Motor Research Data: Subsample Power,,,
+http://orkg.org/orkg/resource/R216505,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216269,Comparison on Knowledge Graph Construction Surveys,,,
+http://orkg.org/orkg/resource/R215882,Estimating and predicting the spatial distribution of soil organic carbon (SOC) by Remote Sensing methods,,,
+http://orkg.org/orkg/resource/R215963,1D fiber based on graphene oxide,,,
+http://orkg.org/orkg/resource/R215964,1D fibers based on rGO,,,
+http://orkg.org/orkg/resource/R215965,electrical conductivity of rGO fiber,,,
+http://orkg.org/orkg/resource/R216313,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216109,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216492,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216212,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R217123,Sports Science Motor Research Data: Subsample Flexibility,,,
+http://orkg.org/orkg/resource/R216430,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216444,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216073,Does the secretor status of the host impact norovirus susecptibility?,,,
+http://orkg.org/orkg/resource/R216407,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R216423,Efficient Transformer Models,,,
+http://orkg.org/orkg/resource/R216543,Comparison of hardware-based authentication mechanisms for the Internet of Drones (IoD) ,,,
+http://orkg.org/orkg/resource/R216549,Comparison of software-based authentication mechanisms for the Internet of Drones (IoD),,,
+http://orkg.org/orkg/resource/R217425,Determination of the most accurate approach for predicting SOC in soil cover,,,
+http://orkg.org/orkg/resource/R217013,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R217000,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R217515,Summary on existing food knowledge graphs,,,
+http://orkg.org/orkg/resource/R217391,Summary of existing food ontologies,,,
+http://orkg.org/orkg/resource/R217389,Summary of existing food ontologies,,,
+http://orkg.org/orkg/resource/R217404,Effect of legume intercrops on soil phosphorus content,,,
+http://orkg.org/orkg/resource/R217407,Effect of legume intercrops on soil potassium content,,,
+http://orkg.org/orkg/resource/R217390,Summary of existing food ontologies,,,
+http://orkg.org/orkg/resource/R217418,Effect of legume intercrops on soil potassium content,,,
+http://orkg.org/orkg/resource/R217424,Determination of the most accurate approach for predicting SOC in soil cover,,,
+http://orkg.org/orkg/resource/R217400,Effect of legume intercrops on soil phosphorus content,,,
+http://orkg.org/orkg/resource/R217421,Effect of legume intercrops on soil nitrogen content,,,
+http://orkg.org/orkg/resource/R217545,Comparison of Water Domain Ontologies,,,
+http://orkg.org/orkg/resource/R217592,A Survey Comparison on Knowledge Graph Construction,,,
+http://orkg.org/orkg/resource/R217803,SMART 2021 Leaderboard on DBpedia AT task,,,
+http://orkg.org/orkg/resource/R219718,Relevant work on Supply chain risk management,,,
+http://orkg.org/orkg/resource/R217830,Comparison of CitySAT system on the validation data for Answer Type prediction task - SMART 2021,,,
+http://orkg.org/orkg/resource/R217829,Comparison of CitySAT system on the validation data for Answer Type prediction task - SMART 2021,,,
+http://orkg.org/orkg/resource/R218144,Food classification system,,,
+http://orkg.org/orkg/resource/R218549,Monitoring of land cover and land use changes (LULCC) based on space images,,,
+http://orkg.org/orkg/resource/R218943,Information theory-based DDoS Defence solutions in SDN,,,
+http://orkg.org/orkg/resource/R219046,Artificial Neural Network-based DDoS defence solutions in SDN,,,
+http://orkg.org/orkg/resource/R218989,Machine learning-based DDoS defense solutions in SDN,,,
+http://orkg.org/orkg/resource/R219130,A comparative analysis of blockchain-based security solutions for Internet of Medical Devices (IoMD).,,,
+http://orkg.org/orkg/resource/R219085,"DDoS defense solutions in SDN (excluding AI, information theory methods)",,,
+http://orkg.org/orkg/resource/R219286,A comparison on Text Classification Approaches,,,
+http://orkg.org/orkg/resource/R219275,Comparison of Dictator Game Means,,,
+http://orkg.org/orkg/resource/R219443,Human Motion Analysis during exercise for healthcare applications,,,
+http://orkg.org/orkg/resource/R219410,A comparison on Short Text Classification,,,
+http://orkg.org/orkg/resource/R219581,"Recent studies modeling Green supply chain(GSC), and Sustainable supply chain(SSC) under uncertainty",,,
+http://orkg.org/orkg/resource/R219757,Biometric-based authentication schemes,,,
+http://orkg.org/orkg/resource/R220422,Are antibodies a correlate of protection against SARS-CoV-2 infection?,,,
+http://orkg.org/orkg/resource/R220094,The vehicle routing problem with multiple depots (MDVRP) in supply chain,,,
+http://orkg.org/orkg/resource/R220920,Arabic corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R220885,Spanish corpora for Named Entity Recognition (NER),,,
+http://orkg.org/orkg/resource/R220231,Recent corresponding publications based on relationship structures in competitive environments in supply chain,,,
+http://orkg.org/orkg/resource/R220697,Fake News detection in the Urdu language,,,
+http://orkg.org/orkg/resource/R221021,Human Motion Quality Analysis for Wellness Applications,,,
+http://orkg.org/orkg/resource/R220872,NER Annotations in the OntoNotes Corpus,,,
+http://orkg.org/orkg/resource/R221394,Study of the expansion of urban space using the CART method based on satellite images,,,
+http://orkg.org/orkg/resource/R221096,Comparison of Bag-of-Word and Bidirectional Attentive Memory networks methods for answering Competency Question in Natural Language over FoodKG,,,
+http://orkg.org/orkg/resource/R221396,Is the secretor status associated with the hosts susceptibility to norovirus infection?,,,
+http://orkg.org/orkg/resource/R221127,Summary of existing food ontologies ,,,
+http://orkg.org/orkg/resource/R221138,Regional Differences of Temperature Extremes in CMIP5,,,
+http://orkg.org/orkg/resource/R221148,Comparison of multiple Deep Learning frameworks for Fake News detection,,,
+http://orkg.org/orkg/resource/R221160,Regional Differences of Temperature Extremes in CMIP5,,,
+http://orkg.org/orkg/resource/R221192,Regional Differences of Temperature Extremes in CMIP6,,,
+http://orkg.org/orkg/resource/R221688,Human Motion Quality Analysis for sports applications.,,,
+http://orkg.org/orkg/resource/R221200,Regional Differences of Temperature Extremes in CMIP5 and CMIP6,,,
+http://orkg.org/orkg/resource/R223132,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R221781,"Transition energies of highly charged ions (HCI)  produced in an electron beam ion trap (EBIT), for the purpose of Quantum Electrodynamic (QED) studies.",,,
+http://orkg.org/orkg/resource/R221782,Classification of gaze estimation algorithms,,,
+http://orkg.org/orkg/resource/R221864,Effect of legume rotations on soil nitrogen content,,,
+http://orkg.org/orkg/resource/R222041,Highly charged ions (HCI) and HCI  beams used in state of the art applications. ,,,
+http://orkg.org/orkg/resource/R222164,Effect of legume rotations on soil phosphorus content,,,
+http://orkg.org/orkg/resource/R222814,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R222590,Mechanical properties of 3D bulk nacre-inspired materials,,,
+http://orkg.org/orkg/resource/R222999,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R222705,Mechanical propertis of PVA hydrogels prepared by salting-out method,,,
+http://orkg.org/orkg/resource/R222684,mechanical properties of ice-templated PVA hydrogels,,,
+http://orkg.org/orkg/resource/R222737,Mechanical properties of dual crosslinked hydrogel ,,,
+http://orkg.org/orkg/resource/R223226,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R222998,A Comparison of Scientific Publications on the State-of-the-Art of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R222990,Comparison of Existing Ontology Evaluation  Tools,,,
+http://orkg.org/orkg/resource/R222954,Effect of Legume Rotations on Cereal Crop Yields in Europe,,,
+http://orkg.org/orkg/resource/R223001,Are antibodies a correlate of protection against influenza virus infection?,,,
+http://orkg.org/orkg/resource/R223002,Comparison of Existing Health Care Ontologies,,,
+http://orkg.org/orkg/resource/R225253,Security solutions against web session attacks,,,
+http://orkg.org/orkg/resource/R224809,A comparison on Query-Answering System in Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R224810,A comparison on Query-Answering System in Knowledge Graphs ,,,
+http://orkg.org/orkg/resource/R225220,A comparison on Ontology Learning algorithms,,,
+http://orkg.org/orkg/resource/R225329,Deception techniques in computer security,,,
+http://orkg.org/orkg/resource/R226630,Traffic Speed Prediction with Deep Learning Methods - Best results,,,
+http://orkg.org/orkg/resource/R226772,LULC classification based on spectral data,,,
+http://orkg.org/orkg/resource/R227615,Comparison of Hyperparameter Optimization Tools,,,
+http://orkg.org/orkg/resource/R228158,IAM-based VS NFV-based implementations in Network Functions Virtualization,,,
+http://orkg.org/orkg/resource/R228134,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R228696,Eye tracking datasets at a glance,,,
+http://orkg.org/orkg/resource/R230114,Is the viral load associated with disease outcome in patients with norovirus infections?,,,
+http://orkg.org/orkg/resource/R230415,Kinect human activity recognition dataset,,,
+http://orkg.org/orkg/resource/R232883,Mechanical properties of double network hydrogel ,,,
+http://orkg.org/orkg/resource/R233016,Mechanical properties of tough hydrogels,,,
+http://orkg.org/orkg/resource/R233015,Mechanical properties of unusual hydrogels ,,,
+http://orkg.org/orkg/resource/R235032,Relevant work on disassembly scheduling problem ,,,
+http://orkg.org/orkg/resource/R233481,Conductivity of nanocomposite electrolyte based on alumina,,,
+http://orkg.org/orkg/resource/R235004,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R235005,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R235571,Supply chain network design and redesign,,,
+http://orkg.org/orkg/resource/R234068,Summary of some related work for an integrated sustainability inventory model,,,
+http://orkg.org/orkg/resource/R236148,COVID-19 Fake News Detection,,,
+http://orkg.org/orkg/resource/R235228,Some models used for the management of assembly systems in production systems.,,,
+http://orkg.org/orkg/resource/R236295,Bag-of-Word and Bidirectional Attentive Memory networks methods for answering Competency Question in Natural Language over FoodKG ,,,
+http://orkg.org/orkg/resource/R235512,Databases used for still image-based action recognition ,,,
+http://orkg.org/orkg/resource/R235595,Datasets for NLP tasks on scholarly articles ,,,
+http://orkg.org/orkg/resource/R236296,Comparison of machine learning classifiers using different satellite images for land use land cover mapping,,,
+http://orkg.org/orkg/resource/R235550,Datasets for 3D object detection in the context of autonomous driving,,,
+http://orkg.org/orkg/resource/R235572,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R239066,Comparative analysis of Fake News Detection schemes ,,,
+http://orkg.org/orkg/resource/R236211,Food ontologies metric ,,,
+http://orkg.org/orkg/resource/R238494,How Do Legume Intercrops Affect Cereal Grain Yield in European Agroecosystems?,,,
+http://orkg.org/orkg/resource/R238243,Comparison of Machine Learning Algorithms for Intrusion Detection,,,
+http://orkg.org/orkg/resource/R240000,test,,,
+http://orkg.org/orkg/resource/R239314,Question templates for Food Question Answering Systems,,,
+http://orkg.org/orkg/resource/R243001,test,,,
+http://orkg.org/orkg/resource/R239547,test,,,
+http://orkg.org/orkg/resource/R239548,test,,,
+http://orkg.org/orkg/resource/R246267,Analyzing visualization tools for Knowledge Graphs,,,
+http://orkg.org/orkg/resource/R246270,"Transition energies and intensities of transitions on the X-ray spectral range, from highly charged Iron ions (HCI)  produced in the laboratory ",,,
+http://orkg.org/orkg/resource/R246269,"Transition energies and intensities on the UV and visible spectral range, from highly charged ions (HCI)  produced in an electron beam ion trap (EBIT).",,,
+http://orkg.org/orkg/resource/R246271,The microcalorimeter spectrometer as a standard detection system for the X-ray  and XUV spectral ranges. ,,,
+http://orkg.org/orkg/resource/R262070,Application of Sentinel-2 data for land use and land cover mapping,,,
+http://orkg.org/orkg/resource/R262141,Machine Learning Methods Applied to Urban Mobility ,,,
+http://orkg.org/orkg/resource/R267046,Food Question Answering systems,,,
+http://orkg.org/orkg/resource/R259183,Baseline metrics used during Human evaluation of Food QA and Food recommendation systems ,,,
+http://orkg.org/orkg/resource/R259184,Baseline methods for Human or Automatic evaluation of Food Knowledge Base Question Answering systems and Food recommendation systems ,,,
+http://orkg.org/orkg/resource/R261028,Non-Geostationary Satellite Systems,,,
+http://orkg.org/orkg/resource/R260009,Comparison on Emergency Situation Ontologies,,,
+http://orkg.org/orkg/resource/R248411,Analyzing visualization tools for Knowledge Graphs ,,,
+http://orkg.org/orkg/resource/R262134,Comparative analysis of Fake News detection frameworks,,,
+http://orkg.org/orkg/resource/R266132,Life cycle analysis of cotton textiles,,,
+http://orkg.org/orkg/resource/R262124,Authentication based on shared knowledge for socail acquaintances,,,
+http://orkg.org/orkg/resource/R266239,Application of Sentinel-2 data for land use and land cover mapping based on pixel-based image analysis,,,
+http://orkg.org/orkg/resource/R260193,A Comparison of Existing Flood Ontologies ,,,
+http://orkg.org/orkg/resource/R256496,Youth definition ,,,
+http://orkg.org/orkg/resource/R259016,Evidence of interspecies transmission of rotavirus,,,
+http://orkg.org/orkg/resource/R257000,Statistics from 156 recipe requests from Reddit,,,
+http://orkg.org/orkg/resource/R257010,Data statistics of the personalized Knowledge Base/Graph Question Answering benchmark,,,
+http://orkg.org/orkg/resource/R260330,Comparison of the state-of-the-art chatbots features and applications,,,
+http://orkg.org/orkg/resource/R259112,Baseline methods used for the comparison of Food QA and Food recommendation systems,,,
+http://orkg.org/orkg/resource/R266140,Evaluation of Fenton processes for the treatment of real raw textile effluents.,,,
+http://orkg.org/orkg/resource/R256241,Various combinations of polysiloxanes-based and PCC polymer electrolyte,,,
+http://orkg.org/orkg/resource/R256247,Conductivity of nanocomposite electrolyte based on inactive filler,,,
+http://orkg.org/orkg/resource/R267027,Food Knowledge Graph description,,,
+http://orkg.org/orkg/resource/R259037,Data statistics of the personalized Knowledge Base/Graph Question Answering benchmark ,,,
+http://orkg.org/orkg/resource/R255464,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R256495,Youth definition ,,,
+http://orkg.org/orkg/resource/R255409,Perception and practices of sharing access to data and devices in households,,,
+http://orkg.org/orkg/resource/R256243,Various combinations of PVDF-based polymer electrolyte and PVDF-HFP,,,
+http://orkg.org/orkg/resource/R255284,A Comparison of Scientific Publications on the State of Empirical Research in Requirements Engineering and Software Engineering,,,
+http://orkg.org/orkg/resource/R255508,Conductivity of various combinations of PEO-based polymer electrolyte,,,
+http://orkg.org/orkg/resource/R256242,Various combinations of PVA-based polymer electrolyte,,,
+http://orkg.org/orkg/resource/R256244,Various combinations of PMMA-based polymer electrolyte,,,
+http://orkg.org/orkg/resource/R256245,Various combinations of PAN-based polymer electrolyte,,,
+http://orkg.org/orkg/resource/R256246,Conductivity of nanocomposite electrolyte based on active filler,,,
+http://orkg.org/orkg/resource/R249037,"Evolution of the interpretation of the  X-ray spectrum originated from highly charged ions (HCI) produced in laboratory experiments, and space observations of cosmic  X-ray sources. ",,,
+http://orkg.org/orkg/resource/R250352,Perception and practices of sharing access to data and devices in households,,,
+http://orkg.org/orkg/resource/R250455,Comparison of Ontology Learning Tools,,,
+http://orkg.org/orkg/resource/R252233,Iron Formation,,,
+http://orkg.org/orkg/resource/R253021,Open access citation advantage,,,
+http://orkg.org/orkg/resource/R262135,Non-Geostationary Satellite Systems,,,
+http://orkg.org/orkg/resource/R262162,Machine learning methods for transport mode,,,
+http://orkg.org/orkg/resource/R272033,Open access page view advantage ,,,
+http://orkg.org/orkg/resource/R266146,Sample of e-Life Cycle Analysis(LCA) studies applied to apparel products,,,
+http://orkg.org/orkg/resource/R267031,Food Knowledge Graphs integration,,,
+http://orkg.org/orkg/resource/R266168,Methods for designing supply chain networks for solid waste management,,,
+http://orkg.org/orkg/resource/R272039,Impact of open access on scholarly output ,,,
+http://orkg.org/orkg/resource/R272018,Food recommendation models,,,
+http://orkg.org/orkg/resource/R272021,Human evaluation of food recommendation systems,,,
+http://orkg.org/orkg/resource/R267015,Food Knowledge Graph construction,,,
+http://orkg.org/orkg/resource/R267019,"Reported use of open, open access, online or public repositories/ databases in research",,,
+http://orkg.org/orkg/resource/R273018,Mentions of open access publications outside of academia,,,
+http://orkg.org/orkg/resource/R277103,Comparative analysis of Landsat-8 and Landsat-9 satellite images during land use/land cover classification,,,
+http://orkg.org/orkg/resource/R267006,Food Knowledge Graph construction,,,
+http://orkg.org/orkg/resource/R272077,Datasets used for food recommendation and food Question Answering,,,
+http://orkg.org/orkg/resource/R269002,Food Question Answering systems,,,
+http://orkg.org/orkg/resource/R269003,Food ontology construction,,,
+http://orkg.org/orkg/resource/R269004,Food ontology description,,,
+http://orkg.org/orkg/resource/R272078,"Datasets used for food dialog system, food recommendation and food Question Answering ",,,
+http://orkg.org/orkg/resource/R266339,The machine learning methods implemented environmental features detection ,,,
+http://orkg.org/orkg/resource/R272035,Impact of open access on scholarly output,,,
+http://orkg.org/orkg/resource/R272044,Mentions of open access publications outside of academia,,,
+http://orkg.org/orkg/resource/R272079,"Review of food information use to build food recommendation, Question Answering and dialog systems",,,
+http://orkg.org/orkg/resource/R272059,Ablation study of food recommendation models,,,
+http://orkg.org/orkg/resource/R272034,Difference in evidence quality between open access and non-open access publications,,,
+http://orkg.org/orkg/resource/R272032,Open access download advantage ,,,
+http://orkg.org/orkg/resource/R272076,Comparison of pFooDREQ and pFooDREQ+RecipeSIM,,,
+http://orkg.org/orkg/resource/R274031,Effect of Legume Rotations on Cereal Crop Yields in Europe ,,,
+http://orkg.org/orkg/resource/R266420,Microbial toxins,,,
+http://orkg.org/orkg/resource/R266423,Comparison of models used for object detection,,,
+http://orkg.org/orkg/resource/R274032,X-ray observations from cosmic objects 1: comets,,,
+http://orkg.org/orkg/resource/R275000,X-ray observations from cosmic objects 2: planets,,,
+http://orkg.org/orkg/resource/R280105,Datasets for NLP tasks on scholarly articles,,,
+http://orkg.org/orkg/resource/R280106,Datasets for NLP tasks on scholarly articles,,,
+http://orkg.org/orkg/resource/R280270,Datasets for NLP tasks on scholarly articles,,,
+http://orkg.org/orkg/resource/R280729,Digital soil mapping (DSM) using machine learning algorithms,,,
+http://orkg.org/orkg/resource/R281261,Glaciers monitoring based on multispectral and radar satellite data,,,
+http://orkg.org/orkg/resource/R281265,Comparison of Hyperparameter Optimization Tools,,,
+http://orkg.org/orkg/resource/R282511,X-ray observations from cosmic objects 4: stars,,,
+http://orkg.org/orkg/resource/R282512,"X-ray observations from cosmic objects 5: intergalactic medium (IGM,WHIM)",,,
+http://orkg.org/orkg/resource/R282510,X-ray observations from cosmic objects 3: the sun,,,
+http://orkg.org/orkg/resource/R284515,Investigating the Relationship between Land Use/Land Cover Change and Land Surface Temperature,,,
+http://orkg.org/orkg/resource/R285347,Diverse approaches for the reproducibility of scientific work,,,
+http://orkg.org/orkg/resource/R285888,The Quest to Replace Passwords,,,
+http://orkg.org/orkg/resource/R287928,Comparison of private and public green procurement literature reviews,,,
+http://orkg.org/orkg/resource/R287929,Comparison of private and public green procurement literature reviews ,,,

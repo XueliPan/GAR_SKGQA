@@ -1,0 +1,46 @@
+#!/bin/bash
+#SBATCH --job-name=sparql-gen
+#SBATCH --partition=gpu_h100
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --gpus-per-node=1
+#SBATCH --cpus-per-task=16
+#SBATCH --export=ALL,PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
+# Activate virtual environment
+source ~/graphrag/bin/activate
+
+python --version
+# Load the required modules
+# current python version 3.9, not match with the codes
+module load 2024
+module load Python/3.12.3-GCCcore-13.3.0
+
+# load CUDA
+module load CUDA/12.6.0
+python --version
+
+# Debug GPU availability
+echo "=== GPU Debug Information ==="
+nvidia-smi
+echo "CUDA_VISIBLE_DEVICES: $CUDA_VISIBLE_DEVICES"
+echo "============================="
+
+# Navigate to the project directory
+cd GAR_SKGQA/
+
+pip install -r requirements.txt
+pip install accelerate
+python --version
+
+cd ..
+cd dblp
+# Run your Python script
+python dblp_answer_generation_Meta-Llama-3.1-8B-Instruct.py \
+  --input_csv subgrapgs_dblp_dump_gemini_2.5_pro_testsetcsv.csv \
+  --output_csv answer_generation_Mistral-7B-Instruct-v0.2.csv \
+  --backend huggingface \
+  --model mistralai/Mistral-7B-Instruct-v0.2 \
+  --endpoint_url https://sparql.dblp.org/sparql \
+  --property_schema_file dblp_property_schema.csv \
+  --temperature 0.1

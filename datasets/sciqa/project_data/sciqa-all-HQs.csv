@@ -327,7 +327,7 @@ WHERE {
 }
 ORDER BY DESC(?uses_ENVI)
 LIMIT 1",train
-HQ0087,When the earliest paper related to X-rays was published? ,"SELECT ?publication_years
+HQ0087,When the earliest paper related to X-rays was published?,"SELECT ?publication_years
 WHERE {
   ?papers rdf:type orkgc:Paper.
   ?papers rdfs:label ?papers_labels.
@@ -347,7 +347,7 @@ WHERE {
   ?anions rdfs:label ?anions_labels.
   FILTER(REGEX(?anions_labels, ""Chloride""^^xsd:string))
 }",train
-HQ0033,What risk factors for OSA are discovered in the paper with 100% OSA frequency?  ,"SELECT ?risk_factors, ?risk_factors_labels
+HQ0033,What risk factors for OSA are discovered in the paper with 100% OSA frequency?,"SELECT ?risk_factors, ?risk_factors_labels
 WHERE {
   orkgr:R110932 orkgp:compareContribution ?contrib.
   ?contrib orkgp:P37530 ?osa_frequency.
@@ -573,7 +573,7 @@ WHERE {
   ?elec_gen orkgp:HAS_VALUE ?value.
   BIND(xsd:float(?value) AS ?elec_gen_value)
 }",train
-HQ0096,Who is the author with the largest number of papers about semantic representation in music research problem? ,"SELECT ?author
+HQ0096,Who is the author with the largest number of papers about semantic representation in music research problem?,"SELECT ?author
 WHERE {
   ?papers rdf:type orkgc:Paper.
   ?papers orkgp:P31 ?contrib.
@@ -907,3 +907,141 @@ WHERE {
               orkgp:P5015 ?recall;
               orkgp:P18037 ?f1.
 }",test
+HQ0090,What museums were involved in the IntARSI project?,"SELECT ?museums, ?museums_labels
+WHERE {
+  ?papers rdf:type orkgc:Paper.
+  ?papers rdfs:label ?papers_labels.
+  FILTER(REGEX(?papers_labels, ""IntARSI""))
+  ?papers orkgp:P31 ?contrib.
+  ?contrib orkgp:P41242 ?museums.
+  ?museums rdfs:label ?museums_labels.
+}",valid
+HQ0055,What is the average energy generation for each energy source considered in 5 year intervals?,"SELECT ?rangeId ?energy_sources_labels (AVG(?eng_gen_value) AS ?avg_eng_gen_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?paper orkgp:P31 ?contrib;
+         orkgp:P29 ?year.
+  BIND(xsd:int(?year) AS ?y).
+  VALUES (?rangeId ?min ?max) {
+    (""2001-2005"" 2001 2005)
+    (""2006-2010"" 2006 2010)
+    (""2011-2015"" 2011 2015)
+    (""2016-2020"" 2016 2020)
+  }
+  FILTER(?min <= ?y && ?y <= ?max).
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43134 ?energy_generation.
+  ?energy_generation orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?eng_gen_value).
+}
+ORDER BY ASC(?rangeId)",valid
+HQ0077,What is the most common type of biosensor?,"SELECT ?biosensor
+WHERE {
+  orkgr:R151435 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43095 ?biosensor.
+}
+ORDER BY DESC(COUNT(?biosensor))
+LIMIT 1",valid
+HQ0052,What is the average installed capacity for each energy source considered?,"SELECT ?energy_sources_labels (AVG(?installed_cap_value) AS ?average_installed_cap_value)
+WHERE {
+  orkgr:R153801 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P43135 ?energy_sources.
+  ?energy_sources rdfs:label ?energy_sources_labels;
+                  orkgp:P43133 ?installed_capacity.
+  ?installed_capacity orkgp:HAS_VALUE ?value.
+  BIND(xsd:float(?value) AS ?installed_cap_value)
+}",valid
+HQ0011,Which system has the worst recall?,"SELECT ?evaluation ?system_name
+WHERE {
+  orkgr:R6946 orkgp:compareContribution ?cont.
+  ?cont orkgp:P34 ?evaluation.
+  ?evaluation orkgp:P5015 ?recall;
+              rdfs:label ?system_name.
+  BIND(xsd:float(?recall) AS ?r)
+}
+ORDER BY ?r
+LIMIT 1",valid
+HQ0080,Which energy system modeling papers indicate where to find their simulation software?,"SELECT ?repo
+WHERE {
+  ?paper a orkgc:Paper.
+  ?paper orkgp:P31 ?contrib.
+  ?contrib orkgp:P37586 ?model.
+  ?model orkgp:P39010 ?code.
+  ?code orkgp:P4077 ?repo.
+}",valid
+HQ0100,What is the maximum reaction yield for the studies?,"SELECT ?reactions_yield WHERE {
+  orkgr:R137086 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37560 ?reactions_yield.
+}
+ORDER BY DESC(?reactions_yield)
+LIMIT 1",valid
+HQ0070,For which region of data collection the number of sampling stations is the largest?,"SELECT ?region
+WHERE {
+  orkgr:R155584 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P41068 ?number_of_stations;
+           orkgp:P27029 ?region.
+}
+ORDER BY DESC(?number_of_stations)
+LIMIT 1",valid
+HQ0095,When MedPost model was published?,"SELECT ?year
+WHERE {
+  ?papers rdf:type orkgc:Paper.
+  ?papers rdfs:label ?papers_labels.
+  FILTER(REGEX(?papers_labels, ""MedPost""))
+  ?papers orkgp:P29 ?year.
+}",valid
+HQ0069,Which sector is the most commonly modeled energy sector?,"SELECT ?label (COUNT(?label) AS ?number)
+WHERE {
+  ?sector rdfs:label ?label;
+          a ?class.
+  ?class owl:equivalentClass <http://openenergy-platform.org/ontology/oeo/OEO_00000367>.
+  orkgr:R150337 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P37586 ?scenario.
+  ?scenario orkgp:P37675 ?study.
+  ?study orkgp:P37668 ?sector.
+  
+}
+ORDER BY DESC(?number)
+LIMIT 1",valid
+HQ0063,Is Cobb-Douglas functional applied in the studies?,"ASK {
+  orkgr:R34493 orkgp:compareContribution ?contrib.
+  ?contrib orkgp:P15661 ?funcionals.
+  ?funcionals rdfs:label ?funtionals_labels.
+  FILTER(REGEX(?funtionals_labels, ""Cobb-Douglas""))
+}",valid
+HQ0008,What is the least common metric used?,"SELECT DISTINCT ?name
+WHERE {
+ ?paper a orkgc:Paper;
+ orkgp:P31 [
+   orkgp:P5003 [
+     rdfs:label ?name
+   ]
+ ].
+ {
+   SELECT DISTINCT (COUNT(?paper_) AS ?min_papers)
+   WHERE {
+    ?paper_ a orkgc:Paper;
+    orkgp:P31 [
+      orkgp:P5003 [
+      rdfs:label ?name_
+      ]
+    ].
+  }
+  GROUP BY ?name_
+  ORDER BY ?min_papers
+  LIMIT 1
+ }
+}
+GROUP BY ?name ?min_papers
+HAVING(COUNT(?paper) = ?min_papers)
+ORDER BY ?name",valid
+HQ0001,"What type of data does the system proposed in paper titled ""Open Research Knowledge Graph"" support?","SELECT ?datatype 
+WHERE {
+  orkgr:R8364 orkgp:compareContribution ?cont.
+  ?paper orkgp:P31 ?cont;
+         rdfs:label ?title.
+  ?cont  orkgp:P7046 ?sys.
+  ?sys orkgp:P7055 ?datatype.
+  FILTER(REGEX(STR(?title), ""Open Research Knowledge Graph""))
+}",valid

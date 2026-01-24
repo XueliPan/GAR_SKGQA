@@ -189,7 +189,7 @@ def get_top_k_candidates(sources: list, candidates: list, candidate_embeddings: 
     return top_df
 
 # Main function, modified to pass pre-computed embeddings
-def main(input_question: str, backend: str = "google", model: Optional[str] = None, temperature: float = 0.1):
+def main(input_question: str, backend: str = "transformers", model: Optional[str] = None, temperature: float = 0.1):
     # Load genai API key from .env file
     load_dotenv()
     
@@ -202,21 +202,49 @@ def main(input_question: str, backend: str = "google", model: Optional[str] = No
         print(f"CUDA device name: {torch.cuda.get_device_name()}")
     
     instruction = """
-        You are an expert in entity recognition and predicate extraction for scholarly data mining. 
-        You will be given a question and you need to identify and extract all the entities and predicates mentioned in the question. 
-        Entities could be the specific names of papers, authors, datasets, models, methods, benchmarks, etc in research papers. Not general terms such as ID, title, study, paper, model, dataset etc.
-        Predicates are the relationships or attributes associated with these entities.
-        Your response must be a single, raw JSON string. Do not include any text before or after the JSON.  
+    You are an expert in entity, class, and predicate extraction for scholarly knowledge graph question answering. 
+    You will be given a natural language question. Your task is to first determine the question type, then extract the relevant elements accordingly.
 
-        Please provide a list of entities and predicates found in the following format:
+    Question types:
+    1. **Entity-centric** — The question asks about a specific instance (e.g., a particular dataset, paper, model, author, or benchmark).  
+    - Extract: "Entities" (specific names only) and "Predicates" (relationships or attributes).  
+    - Example: “What is the publication year of CHEMDNER corpus?”  
+        → Entities: ["CHEMDNER corpus"], Predicates: ["publication year"]
 
-        {
-        "Entities": ["entity1", "entity2", "..."],
-        "Predicates": ["predicate1", "predicate2", "..."]
-        }
+    2. **Class-centric** — The question asks about a general class or type (e.g., datasets, papers, authors, methods).  
+    - Extract: "Classes" (general types or categories) and "Predicates" (relationships or attributes).  
+    - Example: “What properties describe datasets?”  
+        → Classes: ["dataset"], Predicates: ["properties that describe"]
 
-        If no entities or predicates are found, please return empty lists within the JSON object.
-        Do not wrap the JSON in any markdown code block, such as ```json or ```.
+    3. **Property-centric** — The question directly refers to a property or relation itself.  
+    - Extract: "Predicates" only.  
+    - Example: “Which entities have the property hasEvaluationMetric?”  
+        → Predicates: ["hasEvaluationMetric"]
+
+    Your response must be a single raw JSON object with the following structure:
+    {
+    "Question_Type": "entity-centric" | "class-centric" | "property-centric",
+    "Entities": ["..."],      // only if entity-centric
+    "Classes": ["..."],       // only if class-centric
+    "Predicates": ["..."]
+    }
+
+    Rules:
+    - Entities must be *specific names* of scholarly resources (e.g., paper titles, datasets, benchmarks, models, authors). Do NOT treat generic words such as “dataset”, “paper”, “model”, “study”, “ID”, or “title” as entities.  
+    - Predicates represent relationships or attributes (e.g., "published in", "has author", "uses dataset", "publication year").  
+    - If a field does not apply to the detected question type, return an empty list for that field.  
+    - Output must be a raw JSON string (no markdown formatting, no explanations).
+
+    Example:
+    Question: "What is the evaluation metric used in the CHEMDNER corpus?"
+    Output:
+    {
+    "Question_Type": "entity-centric",
+    "Entities": ["CHEMDNER corpus"],
+    "Classes": [],
+    "Predicates": ["evaluation metric"]
+    }
+
         """
     response = get_response(input_question, instruction, backend=backend, model=model, temperature=temperature)
     print(f"\nRaw LLM output:\n{response}\n")
@@ -267,3 +295,4 @@ if __name__ == "__main__":
     for input_question in input_questions:
         main(input_question)
         print("\n"+"="*100+"\n")
+    print("Done!")

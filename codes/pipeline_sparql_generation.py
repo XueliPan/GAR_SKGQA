@@ -195,7 +195,7 @@ def run_sparql_generation_pipeline(
         generated_sparql = f"Error generating SPARQL: {str(e)}"
 
     return {
-        "question": question,
+        "question_string": question,
         "seed_iris": seed_iris,
         "subgraph_turtle": subgraph_turtle,
         "triples": len(merged),
@@ -236,7 +236,8 @@ def run_batch_sparql_generation(
     one_shot_map: Dict[str, Tuple[Optional[str], Optional[str]]] = {}
     if one_shot_csv and os.path.exists(one_shot_csv):
         os_df = pd.read_csv(one_shot_csv)
-        os_required = {"id", "test_question", "test_query", "best_train_question", "best_train_query"}
+        # Expecting columns: id,source_question,source_query,similar_question,similar_question_query
+        os_required = {"id", "source_question", "source_query", "similar_question", "similar_question_query"}
         os_missing = os_required - set(os_df.columns)
         if os_missing:
             raise ValueError(f"Missing required columns in {one_shot_csv}: {sorted(list(os_missing))}")
@@ -246,8 +247,8 @@ def run_batch_sparql_generation(
             if qid_key is None:
                 continue
             one_shot_map[qid_key] = (
-                None if pd.isna(r["best_train_question"]) else str(r["best_train_question"]),
-                None if pd.isna(r["best_train_query"]) else str(r["best_train_query"]),
+                None if pd.isna(r["similar_question"]) else str(r["similar_question"]),
+                None if pd.isna(r["similar_question_query"]) else str(r["similar_question_query"]),
             )
 
     # Load ontology if provided

@@ -20,6 +20,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, List, Optional
 from urllib.error import HTTPError
+from rdflib import Graph, URIRef, RDFS, Namespace
+import requests
+from typing import List, Dict, Union
 
 from dotenv import load_dotenv
 
@@ -43,7 +46,7 @@ except ImportError:  # pragma: no cover
     genai_types = None  # type: ignore
 
 try:
-    from SPARQLWrapper import POST, TURTLE, SPARQLWrapper
+    from SPARQLWrapper import POST, TURTLE, SPARQLWrapper, JSON
 except ImportError:  # pragma: no cover
     SPARQLWrapper = None  # type: ignore
 
@@ -61,28 +64,45 @@ if not os.getenv('OPENAI_API_KEY'):
 
 
 
-PROMPT_TEMPLATE = """You are an expert DBLP knowledge graph assistant.
-Given the natural language question, candidate entities, and relations, do the following:
-1. Generate a SPARQL CONSTRUCT query that retrieves the minimal subgraph required to answer the question.
-2. You are only allowed to use the following provided prefixes:
-    PREFIX dblp: <https://dblp.org/rdf/schema#>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-    PREFIX wd: <http://www.wikidata.org/entity/>
-    PREFIX cito: <http://purl.org/spar/cito/>
-    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-    PREFIX schema: <https://schema.org/>
+PROMPT_TEMPLATE = """You are given:
+1. A natural-language question.
+2. A schema describing the ONLY allowed properties.
+3. A set of entities and their types.
 
-Return strictly the SPARQL query, without commentary. Remove any markdown formatting such as ```sparql and ```, and ensure the query is syntactically correct.
+First, judge whether the question can be answered using a SPARQL SELECT query or an ASK query
 
-Question: {question}
-Entities: {entities}
-Relations: {relations}
+If the question requires a SELECT query, your task is to generate a SINGLE SPARQL CONSTRUCT query that retrieves the
+MINIMAL SUBGRAPH needed to answer the input question.
 
-The DBLP ontology is available here for reference. Pay attention to the classes and properties defined within it. Some range of properties is xsd:date or other literal types not URIs.
-Ontology-----------------
-{ontology}
+### Natural-Language Question
+{question}
+
+### Schema 
+{property_schema}
+
+### Entities and Their Types 
+{entities_type}
+
+### Requirements
+- You MUST use ONLY the properties listed in the schema.
+- You MUST include ALL listed properties at least once in the query.
+- You MUST include ALL provided entities, placed according to their types.
+- The SPARQL query MUST retrieve the MINIMAL SUBGRAPH necessary to answer the input question.
+- The query MUST be a syntactically valid CONSTRUCT query.
+- **Important:** For triple patterns where the object type is a literal (`xsd:string`, `xsd:anyURI`, `xsd:gMonth`, `xsd:integer`, `xsd:gYear`):
+  - The **subject must be a variable** (e.g., `?paper`, `?venue`).
+  - **Do NOT include the literal value** in the CONSTRUCT or WHERE clauses.
+  - **Do NOT use FILTER or any other literal comparison** in any form.  
+    - Reason: The literal in the KG may differ from the question (e.g., abbreviations, formatting).
+- **Do NOT invent new properties, classes, or relationships** beyond the schema.
+- The generated query should only use variables for literals from the question; never attempt to match literals directly.
+- Output ONLY the SPARQL query (no explanations, no comments, no FILTERs).
+- Return strictly the SPARQL query, without commentary. 
+- Remove any markdown formatting such as ```sparql and ```, and ensure the query is syntactically correct.
+
+If the question requires a ASK query, ingore the provided properties.
+Your task is to generate a SINGLE SPARQL CONSTRUCT query that retrieves the MINIMAL SUBGRAPH relevant to the most important entity for the question.
+For example, if the question is asking about whether an author has orcid or whether a paper has two authors, the most important entity is the author or the paper respectively. And the CONSTRUCT query should retrieve all triples related to that entity, ignoring the provided properties.
 """
 
 # read the ontology file for inclusion in the prompt
@@ -94,9 +114,16 @@ else:
     PROMPT_TEMPLATE = PROMPT_TEMPLATE.replace("{ontology}", "N/A")
 
 
-
-
-
+DBLP_PREFIXES = """
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX cito: <http://purl.org/spar/cito/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <https://schema.org/>
+"""
 
 
 @dataclass
@@ -167,6 +194,90 @@ def question_records(df: pd.DataFrame) -> Iterable[QuestionRecord]:
             help_out=row.get("help_out"),
         )
 
+
+def get_column_list(file: Path, column_name: str) -> List[str]:
+    """
+    Given a file path, read the column with zero triple from the file and returned a list of question Id that have zero triples.
+    """
+    if not file.exists():
+        return []
+    zero_triple_list = []
+    construct_query_list = []
+    df = pd.read_csv(file)
+    for _, row in df.iterrows():
+        if row[column_name] == 0:
+            zero_triple_list.append(row['id'])
+            construct_query_list.append(row['construct_query'])
+    return zero_triple_list, construct_query_list
+
+def _escape_braces(value: Union[str, None]) -> str:
+    """
+    Escape curly braces in a string to make it safe for str.format().
+    This prevents errors like "Single '}' encountered in format string".
+    """
+    if value is None:
+        return ""
+    return str(value).replace("{", "{{").replace("}", "}}")
+
+
+def get_property_schema(relations: List[str], schema_file: Path) -> str:
+    """
+    Given a list of relation IRIs, extract their property schema from the property schema file.
+    Returns a string representation suitable for inclusion in the prompt.
+    """
+    if not schema_file.exists():
+        return "N/A"
+    df = pd.read_csv(schema_file)
+    # given a list of properties, output their domain and range in the format <domain, property, range>
+    output_list = []
+    for prop in relations:
+        prop_name = "dblp:" + prop.split("#")[-1].strip(">")
+        row = df[df['property'] == prop_name]
+        if not row.empty:
+            domain = row['domain'].values[0]
+            range_ = row['range'].values[0]
+            output_list.append(f"<{domain}, {prop_name}, {range_}>")
+    return "\n".join(output_list)
+
+def get_entity_types(entities: str, endpoint_url: str) -> str:
+    """
+    Given a list of entity IRIs, query their types from the SPARQL endpoint.
+    Returns a string representation suitable for inclusion in the prompt, in the format: [entityIRI: type1, type1]
+    Local endpoint url example: "http://localhost:7021/sparql"
+    dblp endpoint url example: "https://dblp.org/sparql"
+    """
+    if SPARQLWrapper is None:
+        raise ImportError("SPARQLWrapper is required for querying entity types.")
+
+    SPARQL_TEMPLATE = """
+    SELECT ?type
+    WHERE {{
+    {entity_uri} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type .
+    }}
+    """
+    entity_types_list = []
+    for entity_uri in entities:
+        query = SPARQL_TEMPLATE.format(entity_uri=entity_uri)
+        wrapper = SPARQLWrapper(endpoint_url)
+        wrapper.setMethod(POST)
+        wrapper.setReturnFormat(JSON)
+        wrapper.setQuery(query)
+
+        results = wrapper.query().convert()
+        types = [result["type"]["value"] for result in results["results"]["bindings"]]
+        # Format the output
+        # Abbreviate the type URIs to use the 'dblp:' prefix where applicable
+        abbreviated_types = []
+        for t in types:
+            if t.startswith("https://dblp.org/rdf/schema#"):
+                abbreviated_types.append("dblp:" + t.split("#")[-1])
+            else:
+                abbreviated_types.append(t)
+        types = abbreviated_types
+        entity_types = f"{entity_uri}: " + ", ".join(types)
+        entity_types_list.append(entity_types)
+    final_output = " \n".join(entity_types_list)
+    return final_output
 
 def generate_construct_query(
     backend: str,
@@ -251,7 +362,7 @@ def execute_construct(
                 wrapper = SPARQLWrapper(endpoint_url)
                 wrapper.setMethod(POST)
                 wrapper.setReturnFormat(TURTLE)
-                wrapper.setQuery(query)
+                wrapper.setQuery(DBLP_PREFIXES + query)
                 ttl = wrapper.query().convert()
                 ttl_str = ttl.decode("utf-8") if isinstance(ttl, bytes) else ttl
                 result_graph = Graph()
@@ -307,11 +418,13 @@ def run_pipeline(
     json_path: Path,
     rdf_path: Path,
     summary_csv: Path,
+    zero_triple_file: Path,
     backend: str,
     model: str,
     temperature: float,
-    endpoint_url: Optional[str],
-    limit: Optional[int],
+    property_schema_file: Path = Path("/Users/sherrypan/GitHub/GAR_SKGQA/datasets/dblp/project_data/dblp_property_schema.csv"),
+    endpoint_url: Optional[str] = None,
+    limit: Optional[int] = None,
 ) -> None:
     df = load_questions_dataframe(json_path)
     if limit is not None:
@@ -320,46 +433,28 @@ def run_pipeline(
     graph = None if endpoint_url else load_graph(rdf_path)
     print(f"Loaded RDF graph from {rdf_path}")
     summaries = []
+    zero_triple_list = get_column_list(zero_triple_file, "triples")[0]
+    construct_query_list = get_column_list(zero_triple_file, "triples")[1]
+    print(f"zero_triple_list length: {len(zero_triple_list)}")
+    print(f"construct_query_list length: {len(construct_query_list)}")
 
+    i = 0
     for idx, record in enumerate(question_records(df[0:]), start=1):  # to resume from 0
+        # if record.id in zero_triple_list then run the pipeline, otherwiese skip the questions.
+        if record.id not in zero_triple_list:
+            # print(f"Skipping question {record.id} (#{idx}) as it is not in the zero triple list.")
+            continue
         try:
-            prompt = PROMPT_TEMPLATE.format(
-                question=record.question_string,
-                entities=", ".join(record.entities),
-                relations=", ".join(record.relations),
-            )
-            print(
-                f"\nGenerated prompt for {record.id} (#{idx}):\n"
-                # f"PROMPT start ******************\n{prompt}\nPROMPT end ******************"
-            )
-            if record.template_id:
-                prompt += f"\nKnown template: {record.template_id}"
-
-            # Generate CONSTRUCT query (with internal retry logic on LLM failures)
-            while True:
-                try:
-                    construct_query = generate_construct_query(
-                        backend=backend,
-                        model=model,
-                        prompt=prompt,
-                        temperature=temperature,
-                    )
-                    break
-                except Exception as e:
-                    print(
-                        f"Error generating CONSTRUCT query for {record.id}: {e}. "
-                        "Retrying in 5 seconds..."
-                    )
-                    time.sleep(5)
-
-            print(f"\nGenerated CONSTRUCT query for {record.id}:\n{construct_query}\n")
+            construct_query = construct_query_list[i]  # zero-based index
+            print(f"\nCONSTRUCT query for {record.id}:\n{construct_query}\n")
+            i += 1
 
             # Sleep between requests to avoid rate limiting on LLM / endpoint
             time.sleep(10)
 
             # Execute CONSTRUCT query and serialize subgraph
             subgraph = execute_construct(
-                construct_query, graph=graph, endpoint_url=endpoint_url
+                query=construct_query, graph=graph, endpoint_url=endpoint_url
             )
             ttl_data = subgraph.serialize(format="turtle")
 
@@ -419,10 +514,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/datasets/dblp/dblp-2022-03-01.nt.gz"),
     )
+    parser.add_argument("--summary_csv", type=Path)
+    parser.add_argument("--zero_triple_file", type=Path, default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/results/dblp/zero_triple_question_247.csv"))  
     parser.add_argument(
-        "--summary_csv",
+        "--property_schema_file",
         type=Path,
-        default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/results/dblp/subgraph_summary.csv"),
+        default=Path("/Users/sherrypan/GitHub/GAR_SKGQA/datasets/dblp/project_data/dblp_property_schema.csv"),
+        help="Path to the property schema CSV file.",
     )
     parser.add_argument("--backend", choices=["google", "huggingface"], default="google")
     parser.add_argument("--model", type=str, required=True, help="LLM model name or identifier.")
@@ -438,9 +536,11 @@ def main() -> None:
         json_path=args.json_path,
         rdf_path=args.rdf_path,
         summary_csv=args.summary_csv,
+        zero_triple_file=args.zero_triple_file,
         backend=args.backend,
         model=args.model,
         temperature=args.temperature,
+        property_schema_file=args.property_schema_file,
         endpoint_url=args.endpoint_url,
         limit=args.limit,
     )
@@ -448,6 +548,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
-# python codes/subgraph_extraction_dblp.py --model gemini-2.5-pro --backend google --json_path datasets/dblp/test/questions.json --rdf_path datasets/dblp/dblp-2022-03-01.nt.gz --summary_csv results/dblp/subgraph_summary.csv
